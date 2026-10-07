@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root { color-scheme: light; }
+body { margin: 0; background: #fafbfc; color: #18232d; font-family: Arial, Helvetica, sans-serif; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid #479caf; outline-offset: 3px; }
+th { text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: #53616d; }
+th, td { padding: 0.75rem 1rem; border-bottom: 1px solid #e7ecef; }
+tbody tr:last-child td { border-bottom: 0; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }

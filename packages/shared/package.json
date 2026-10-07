@@ -1,0 +1,6 @@
+{
+  "name": "@llm-lab/shared",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {"./api": "./src/generated/api.ts"}
+}

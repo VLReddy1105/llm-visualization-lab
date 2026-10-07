@@ -1,0 +1,16 @@
+{
+  "name": "llm-visualization-lab",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/web", "packages/shared"],
+  "engines": {"node": ">=22.0.0"},
+  "scripts": {
+    "dev": "npm run dev --workspace @llm-lab/web",
+    "build": "npm run build --workspace @llm-lab/web",
+    "typecheck": "npm run typecheck --workspace @llm-lab/web",
+    "lint": "npm run lint --workspace @llm-lab/web",
+    "generate:types": "openapi-typescript packages/shared/openapi.json -o packages/shared/src/generated/api.ts",
+    "check:types": "openapi-typescript packages/shared/openapi.json -o packages/shared/src/generated/api.ts --check"
+  },
+  "devDependencies": {"openapi-typescript": "7.13.0"}
+}

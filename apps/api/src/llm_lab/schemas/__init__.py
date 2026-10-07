@@ -1,0 +1,1 @@
+"""Authoritative Pydantic API contracts."""

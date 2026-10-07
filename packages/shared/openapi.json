@@ -1,0 +1,1041 @@
+{
+  "components": {
+    "schemas": {
+      "Candidate": {
+        "additionalProperties": false,
+        "properties": {
+          "decoded_token": {
+            "title": "Decoded Token",
+            "type": "string"
+          },
+          "probability": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Probability",
+            "type": "number"
+          },
+          "rank": {
+            "title": "Rank",
+            "type": "integer"
+          },
+          "raw_logit": {
+            "title": "Raw Logit",
+            "type": "number"
+          },
+          "token_id": {
+            "title": "Token Id",
+            "type": "integer"
+          },
+          "tokenizer_piece": {
+            "title": "Tokenizer Piece",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rank",
+          "token_id",
+          "tokenizer_piece",
+          "decoded_token",
+          "raw_logit",
+          "probability"
+        ],
+        "title": "Candidate",
+        "type": "object"
+      },
+      "ErrorInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retryable": {
+            "default": false,
+            "title": "Retryable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "ErrorInfo",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorInfo"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "application_version": {
+            "default": "0.1.0",
+            "title": "Application Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "InputResult": {
+        "additionalProperties": false,
+        "properties": {
+          "add_special_tokens": {
+            "const": false,
+            "default": false,
+            "title": "Add Special Tokens",
+            "type": "boolean"
+          },
+          "decoded_text": {
+            "title": "Decoded Text",
+            "type": "string"
+          },
+          "effective_text": {
+            "title": "Effective Text",
+            "type": "string"
+          },
+          "mode": {
+            "const": "raw",
+            "default": "raw",
+            "title": "Mode",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "token_count": {
+            "title": "Token Count",
+            "type": "integer"
+          },
+          "tokens": {
+            "items": {
+              "$ref": "#/components/schemas/TokenRecord"
+            },
+            "title": "Tokens",
+            "type": "array"
+          }
+        },
+        "required": [
+          "text",
+          "effective_text",
+          "token_count",
+          "decoded_text",
+          "tokens"
+        ],
+        "title": "InputResult",
+        "type": "object"
+      },
+      "ModelLoadRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "device": {
+            "default": "auto",
+            "title": "Device",
+            "type": "string"
+          },
+          "dtype_policy": {
+            "const": "scientific_default",
+            "default": "scientific_default",
+            "title": "Dtype Policy",
+            "type": "string"
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{40}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revision"
+          }
+        },
+        "title": "ModelLoadRequest",
+        "type": "object"
+      },
+      "ModelMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "attention_backend": {
+            "const": "eager",
+            "default": "eager",
+            "title": "Attention Backend",
+            "type": "string"
+          },
+          "device": {
+            "title": "Device",
+            "type": "string"
+          },
+          "dtype": {
+            "title": "Dtype",
+            "type": "string"
+          },
+          "hf_model_id": {
+            "default": "Qwen/Qwen3-0.6B",
+            "title": "Hf Model Id",
+            "type": "string"
+          },
+          "hidden_size": {
+            "title": "Hidden Size",
+            "type": "integer"
+          },
+          "layer_count": {
+            "title": "Layer Count",
+            "type": "integer"
+          },
+          "model_id": {
+            "default": "qwen3-0.6b",
+            "title": "Model Id",
+            "type": "string"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "string"
+          },
+          "tokenizer_revision": {
+            "title": "Tokenizer Revision",
+            "type": "string"
+          },
+          "vocabulary_size": {
+            "title": "Vocabulary Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "tokenizer_revision",
+          "device",
+          "dtype",
+          "vocabulary_size",
+          "layer_count",
+          "hidden_size"
+        ],
+        "title": "ModelMetadata",
+        "type": "object"
+      },
+      "ModelStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "available_devices": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Available Devices",
+            "type": "array"
+          },
+          "configured_revision": {
+            "title": "Configured Revision",
+            "type": "string"
+          },
+          "detected_device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detected Device"
+          },
+          "device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device"
+          },
+          "dtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dtype"
+          },
+          "dtype_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dtype Reason"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "execution_busy": {
+            "default": false,
+            "title": "Execution Busy",
+            "type": "boolean"
+          },
+          "hf_model_id": {
+            "default": "Qwen/Qwen3-0.6B",
+            "title": "Hf Model Id",
+            "type": "string"
+          },
+          "load_duration_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Load Duration Ms"
+          },
+          "loading_phase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loading Phase"
+          },
+          "max_input_tokens": {
+            "title": "Max Input Tokens",
+            "type": "integer"
+          },
+          "max_prompt_characters": {
+            "title": "Max Prompt Characters",
+            "type": "integer"
+          },
+          "model_id": {
+            "default": "qwen3-0.6b",
+            "title": "Model Id",
+            "type": "string"
+          },
+          "pending_operations": {
+            "default": 0,
+            "title": "Pending Operations",
+            "type": "integer"
+          },
+          "queue_capacity": {
+            "title": "Queue Capacity",
+            "type": "integer"
+          },
+          "resolved_revision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved Revision"
+          },
+          "state": {
+            "enum": [
+              "unloaded",
+              "loading",
+              "ready",
+              "failed"
+            ],
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state",
+          "configured_revision",
+          "max_input_tokens",
+          "max_prompt_characters",
+          "queue_capacity"
+        ],
+        "title": "ModelStatus",
+        "type": "object"
+      },
+      "NextTokenRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "input": {
+            "$ref": "#/components/schemas/RawInput"
+          },
+          "model_id": {
+            "const": "qwen3-0.6b",
+            "default": "qwen3-0.6b",
+            "title": "Model Id",
+            "type": "string"
+          },
+          "top_k": {
+            "default": 10,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "title": "NextTokenRequest",
+        "type": "object"
+      },
+      "NextTokenResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "input": {
+            "$ref": "#/components/schemas/InputResult"
+          },
+          "model": {
+            "$ref": "#/components/schemas/ModelMetadata"
+          },
+          "prediction": {
+            "$ref": "#/components/schemas/Prediction"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "runtime": {
+            "$ref": "#/components/schemas/RuntimeMetadata"
+          }
+        },
+        "required": [
+          "request_id",
+          "model",
+          "input",
+          "prediction",
+          "runtime"
+        ],
+        "title": "NextTokenResponse",
+        "type": "object"
+      },
+      "Prediction": {
+        "additionalProperties": false,
+        "properties": {
+          "argmax_token_id": {
+            "title": "Argmax Token Id",
+            "type": "integer"
+          },
+          "logits_shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Logits Shape",
+            "type": "array"
+          },
+          "next_position": {
+            "title": "Next Position",
+            "type": "integer"
+          },
+          "omitted_probability_mass": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Omitted Probability Mass",
+            "type": "number"
+          },
+          "position": {
+            "title": "Position",
+            "type": "integer"
+          },
+          "top_k": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "title": "Top K",
+            "type": "array"
+          },
+          "vocabulary_size": {
+            "title": "Vocabulary Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "position",
+          "next_position",
+          "logits_shape",
+          "vocabulary_size",
+          "top_k",
+          "omitted_probability_mass",
+          "argmax_token_id"
+        ],
+        "title": "Prediction",
+        "type": "object"
+      },
+      "RawInput": {
+        "additionalProperties": false,
+        "properties": {
+          "add_special_tokens": {
+            "const": false,
+            "default": false,
+            "title": "Add Special Tokens",
+            "type": "boolean"
+          },
+          "mode": {
+            "const": "raw",
+            "default": "raw",
+            "title": "Mode",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 32768,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "RawInput",
+        "type": "object"
+      },
+      "RuntimeMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "cache_enabled": {
+            "const": false,
+            "default": false,
+            "title": "Cache Enabled",
+            "type": "boolean"
+          },
+          "forward_duration_ms": {
+            "title": "Forward Duration Ms",
+            "type": "number"
+          },
+          "inference_duration_ms": {
+            "title": "Inference Duration Ms",
+            "type": "number"
+          },
+          "load_duration_ms": {
+            "title": "Load Duration Ms",
+            "type": "number"
+          },
+          "probability_dtype": {
+            "const": "float32",
+            "default": "float32",
+            "title": "Probability Dtype",
+            "type": "string"
+          },
+          "python_version": {
+            "title": "Python Version",
+            "type": "string"
+          },
+          "softmax_accumulation_dtype": {
+            "const": "float64",
+            "default": "float64",
+            "title": "Softmax Accumulation Dtype",
+            "type": "string"
+          },
+          "torch_version": {
+            "title": "Torch Version",
+            "type": "string"
+          },
+          "tracing_enabled": {
+            "const": false,
+            "default": false,
+            "title": "Tracing Enabled",
+            "type": "boolean"
+          },
+          "transformers_version": {
+            "title": "Transformers Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "python_version",
+          "torch_version",
+          "transformers_version",
+          "load_duration_ms",
+          "forward_duration_ms",
+          "inference_duration_ms"
+        ],
+        "title": "RuntimeMetadata",
+        "type": "object"
+      },
+      "ServiceStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "inference_ready": {
+            "title": "Inference Ready",
+            "type": "boolean"
+          },
+          "model": {
+            "$ref": "#/components/schemas/ModelStatus"
+          }
+        },
+        "required": [
+          "inference_ready",
+          "model"
+        ],
+        "title": "ServiceStatus",
+        "type": "object"
+      },
+      "TokenRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "character_end": {
+            "title": "Character End",
+            "type": "integer"
+          },
+          "character_start": {
+            "title": "Character Start",
+            "type": "integer"
+          },
+          "decoded_token": {
+            "title": "Decoded Token",
+            "type": "string"
+          },
+          "is_special": {
+            "title": "Is Special",
+            "type": "boolean"
+          },
+          "position_id": {
+            "title": "Position Id",
+            "type": "integer"
+          },
+          "token_id": {
+            "title": "Token Id",
+            "type": "integer"
+          },
+          "token_index": {
+            "title": "Token Index",
+            "type": "integer"
+          },
+          "tokenizer_piece": {
+            "title": "Tokenizer Piece",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token_index",
+          "token_id",
+          "tokenizer_piece",
+          "decoded_token",
+          "position_id",
+          "is_special",
+          "character_start",
+          "character_end"
+        ],
+        "title": "TokenRecord",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "LLM Visualization Lab API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/v1/inference": {
+      "post": {
+        "operationId": "next_token_api_v1_inference_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NextTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NextTokenResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Next Token",
+        "tags": [
+          "inference"
+        ]
+      }
+    },
+    "/api/v1/models": {
+      "get": {
+        "operationId": "list_models_api_v1_models_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ModelStatus"
+                  },
+                  "title": "Response List Models Api V1 Models Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Models",
+        "tags": [
+          "models"
+        ]
+      }
+    },
+    "/api/v1/models/{model_id}": {
+      "get": {
+        "operationId": "get_model_api_v1_models__model_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_id",
+            "required": true,
+            "schema": {
+              "title": "Model Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Model",
+        "tags": [
+          "models"
+        ]
+      }
+    },
+    "/api/v1/models/{model_id}/load": {
+      "post": {
+        "operationId": "load_model_api_v1_models__model_id__load_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_id",
+            "required": true,
+            "schema": {
+              "title": "Model Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelLoadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelStatus"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Load Model",
+        "tags": [
+          "models"
+        ]
+      }
+    },
+    "/api/v1/status": {
+      "get": {
+        "operationId": "status_api_v1_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Status",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  }
+}

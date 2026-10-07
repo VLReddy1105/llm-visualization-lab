@@ -1,0 +1,181 @@
+{
+  "request_id": "3c7b5f7a-a83b-459f-8f58-80a35c9ec1d6",
+  "model": {
+    "model_id": "qwen3-0.6b",
+    "hf_model_id": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "device": "mps",
+    "dtype": "float32",
+    "attention_backend": "eager",
+    "vocabulary_size": 151936,
+    "layer_count": 28,
+    "hidden_size": 1024
+  },
+  "input": {
+    "text": "The capital of Germany is",
+    "effective_text": "The capital of Germany is",
+    "mode": "raw",
+    "add_special_tokens": false,
+    "token_count": 5,
+    "decoded_text": "The capital of Germany is",
+    "tokens": [
+      {
+        "token_index": 0,
+        "token_id": 785,
+        "tokenizer_piece": "The",
+        "decoded_token": "The",
+        "position_id": 0,
+        "is_special": false,
+        "character_start": 0,
+        "character_end": 3
+      },
+      {
+        "token_index": 1,
+        "token_id": 6722,
+        "tokenizer_piece": "Ġcapital",
+        "decoded_token": " capital",
+        "position_id": 1,
+        "is_special": false,
+        "character_start": 3,
+        "character_end": 11
+      },
+      {
+        "token_index": 2,
+        "token_id": 315,
+        "tokenizer_piece": "Ġof",
+        "decoded_token": " of",
+        "position_id": 2,
+        "is_special": false,
+        "character_start": 11,
+        "character_end": 14
+      },
+      {
+        "token_index": 3,
+        "token_id": 9856,
+        "tokenizer_piece": "ĠGermany",
+        "decoded_token": " Germany",
+        "position_id": 3,
+        "is_special": false,
+        "character_start": 14,
+        "character_end": 22
+      },
+      {
+        "token_index": 4,
+        "token_id": 374,
+        "tokenizer_piece": "Ġis",
+        "decoded_token": " is",
+        "position_id": 4,
+        "is_special": false,
+        "character_start": 22,
+        "character_end": 25
+      }
+    ]
+  },
+  "prediction": {
+    "position": 4,
+    "next_position": 5,
+    "logits_shape": [
+      1,
+      1,
+      151936
+    ],
+    "vocabulary_size": 151936,
+    "top_k": [
+      {
+        "rank": 1,
+        "token_id": 19846,
+        "tokenizer_piece": "ĠBerlin",
+        "decoded_token": " Berlin",
+        "raw_logit": 16.52149200439453,
+        "probability": 0.47704339027404785
+      },
+      {
+        "rank": 2,
+        "token_id": 7407,
+        "tokenizer_piece": "Ġlocated",
+        "decoded_token": " located",
+        "raw_logit": 14.624664306640625,
+        "probability": 0.07157742977142334
+      },
+      {
+        "rank": 3,
+        "token_id": 32671,
+        "tokenizer_piece": "Ġ______",
+        "decoded_token": " ______",
+        "raw_logit": 14.192410469055176,
+        "probability": 0.046456944197416306
+      },
+      {
+        "rank": 4,
+        "token_id": 30743,
+        "tokenizer_piece": "Ġ____",
+        "decoded_token": " ____",
+        "raw_logit": 13.501934051513672,
+        "probability": 0.023290593177080154
+      },
+      {
+        "rank": 5,
+        "token_id": 304,
+        "tokenizer_piece": "Ġin",
+        "decoded_token": " in",
+        "raw_logit": 13.070024490356445,
+        "probability": 0.015121839009225368
+      },
+      {
+        "rank": 6,
+        "token_id": 220,
+        "tokenizer_piece": "Ġ",
+        "decoded_token": " ",
+        "raw_logit": 13.063224792480469,
+        "probability": 0.015019363723695278
+      },
+      {
+        "rank": 7,
+        "token_id": 320,
+        "tokenizer_piece": "Ġ(",
+        "decoded_token": " (",
+        "raw_logit": 13.024328231811523,
+        "probability": 0.014446377754211426
+      },
+      {
+        "rank": 8,
+        "token_id": 264,
+        "tokenizer_piece": "Ġa",
+        "decoded_token": " a",
+        "raw_logit": 12.992985725402832,
+        "probability": 0.014000614173710346
+      },
+      {
+        "rank": 9,
+        "token_id": 825,
+        "tokenizer_piece": "Ġone",
+        "decoded_token": " one",
+        "raw_logit": 12.930341720581055,
+        "probability": 0.013150465674698353
+      },
+      {
+        "rank": 10,
+        "token_id": 279,
+        "tokenizer_piece": "Ġthe",
+        "decoded_token": " the",
+        "raw_logit": 12.914087295532227,
+        "probability": 0.012938440777361393
+      }
+    ],
+    "omitted_probability_mass": 0.2969545414671302,
+    "argmax_token_id": 19846
+  },
+  "runtime": {
+    "python_version": "3.11.15",
+    "torch_version": "2.14.1",
+    "transformers_version": "5.19.0",
+    "probability_dtype": "float32",
+    "softmax_accumulation_dtype": "float64",
+    "load_duration_ms": 9859.387917007552,
+    "forward_duration_ms": 809.7825419972651,
+    "inference_duration_ms": 818.5759579937439,
+    "cache_enabled": false,
+    "tracing_enabled": false
+  }
+}
