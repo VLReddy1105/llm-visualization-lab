@@ -1,0 +1,226 @@
+{
+  "trace_id": "16ae9419-b56d-4849-a100-a069a2a4c8c0",
+  "prediction_position": 4,
+  "next_position": 5,
+  "vocabulary_size": 151936,
+  "normalization": "full vocabulary; Stage 1 CPU float64 softmax, stored float32 probabilities",
+  "top_k": [
+    {
+      "rank": 1,
+      "token_id": 19846,
+      "tokenizer_piece": "ĠBerlin",
+      "decoded_token": " Berlin",
+      "raw_logit": 16.52149200439453,
+      "probability": 0.47704339027404785
+    },
+    {
+      "rank": 2,
+      "token_id": 7407,
+      "tokenizer_piece": "Ġlocated",
+      "decoded_token": " located",
+      "raw_logit": 14.624664306640625,
+      "probability": 0.07157742977142334
+    },
+    {
+      "rank": 3,
+      "token_id": 32671,
+      "tokenizer_piece": "Ġ______",
+      "decoded_token": " ______",
+      "raw_logit": 14.192410469055176,
+      "probability": 0.046456944197416306
+    },
+    {
+      "rank": 4,
+      "token_id": 30743,
+      "tokenizer_piece": "Ġ____",
+      "decoded_token": " ____",
+      "raw_logit": 13.501934051513672,
+      "probability": 0.023290593177080154
+    },
+    {
+      "rank": 5,
+      "token_id": 304,
+      "tokenizer_piece": "Ġin",
+      "decoded_token": " in",
+      "raw_logit": 13.070024490356445,
+      "probability": 0.015121839009225368
+    },
+    {
+      "rank": 6,
+      "token_id": 220,
+      "tokenizer_piece": "Ġ",
+      "decoded_token": " ",
+      "raw_logit": 13.063224792480469,
+      "probability": 0.015019363723695278
+    },
+    {
+      "rank": 7,
+      "token_id": 320,
+      "tokenizer_piece": "Ġ(",
+      "decoded_token": " (",
+      "raw_logit": 13.024328231811523,
+      "probability": 0.014446377754211426
+    },
+    {
+      "rank": 8,
+      "token_id": 264,
+      "tokenizer_piece": "Ġa",
+      "decoded_token": " a",
+      "raw_logit": 12.992985725402832,
+      "probability": 0.014000614173710346
+    },
+    {
+      "rank": 9,
+      "token_id": 825,
+      "tokenizer_piece": "Ġone",
+      "decoded_token": " one",
+      "raw_logit": 12.930341720581055,
+      "probability": 0.013150465674698353
+    },
+    {
+      "rank": 10,
+      "token_id": 279,
+      "tokenizer_piece": "Ġthe",
+      "decoded_token": " the",
+      "raw_logit": 12.914087295532227,
+      "probability": 0.012938440777361393
+    }
+  ],
+  "omitted_probability_mass": 0.2969545414671302,
+  "logits": {
+    "component_id": "output.logits",
+    "tensor_id": "tensor-26",
+    "axes": [
+      "batch",
+      "prediction_position",
+      "vocabulary"
+    ],
+    "logical_shape": [
+      1,
+      1,
+      151936
+    ],
+    "storage_shape": [
+      1,
+      1,
+      151936
+    ],
+    "coverage": {
+      "batch": {
+        "count": 1,
+        "start": 0,
+        "stop": 1,
+        "step": 1
+      },
+      "prediction_position": {
+        "count": 1,
+        "start": 0,
+        "stop": 1,
+        "step": 1
+      },
+      "vocabulary": {
+        "count": 151936,
+        "start": 0,
+        "stop": 151936,
+        "step": 1
+      }
+    },
+    "dtype": "float32",
+    "storage_dtype": "float32",
+    "original_device": "mps:0",
+    "storage_device": "cpu",
+    "numel": 151936,
+    "byte_size": 607744,
+    "provenance": "raw",
+    "sources": [],
+    "method": "actual last-position LM head output; local prediction index0 maps to absolute input position 4",
+    "availability": "captured",
+    "raw_available": true,
+    "unavailable_reason": null,
+    "statistics": {
+      "finite_count": 151936,
+      "nonfinite_count": 0,
+      "min": -15.386022567749023,
+      "max": 16.52149200439453,
+      "mean": -3.0041539669036865,
+      "std": 3.0323755741119385,
+      "l2_norm": 1663.826416015625,
+      "accumulation_dtype": "float32",
+      "value_kind": "summary",
+      "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+      "masked_count": 0,
+      "total_count": 151936,
+      "finite": true,
+      "undefined_fields": []
+    }
+  },
+  "probabilities": {
+    "component_id": "output.probabilities",
+    "tensor_id": "tensor-34",
+    "axes": [
+      "batch",
+      "prediction_position",
+      "vocabulary"
+    ],
+    "logical_shape": [
+      1,
+      1,
+      151936
+    ],
+    "storage_shape": [
+      1,
+      1,
+      151936
+    ],
+    "coverage": {
+      "batch": {
+        "count": 1,
+        "start": 0,
+        "stop": 1,
+        "step": 1
+      },
+      "prediction_position": {
+        "count": 1,
+        "start": 0,
+        "stop": 1,
+        "step": 1
+      },
+      "vocabulary": {
+        "count": 151936,
+        "start": 0,
+        "stop": 151936,
+        "step": 1
+      }
+    },
+    "dtype": "float32",
+    "storage_dtype": "float32",
+    "original_device": "cpu",
+    "storage_device": "cpu",
+    "numel": 151936,
+    "byte_size": 607744,
+    "provenance": "derived",
+    "sources": [
+      "output.logits"
+    ],
+    "method": "trusted Stage1 full-vocabulary CPU float64 softmax accumulation; cast to float32",
+    "availability": "captured",
+    "raw_available": true,
+    "unavailable_reason": null,
+    "statistics": {
+      "finite_count": 151936,
+      "nonfinite_count": 0,
+      "min": 6.626747016250968e-15,
+      "max": 0.47704339027404785,
+      "mean": 6.581719389942009e-06,
+      "std": 0.0012513716937974095,
+      "l2_norm": 0.4877784252166748,
+      "accumulation_dtype": "float32",
+      "value_kind": "summary",
+      "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+      "masked_count": 0,
+      "total_count": 151936,
+      "finite": true,
+      "undefined_fields": []
+    }
+  }
+}

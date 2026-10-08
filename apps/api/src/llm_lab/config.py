@@ -17,6 +17,12 @@ class Settings(BaseSettings):
     max_prompt_characters: int = Field(default=8192, ge=1, le=32768)
     queue_capacity: int = Field(default=3, ge=1, le=3)
     trace_max_bytes: int = Field(default=256 * 1024 * 1024, ge=1, le=1024 * 1024 * 1024)
+    trace_ttl_seconds: float = Field(default=1800, gt=0, le=86400)
+    trace_store_max_bytes: int = Field(default=512 * 1024 * 1024, ge=1, le=4 * 1024**3)
+    trace_store_max_entries: int = Field(default=1024, ge=1, le=10000)
+    trace_api_max_elements: int = Field(default=65536, ge=1, le=1048576)
+    trace_api_max_response_bytes: int = Field(default=1024 * 1024, ge=1024, le=16 * 1024**2)
+    trace_sweep_seconds: float = Field(default=15, gt=0, le=60)
     cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @field_validator("cors_origins")

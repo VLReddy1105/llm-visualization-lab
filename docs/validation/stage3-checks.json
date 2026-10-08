@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "automated_tests": {
+    "mps": {
+      "tests": "224",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "22.456"
+    },
+    "cpu": {
+      "tests": "224",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "19.627"
+    }
+  },
+  "openapi_export_check": "PASS",
+  "generated_types_check": "PASS",
+  "ruff_check": "PASS",
+  "ruff_format_check": "PASS",
+  "typescript": "PASS",
+  "eslint": "PASS",
+  "production_build": "PASS",
+  "stage4_started": false,
+  "created_files": [
+    "apps/api/src/llm_lab/api/traces.py",
+    "apps/api/src/llm_lab/schemas/trace_api.py",
+    "apps/api/src/llm_lab/store/__init__.py",
+    "apps/api/src/llm_lab/store/trace_store.py",
+    "apps/api/src/llm_lab/tracing/serialization.py",
+    "apps/api/src/llm_lab/tracing/service.py",
+    "apps/api/src/llm_lab/trace_http_validation.py",
+    "apps/api/tests/test_trace_api.py",
+    "apps/api/tests/test_trace_serialization.py",
+    "apps/api/tests/test_trace_store.py",
+    "docs/validation/STAGE_3_REPORT.md",
+    "docs/validation/stage3-create-trace.json",
+    "docs/validation/stage3-trace-overview.json",
+    "docs/validation/stage3-layer12.json",
+    "docs/validation/stage3-attention-head.json",
+    "docs/validation/stage3-residual.json",
+    "docs/validation/stage3-mlp.json",
+    "docs/validation/stage3-logits.json",
+    "docs/validation/stage3-tensor-slice.json",
+    "docs/validation/stage3-http-validation.json",
+    "docs/validation/stage3-tests-mps.xml",
+    "docs/validation/stage3-tests-cpu.xml",
+    "docs/validation/stage3-checks.json"
+  ],
+  "modified_files": [
+    "README.md",
+    "docs/API_CONTRACT.md",
+    "docs/SYSTEM_ARCHITECTURE.md",
+    "docs/IMPLEMENTATION_STAGES.md",
+    "apps/api/.env.example",
+    "apps/api/src/llm_lab/config.py",
+    "apps/api/src/llm_lab/main.py",
+    "apps/api/src/llm_lab/models/manager.py",
+    "apps/api/src/llm_lab/export_openapi.py",
+    "apps/api/tests/test_foundation.py",
+    "apps/web/src/lib/api/client.ts",
+    "packages/shared/openapi.json",
+    "packages/shared/src/generated/api.ts"
+  ],
+  "existing_warning": "Starlette TestClient warns that its httpx integration is deprecated; no test failure."
+}

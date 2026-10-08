@@ -8,7 +8,7 @@ from llm_lab.main import create_app
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Export implemented Stage 1 OpenAPI without loading Qwen"
+        description="Export implemented Stage 1–3 OpenAPI without loading Qwen"
     )
     parser.add_argument("output", type=Path)
     parser.add_argument("--check", action="store_true")

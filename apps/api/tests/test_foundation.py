@@ -65,9 +65,9 @@ def test_chat_and_special_token_insertion_rejected(client):
         assert client.post("/api/v1/inference", json={"input": body}).status_code == 422
 
 
-def test_no_trace_routes_and_only_scoped_instrumentation():
+def test_baseline_routes_preserved_and_only_scoped_instrumentation():
     schema = create_app(Settings(auto_load=False)).openapi()
-    assert set(schema["paths"]) == {
+    assert set(schema["paths"]) >= {
         "/api/v1/health",
         "/api/v1/status",
         "/api/v1/models",

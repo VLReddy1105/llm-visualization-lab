@@ -66,6 +66,7 @@ class ModelService:
         self._load_future: Future | None = None
         self._load_options: tuple[str, str] | None = None
         self._closed = False
+        self._request_forward_passes = 0
 
     def status(self) -> ModelStatus:
         with self._state_lock:
@@ -278,6 +279,21 @@ class ModelService:
         self._require_ready()
         return self._submit(self._trace, text, plan, top_k)
 
+    def submit_trace_job(self, function, *args) -> Future:
+        """Stage 3 orchestration uses the same executor and queue admission."""
+        self._require_ready()
+        return self._submit(function, *args)
+
+    def execution_metrics(self) -> dict:
+        with self._state_lock:
+            return {
+                "request_forward_passes": self._request_forward_passes,
+                "counter_scope": (
+                    "adapter.forward attempts from inference/trace; "
+                    "excludes load warmup and independent validation reference"
+                ),
+            }
+
     def _trace(self, text, plan, top_k):
         from llm_lab.tracing.engine import TraceEngine
 
@@ -328,6 +344,8 @@ class ModelService:
             synchronize(self._selection.device)
             forward_started = time.perf_counter()
             with torch.inference_mode():
+                with self._state_lock:
+                    self._request_forward_passes += 1
                 output = self._adapter.forward(
                     **inputs,
                     logits_to_keep=1,

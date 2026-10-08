@@ -1,6 +1,6 @@
 # Implementation stages
 
-Status: **Stage 2 — PASS on CPU and Apple MPS float32.** The [Stage 1 report](validation/STAGE_1_REPORT.md) preserves the trusted inference baseline. Stage 2's [completion report](validation/STAGE_2_REPORT.md) records 137 passing tests per device and real trace evidence. Stage 3 and subsequent APIs, storage and visualizations below remain planned; documenting them does not authorize implementation.
+Status: **Stage 3 — PASS on CPU and Apple MPS float32.** The [Stage 1 report](validation/STAGE_1_REPORT.md) and [Stage 2 report](validation/STAGE_2_REPORT.md) preserve predecessor validation. The [Stage 3 report](validation/STAGE_3_REPORT.md) records 224 passing tests per device, store/API lifecycle checks and actual HTTP evidence. Stage 4 and subsequent visualizations/analyses remain planned and require explicit authorization.
 
 ## Stage execution rules
 
@@ -82,10 +82,14 @@ Implemented placement: provenance is carried by `ComponentSpec`, `TensorDescript
 2. Add a bounded asynchronous trace job service over the existing serialized executor; expose queued/running/ready/failed/cancelled states.
 3. Implement all Stage 3 endpoints in [API contract](API_CONTRACT.md), including tokens/layers/components, attention/head/relationship details, MLP/residual manifests, logits, and bounded JSON/binary slices.
 4. Enforce named selectors, coverage, element/response budgets, pagination, typed errors, stale-source handling, safe cancellation, local origins, and prompt-free diagnostic logs.
-5. Generate the implemented schema/types, add TanStack Query and query-key helpers, and extend the simple frontend connection to submit a trace and inspect textual overview/status. This is a contract probe, not Model Journey UI.
+5. Generate the implemented schema/types and extend the typed API client. Validate HTTP automatically. Under the explicit Stage 3 request, no debug page or visualization is necessary; frontend query-library/provider integration belongs with Stage 4.
 6. Demonstrate lazy requests reuse one stored trace and do not invoke additional inference or model loading.
 
 **Expected files/modules:** `storage/base.py`, `memory.py`, `leases.py`, `expiration.py`; `api/traces.py`, `api/components.py`, `api/tensors.py`, `api/errors.py`; `schemas/requests.py`, `schemas/responses.py`, `tracing/jobs.py`; `apps/web/src/lib/api/queries.ts`, query provider; updated generated contracts; `tests/test_trace_api.py`, `test_slice_selectors.py`, `test_store_lifecycle.py`, `test_job_cleanup.py`.
+
+Implemented placement: one compact RLock store (`store/trace_store.py`) owns leases/TTL/reservations/tombstones; `tracing/service.py` uses the existing model executor; `tracing/serialization.py` owns bounded JSON/binary transport; `schemas/trace_api.py` defines public Pydantic schemas; `api/traces.py` registers canonical/shared aliases. `test_trace_store.py`, `test_trace_serialization.py`, `test_trace_api.py` and `trace_http_validation.py` cover storage, transport, real HTTP and cleanup. The original Stage 2 engine, adapter, collector and numerical operations are preserved. This replaces the separately planned module split without changing responsibilities.
+
+Stage 3 completion: 224 tests pass on each CPU/MPS device (87 added beyond Stage 2), including 90 real-model cases. Actual uvicorn HTTP proves a 28-layer overview with selected Layer 12 detail, retained-value slices, exact baseline predictions, deletion and zero retrieval forwards. JSON/binary payload limits, TTL/LRU/deferred leases and cancellation pass. Generated schema/types, Ruff, TypeScript, ESLint and production build pass. See the report for measured single-request timings and limits.
 
 **Test criteria:** Real trace creates/polls/serves correctly; counters prove detail requests do not rerun inference; returned slice values match stored originals; JSON/binary shape/coordinate/dtype metadata agrees; bounds/coverage errors are typed; expiration yields 410 while tombstones exist, unknown IDs 404; simultaneous read/expiry is lease-safe; queued and running cancellation clean up; store bytes include alias deduplication and stay within budget; malformed requests cannot trigger oversized serialization.
 

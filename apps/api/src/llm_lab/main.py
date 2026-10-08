@@ -8,37 +8,67 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from llm_lab.api import health, inference, models
+from llm_lab.api import health, inference, models, traces
 from llm_lab.config import Settings
 from llm_lab.errors import ServiceError
 from llm_lab.models.manager import ModelService
+from llm_lab.store.trace_store import TraceStore
+from llm_lab.tracing.serialization import TraceSerializer
+from llm_lab.tracing.service import TraceService
 
 logger = logging.getLogger(__name__)
 
 
-def create_app(settings: Settings | None = None, service: ModelService | None = None) -> FastAPI:
+def create_app(
+    settings: Settings | None = None,
+    service: ModelService | None = None,
+    store: TraceStore | None = None,
+) -> FastAPI:
     configuration = settings or Settings()
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         app.state.model_service = service or ModelService(configuration)
+        app.state.trace_settings = configuration
+        app.state.trace_store = store or TraceStore(
+            configuration.trace_store_max_bytes,
+            configuration.trace_ttl_seconds,
+            configuration.trace_store_max_entries,
+        )
+        app.state.trace_serializer = TraceSerializer(configuration)
+        app.state.trace_service = TraceService(
+            app.state.model_service, app.state.trace_store, configuration
+        )
+
+        async def sweep():
+            while True:
+                await asyncio.sleep(configuration.trace_sweep_seconds)
+                await asyncio.to_thread(app.state.trace_store.sweep)
+
+        sweeper = asyncio.create_task(sweep())
         if configuration.auto_load:
             try:
                 app.state.model_service.start_loading()
             except ServiceError:
                 logger.exception("Automatic model load could not be started")
         yield
+        sweeper.cancel()
+        try:
+            await sweeper
+        except asyncio.CancelledError:
+            pass
         if service is None:
             await asyncio.to_thread(app.state.model_service.close)
+        app.state.trace_store.close()
 
     app = FastAPI(title="LLM Visualization Lab API", version="0.1.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=configuration.cors_origins,
         allow_credentials=False,
-        allow_methods=["GET", "POST"],
+        allow_methods=["GET", "POST", "DELETE"],
         allow_headers=["Content-Type"],
-        expose_headers=["X-Request-ID"],
+        expose_headers=["X-Request-ID", "Location", "X-Tensor-Metadata"],
     )
 
     @app.middleware("http")
@@ -77,7 +107,7 @@ def create_app(settings: Settings | None = None, service: ModelService | None = 
             content={
                 "error": {
                     "code": "INVALID_REQUEST",
-                    "message": "Check the prompt and top_k request fields.",
+                    "message": "Check the request fields and semantic selectors.",
                     "details": {"fields": fields},
                     "retryable": False,
                     "request_id": request.state.request_id,
@@ -104,6 +134,7 @@ def create_app(settings: Settings | None = None, service: ModelService | None = 
     app.include_router(health.router)
     app.include_router(models.router)
     app.include_router(inference.router)
+    app.include_router(traces.router)
     return app
 
 

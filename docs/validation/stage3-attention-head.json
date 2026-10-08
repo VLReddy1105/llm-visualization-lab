@@ -1,0 +1,748 @@
+{
+  "trace_id": "16ae9419-b56d-4849-a100-a069a2a4c8c0",
+  "layer_index": 12,
+  "head_index": 4,
+  "kv_head_index": 2,
+  "components": [
+    {
+      "component_id": "layer[12].attention.weights",
+      "tensor_id": "tensor-14",
+      "axes": [
+        "batch",
+        "query_head",
+        "query_token",
+        "key_token"
+      ],
+      "logical_shape": [
+        1,
+        16,
+        5,
+        5
+      ],
+      "storage_shape": [
+        1,
+        16,
+        5,
+        5
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "query_head": {
+          "count": 16,
+          "start": 0,
+          "stop": 16,
+          "step": 1
+        },
+        "query_token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "key_token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 400,
+      "byte_size": 1600,
+      "provenance": "raw",
+      "sources": [],
+      "method": "actual eager attention weights from Qwen3Attention; HF output_attentions remains False",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 400,
+        "nonfinite_count": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "mean": 0.20000000298023224,
+        "std": 0.3493971526622772,
+        "l2_norm": 8.05179214477539,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 400,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].attention.query.rotary",
+      "tensor_id": "tensor-27",
+      "axes": [
+        "batch",
+        "query_head",
+        "query_token",
+        "head_dimension"
+      ],
+      "logical_shape": [
+        1,
+        16,
+        5,
+        128
+      ],
+      "storage_shape": [
+        1,
+        16,
+        5,
+        128
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "query_head": {
+          "count": 16,
+          "start": 0,
+          "stop": 16,
+          "step": 1
+        },
+        "query_token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "head_dimension": {
+          "count": 128,
+          "start": 0,
+          "stop": 128,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps",
+      "storage_device": "cpu",
+      "numel": 10240,
+      "byte_size": 40960,
+      "provenance": "reconstructed",
+      "sources": [
+        "layer[12].attention.query.normalized",
+        "position.rotary_cos",
+        "position.rotary_sin"
+      ],
+      "method": "installed Qwen3 RoPE/GQA/scale/mask/float32 softmax/value-mixing recipe; reconstructed rather than observed",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 10240,
+        "nonfinite_count": 0,
+        "min": -7.173344612121582,
+        "max": 7.7636399269104,
+        "mean": -0.007724907249212265,
+        "std": 1.276456356048584,
+        "l2_norm": 129.17059326171875,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 10240,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].attention.key.rotary",
+      "tensor_id": "tensor-28",
+      "axes": [
+        "batch",
+        "kv_head",
+        "key_token",
+        "head_dimension"
+      ],
+      "logical_shape": [
+        1,
+        8,
+        5,
+        128
+      ],
+      "storage_shape": [
+        1,
+        8,
+        5,
+        128
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "kv_head": {
+          "count": 8,
+          "start": 0,
+          "stop": 8,
+          "step": 1
+        },
+        "key_token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "head_dimension": {
+          "count": 128,
+          "start": 0,
+          "stop": 128,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "reconstructed",
+      "sources": [
+        "layer[12].attention.key.normalized",
+        "position.rotary_cos",
+        "position.rotary_sin"
+      ],
+      "method": "installed Qwen3 RoPE/GQA/scale/mask/float32 softmax/value-mixing recipe; reconstructed rather than observed",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -43.38972473144531,
+        "max": 40.38455581665039,
+        "mean": 0.009947058744728565,
+        "std": 3.118488073348999,
+        "l2_norm": 223.14198303222656,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].attention.value",
+      "tensor_id": "tensor-11",
+      "axes": [
+        "batch",
+        "kv_head",
+        "key_token",
+        "head_dimension"
+      ],
+      "logical_shape": [
+        1,
+        8,
+        5,
+        128
+      ],
+      "storage_shape": [
+        1,
+        8,
+        5,
+        128
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "kv_head": {
+          "count": 8,
+          "start": 0,
+          "stop": 8,
+          "step": 1
+        },
+        "key_token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "head_dimension": {
+          "count": 128,
+          "start": 0,
+          "stop": 128,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "raw",
+      "sources": [],
+      "method": "actual module boundary observed through a run-scoped PyTorch hook",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -6.806597709655762,
+        "max": 5.077622413635254,
+        "mean": -0.006120363250374794,
+        "std": 0.8030890226364136,
+        "l2_norm": 57.466033935546875,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    }
+  ],
+  "weights": {
+    "trace_id": "16ae9419-b56d-4849-a100-a069a2a4c8c0",
+    "tensor_id": "tensor-14",
+    "component_id": "layer[12].attention.weights",
+    "provenance": "raw",
+    "sources": [],
+    "method": "actual eager attention weights from Qwen3Attention; HF output_attentions remains False",
+    "axes": [
+      "batch",
+      "query_head",
+      "query_token",
+      "key_token"
+    ],
+    "logical_shape": [
+      1,
+      16,
+      5,
+      5
+    ],
+    "shape": [
+      1,
+      1,
+      1,
+      5
+    ],
+    "coordinates": {
+      "batch": {
+        "count": 1,
+        "start": 0,
+        "stop": 1,
+        "step": 1
+      },
+      "query_head": {
+        "count": 1,
+        "start": 4,
+        "stop": 5,
+        "step": 1
+      },
+      "query_token": {
+        "count": 1,
+        "start": 3,
+        "stop": 4,
+        "step": 1
+      },
+      "key_token": {
+        "count": 5,
+        "start": 0,
+        "stop": 5,
+        "step": 1
+      }
+    },
+    "selectors": {
+      "batch": {
+        "index": 0
+      },
+      "query_head": {
+        "index": 4
+      },
+      "query_token": {
+        "index": 3
+      }
+    },
+    "dtype": "float32",
+    "storage_dtype": "float32",
+    "wire_dtype": "json_number",
+    "values": [
+      0.582353413105011,
+      0.12414347380399704,
+      0.07568511366844177,
+      0.21781790256500244,
+      0.0
+    ],
+    "nonfinite": [],
+    "masked_flat_indices": []
+  },
+  "query": {
+    "trace_id": "16ae9419-b56d-4849-a100-a069a2a4c8c0",
+    "tensor_id": "tensor-27",
+    "component_id": "layer[12].attention.query.rotary",
+    "provenance": "reconstructed",
+    "sources": [
+      "layer[12].attention.query.normalized",
+      "position.rotary_cos",
+      "position.rotary_sin"
+    ],
+    "method": "installed Qwen3 RoPE/GQA/scale/mask/float32 softmax/value-mixing recipe; reconstructed rather than observed",
+    "axes": [
+      "batch",
+      "query_head",
+      "query_token",
+      "head_dimension"
+    ],
+    "logical_shape": [
+      1,
+      16,
+      5,
+      128
+    ],
+    "shape": [
+      1,
+      1,
+      1,
+      128
+    ],
+    "coordinates": {
+      "batch": {
+        "count": 1,
+        "start": 0,
+        "stop": 1,
+        "step": 1
+      },
+      "query_head": {
+        "count": 1,
+        "start": 4,
+        "stop": 5,
+        "step": 1
+      },
+      "query_token": {
+        "count": 1,
+        "start": 3,
+        "stop": 4,
+        "step": 1
+      },
+      "head_dimension": {
+        "count": 128,
+        "start": 0,
+        "stop": 128,
+        "step": 1
+      }
+    },
+    "selectors": {
+      "batch": {
+        "index": 0
+      },
+      "query_head": {
+        "index": 4
+      },
+      "query_token": {
+        "index": 3
+      }
+    },
+    "dtype": "float32",
+    "storage_dtype": "float32",
+    "wire_dtype": "json_number",
+    "values": [
+      -1.021414875984192,
+      2.020597457885742,
+      -1.2244054079055786,
+      0.35644498467445374,
+      1.11822509765625,
+      -0.9075999855995178,
+      0.52580726146698,
+      0.8266093730926514,
+      0.7941858172416687,
+      -1.0323874950408936,
+      -0.05942852795124054,
+      4.209090709686279,
+      0.693964958190918,
+      0.188567653298378,
+      -1.2643681764602661,
+      1.5588563680648804,
+      -0.626200795173645,
+      0.5521007776260376,
+      0.8230884671211243,
+      1.6068040132522583,
+      -0.1958548128604889,
+      -0.261185884475708,
+      1.4694737195968628,
+      -0.2742801010608673,
+      0.17466600239276886,
+      -1.3441716432571411,
+      0.31245115399360657,
+      0.39547133445739746,
+      -0.7373705506324768,
+      1.0944503545761108,
+      -0.6159766316413879,
+      -1.2536547183990479,
+      0.9610041379928589,
+      -0.23870521783828735,
+      -0.05458077788352966,
+      -0.5123106837272644,
+      1.6934338808059692,
+      -0.23024874925613403,
+      -3.2440500259399414,
+      -0.1896088421344757,
+      -0.03159637376666069,
+      2.0777947902679443,
+      -0.4009822905063629,
+      0.896333634853363,
+      0.8834711313247681,
+      -1.054389476776123,
+      1.051303744316101,
+      -0.1312340348958969,
+      0.44735684990882874,
+      0.006501316092908382,
+      -0.08788587152957916,
+      -0.5585053563117981,
+      -1.853525996208191,
+      -0.7623923420906067,
+      -0.2319735437631607,
+      -0.6682195067405701,
+      -1.8854715824127197,
+      -0.24085572361946106,
+      0.05031406134366989,
+      0.7441467046737671,
+      -0.64171302318573,
+      -0.9682401418685913,
+      0.7680053114891052,
+      0.5296252369880676,
+      0.17396362125873566,
+      -2.4867959022521973,
+      2.495035171508789,
+      0.9320144653320312,
+      -0.3608526885509491,
+      -1.3335670232772827,
+      0.9156186580657959,
+      2.3743066787719727,
+      0.2451951950788498,
+      -0.8229124546051025,
+      -0.4358910918235779,
+      0.6124829053878784,
+      0.8124266862869263,
+      0.12904691696166992,
+      -3.6300203800201416,
+      0.5618375539779663,
+      0.8704427480697632,
+      0.04877004772424698,
+      -0.15155161917209625,
+      2.4889578819274902,
+      -0.32459765672683716,
+      -0.014720389619469643,
+      -1.0303298234939575,
+      1.237184762954712,
+      1.0073611736297607,
+      0.9078363180160522,
+      -1.7637865543365479,
+      -0.41463175415992737,
+      0.6093037724494934,
+      0.2842579185962677,
+      4.477275371551514,
+      -0.31312426924705505,
+      -0.26471275091171265,
+      0.11586133390665054,
+      -0.07018552720546722,
+      -2.4464144706726074,
+      0.18920980393886566,
+      0.7909213900566101,
+      0.9706249237060547,
+      1.3197636604309082,
+      0.3984222412109375,
+      1.9758256673812866,
+      -0.08994898200035095,
+      0.18382874131202698,
+      -0.2239082157611847,
+      -1.0643036365509033,
+      0.18540455400943756,
+      1.2018457651138306,
+      -1.5832593441009521,
+      2.2963767051696777,
+      -0.39468538761138916,
+      -0.10352753102779388,
+      0.2739993631839752,
+      0.7447575926780701,
+      -0.5659300684928894,
+      -0.28071650862693787,
+      -0.603804349899292,
+      0.5487488508224487,
+      -2.7077033519744873,
+      1.3896441459655762,
+      -0.2646383047103882,
+      0.1935797482728958,
+      1.8403552770614624,
+      -0.15268678963184357
+    ],
+    "nonfinite": [],
+    "masked_flat_indices": []
+  },
+  "validation": {
+    "layer[12].residual.attention": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].residual.mlp": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].layer_output": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.rmsnorm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].query_norm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].key_norm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.weights": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.head_output": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.row_normalization": {
+      "passed": true,
+      "max_absolute_error": 1.1082738637924194e-07,
+      "absolute_tolerance": 1e-05,
+      "scope": "full key rows for selected query heads and absolute query positions"
+    },
+    "layer[12].attention.causal_mask": {
+      "passed": true,
+      "masked_count": 160,
+      "max_masked_weight": 0.0,
+      "absolute_tolerance": 0.0
+    },
+    "layer[12].attention.actual_mask": {
+      "passed": true,
+      "mask_sentinel": -3.4028234663852886e+38,
+      "mask_kind": "actual unpadded causal additive mask with finite dtype minimum"
+    },
+    "layer[12].mlp.rmsnorm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].mlp.activation": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].mlp.gated": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].mlp.down_projection": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    }
+  }
+}

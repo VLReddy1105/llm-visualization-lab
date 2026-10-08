@@ -1,0 +1,502 @@
+{
+  "trace_id": "16ae9419-b56d-4849-a100-a069a2a4c8c0",
+  "layer_index": 12,
+  "kind": "residual",
+  "structure": {
+    "before": "layer[12].residual.before",
+    "attention_update": "layer[12].attention.output",
+    "after_attention": "layer[12].residual.after_attention",
+    "mlp_update": "layer[12].mlp.output",
+    "after_mlp": "layer[12].residual.after_mlp"
+  },
+  "components": [
+    {
+      "component_id": "layer[12].residual.before",
+      "tensor_id": "tensor-4",
+      "axes": [
+        "batch",
+        "token",
+        "hidden"
+      ],
+      "logical_shape": [
+        1,
+        5,
+        1024
+      ],
+      "storage_shape": [
+        1,
+        5,
+        1024
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "hidden": {
+          "count": 1024,
+          "start": 0,
+          "stop": 1024,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "raw",
+      "sources": [
+        "layer[11].residual.after_mlp"
+      ],
+      "method": "actual decoder input; verified exact alias of embedding/previous decoder output",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -159.6315460205078,
+        "max": 6524.39892578125,
+        "mean": 1.4783910512924194,
+        "std": 91.87017822265625,
+        "l2_norm": 6574.5224609375,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].attention.output",
+      "tensor_id": "tensor-13",
+      "axes": [
+        "batch",
+        "token",
+        "hidden"
+      ],
+      "logical_shape": [
+        1,
+        5,
+        1024
+      ],
+      "storage_shape": [
+        1,
+        5,
+        1024
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "hidden": {
+          "count": 1024,
+          "start": 0,
+          "stop": 1024,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "raw",
+      "sources": [],
+      "method": "actual module boundary observed through a run-scoped PyTorch hook",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -2.217583179473877,
+        "max": 0.9940972328186035,
+        "mean": 0.0030387602746486664,
+        "std": 0.18957160413265228,
+        "l2_norm": 13.566383361816406,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].residual.after_attention",
+      "tensor_id": "tensor-15",
+      "axes": [
+        "batch",
+        "token",
+        "hidden"
+      ],
+      "logical_shape": [
+        1,
+        5,
+        1024
+      ],
+      "storage_shape": [
+        1,
+        5,
+        1024
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "hidden": {
+          "count": 1024,
+          "start": 0,
+          "stop": 1024,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "raw",
+      "sources": [],
+      "method": "actual module boundary observed through a run-scoped PyTorch hook",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -160.07928466796875,
+        "max": 6522.18115234375,
+        "mean": 1.4814295768737793,
+        "std": 91.84009552001953,
+        "l2_norm": 6572.375,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].mlp.output",
+      "tensor_id": "tensor-21",
+      "axes": [
+        "batch",
+        "token",
+        "hidden"
+      ],
+      "logical_shape": [
+        1,
+        5,
+        1024
+      ],
+      "storage_shape": [
+        1,
+        5,
+        1024
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "hidden": {
+          "count": 1024,
+          "start": 0,
+          "stop": 1024,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "raw",
+      "sources": [],
+      "method": "actual module boundary observed through a run-scoped PyTorch hook",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -1.514047622680664,
+        "max": 7.6002349853515625,
+        "mean": 0.0021345880813896656,
+        "std": 0.3656996786594391,
+        "l2_norm": 26.16777992248535,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    },
+    {
+      "component_id": "layer[12].residual.after_mlp",
+      "tensor_id": "tensor-22",
+      "axes": [
+        "batch",
+        "token",
+        "hidden"
+      ],
+      "logical_shape": [
+        1,
+        5,
+        1024
+      ],
+      "storage_shape": [
+        1,
+        5,
+        1024
+      ],
+      "coverage": {
+        "batch": {
+          "count": 1,
+          "start": 0,
+          "stop": 1,
+          "step": 1
+        },
+        "token": {
+          "count": 5,
+          "start": 0,
+          "stop": 5,
+          "step": 1
+        },
+        "hidden": {
+          "count": 1024,
+          "start": 0,
+          "stop": 1024,
+          "step": 1
+        }
+      },
+      "dtype": "float32",
+      "storage_dtype": "float32",
+      "original_device": "mps:0",
+      "storage_device": "cpu",
+      "numel": 5120,
+      "byte_size": 20480,
+      "provenance": "raw",
+      "sources": [],
+      "method": "actual module boundary observed through a run-scoped PyTorch hook",
+      "availability": "captured",
+      "raw_available": true,
+      "unavailable_reason": null,
+      "statistics": {
+        "finite_count": 5120,
+        "nonfinite_count": 0,
+        "min": -160.09967041015625,
+        "max": 6522.06005859375,
+        "mean": 1.4835643768310547,
+        "std": 91.84010314941406,
+        "l2_norm": 6572.38232421875,
+        "accumulation_dtype": "float32",
+        "value_kind": "summary",
+        "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+        "masked_count": 0,
+        "total_count": 5120,
+        "finite": true,
+        "undefined_fields": []
+      }
+    }
+  ],
+  "validation": {
+    "layer[12].residual.attention": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].residual.mlp": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].layer_output": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.rmsnorm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].query_norm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].key_norm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.weights": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.head_output": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.row_normalization": {
+      "passed": true,
+      "max_absolute_error": 1.1082738637924194e-07,
+      "absolute_tolerance": 1e-05,
+      "scope": "full key rows for selected query heads and absolute query positions"
+    },
+    "layer[12].attention.causal_mask": {
+      "passed": true,
+      "masked_count": 160,
+      "max_masked_weight": 0.0,
+      "absolute_tolerance": 0.0
+    },
+    "layer[12].attention.actual_mask": {
+      "passed": true,
+      "mask_sentinel": -3.4028234663852886e+38,
+      "mask_kind": "actual unpadded causal additive mask with finite dtype minimum"
+    },
+    "layer[12].mlp.rmsnorm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].mlp.activation": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].mlp.gated": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].mlp.down_projection": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "relative_l2_error": 0.0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    }
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "trace_id": "16ae9419-b56d-4849-a100-a069a2a4c8c0",
+  "status": "ready",
+  "created_at": "2026-10-08T08:41:04.130827+00:00",
+  "last_access_at": "2026-10-08T08:41:04.500902+00:00",
+  "completed_at": "2026-10-08T08:41:04.471370+00:00",
+  "expires_at": "2026-10-08T09:11:04.471393+00:00",
+  "retained_bytes": 1970124,
+  "reserved_bytes": 0,
+  "error": null,
+  "metadata": {
+    "model_id": "qwen3-0.6b",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "sequence_length": 5,
+    "capture_profile": "deep",
+    "detail_layers": [
+      12
+    ]
+  },
+  "schema_version": "1.0.0",
+  "overview": {
+    "model": {
+      "model_id": "qwen3-0.6b",
+      "hf_model_id": "Qwen/Qwen3-0.6B",
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "device": "mps",
+      "dtype": "float32",
+      "architecture": {
+        "layers": 28,
+        "hidden_size": 1024,
+        "intermediate_size": 3072,
+        "query_heads": 16,
+        "kv_heads": 8,
+        "head_dim": 128,
+        "vocabulary_size": 151936,
+        "rms_norm_epsilon": 1e-06,
+        "rope_theta": 1000000.0,
+        "tied_embeddings": true,
+        "attention_dropout": 0.0,
+        "attention_backend": "eager",
+        "config_digest": "7870eed078fc404f7c0621149c22cb265a52664129662bb5519eaaf4ef1809d3",
+        "implementation_digest": "ca9535e36ea4e689c76d7d753b91aec9ea00da837fbf223c8ea4c01a3b50cac0",
+        "adapter_id": "qwen3",
+        "adapter_version": "1.0.0"
+      }
+    },
+    "input": {
+      "text": "The capital of Germany is",
+      "mode": "raw",
+      "add_special_tokens": false,
+      "sequence_length": 5,
+      "tokens": {
+        "items": [
+          {
+            "token_index": 0,
+            "token_id": 785,
+            "tokenizer_piece": "The",
+            "decoded_token": "The",
+            "position_id": 0,
+            "is_special": false,
+            "character_start": 0,
+            "character_end": 3,
+            "origin": "user"
+          },
+          {
+            "token_index": 1,
+            "token_id": 6722,
+            "tokenizer_piece": "Ġcapital",
+            "decoded_token": " capital",
+            "position_id": 1,
+            "is_special": false,
+            "character_start": 3,
+            "character_end": 11,
+            "origin": "user"
+          },
+          {
+            "token_index": 2,
+            "token_id": 315,
+            "tokenizer_piece": "Ġof",
+            "decoded_token": " of",
+            "position_id": 2,
+            "is_special": false,
+            "character_start": 11,
+            "character_end": 14,
+            "origin": "user"
+          },
+          {
+            "token_index": 3,
+            "token_id": 9856,
+            "tokenizer_piece": "ĠGermany",
+            "decoded_token": " Germany",
+            "position_id": 3,
+            "is_special": false,
+            "character_start": 14,
+            "character_end": 22,
+            "origin": "user"
+          },
+          {
+            "token_index": 4,
+            "token_id": 374,
+            "tokenizer_piece": "Ġis",
+            "decoded_token": " is",
+            "position_id": 4,
+            "is_special": false,
+            "character_start": 22,
+            "character_end": 25,
+            "origin": "user"
+          }
+        ],
+        "total": 5,
+        "next_cursor": null
+      }
+    },
+    "capture": {
+      "profile": "deep",
+      "layers": [
+        12
+      ],
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "query_heads": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "raw_tensors": true,
+      "statistics": true,
+      "max_bytes": 268435456
+    },
+    "summary": {
+      "layer_count": 28,
+      "retained_bytes": 1970124,
+      "estimated_bytes": 2031564,
+      "transient_estimated_bytes": 34471104,
+      "duration_ms": 224.21675000805408,
+      "forward_duration_ms": 161.4808749873191,
+      "retention_policy": "ttl_or_capacity"
+    },
+    "prediction": {
+      "prediction_position": 4,
+      "next_position": 5,
+      "vocabulary_size": 151936,
+      "normalization": "full vocabulary; Stage 1 CPU float64 softmax, stored float32 probabilities",
+      "top_k": [
+        {
+          "rank": 1,
+          "token_id": 19846,
+          "tokenizer_piece": "ĠBerlin",
+          "decoded_token": " Berlin",
+          "raw_logit": 16.52149200439453,
+          "probability": 0.47704339027404785
+        },
+        {
+          "rank": 2,
+          "token_id": 7407,
+          "tokenizer_piece": "Ġlocated",
+          "decoded_token": " located",
+          "raw_logit": 14.624664306640625,
+          "probability": 0.07157742977142334
+        },
+        {
+          "rank": 3,
+          "token_id": 32671,
+          "tokenizer_piece": "Ġ______",
+          "decoded_token": " ______",
+          "raw_logit": 14.192410469055176,
+          "probability": 0.046456944197416306
+        },
+        {
+          "rank": 4,
+          "token_id": 30743,
+          "tokenizer_piece": "Ġ____",
+          "decoded_token": " ____",
+          "raw_logit": 13.501934051513672,
+          "probability": 0.023290593177080154
+        },
+        {
+          "rank": 5,
+          "token_id": 304,
+          "tokenizer_piece": "Ġin",
+          "decoded_token": " in",
+          "raw_logit": 13.070024490356445,
+          "probability": 0.015121839009225368
+        },
+        {
+          "rank": 6,
+          "token_id": 220,
+          "tokenizer_piece": "Ġ",
+          "decoded_token": " ",
+          "raw_logit": 13.063224792480469,
+          "probability": 0.015019363723695278
+        },
+        {
+          "rank": 7,
+          "token_id": 320,
+          "tokenizer_piece": "Ġ(",
+          "decoded_token": " (",
+          "raw_logit": 13.024328231811523,
+          "probability": 0.014446377754211426
+        },
+        {
+          "rank": 8,
+          "token_id": 264,
+          "tokenizer_piece": "Ġa",
+          "decoded_token": " a",
+          "raw_logit": 12.992985725402832,
+          "probability": 0.014000614173710346
+        },
+        {
+          "rank": 9,
+          "token_id": 825,
+          "tokenizer_piece": "Ġone",
+          "decoded_token": " one",
+          "raw_logit": 12.930341720581055,
+          "probability": 0.013150465674698353
+        },
+        {
+          "rank": 10,
+          "token_id": 279,
+          "tokenizer_piece": "Ġthe",
+          "decoded_token": " the",
+          "raw_logit": 12.914087295532227,
+          "probability": 0.012938440777361393
+        }
+      ],
+      "omitted_probability_mass": 0.2969545414671302
+    },
+    "available": {
+      "layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "attention_layers": [
+        12
+      ],
+      "mlp_layers": [
+        12
+      ],
+      "component_count": 199,
+      "raw_component_count": 37,
+      "components_url": "/api/v1/traces/16ae9419-b56d-4849-a100-a069a2a4c8c0/components"
+    },
+    "provenance": {
+      "raw": 191,
+      "reconstructed": 4,
+      "derived": 4
+    },
+    "validation": {
+      "counts": {
+        "passed": 100
+      },
+      "failed": [],
+      "scope": "existing Stage 2 checks; HTTP does not recompute scientific gates"
+    },
+    "warnings": [],
+    "runtime": {
+      "python_version": "3.11.15",
+      "torch_version": "2.14.1",
+      "transformers_version": "5.19.0",
+      "platform": "macOS-26.6.1-arm64-arm-64bit",
+      "tracing_enabled": true,
+      "attention_backend": "eager",
+      "eval_mode": true,
+      "use_cache": false,
+      "output_hidden_states": false,
+      "output_attentions": false,
+      "logits_to_keep": 1,
+      "forward_count": 1,
+      "sampling": false,
+      "snapshot_device": "cpu",
+      "peak_extra_tensor_estimated_bytes": 36502668,
+      "budget_bytes": 268435456,
+      "unrequested_detail": "unavailable; omitted by capture profile",
+      "statistics": "float32, finite unmasked retained coordinates, population std"
+    },
+    "links": {
+      "tokens": "/api/v1/traces/16ae9419-b56d-4849-a100-a069a2a4c8c0/tokens",
+      "layers": "/api/v1/traces/16ae9419-b56d-4849-a100-a069a2a4c8c0/layers",
+      "components": "/api/v1/traces/16ae9419-b56d-4849-a100-a069a2a4c8c0/components",
+      "logits": "/api/v1/traces/16ae9419-b56d-4849-a100-a069a2a4c8c0/logits"
+    }
+  }
+}
