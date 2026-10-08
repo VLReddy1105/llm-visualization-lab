@@ -1,6 +1,6 @@
 # System architecture
 
-Status: Stage 0 blueprint, with Stage 1 foundation implemented. The root README and Stage 1 report identify existing modules; trace/adaptor/store/view paths below remain future work.
+Status: Stage 0 blueprint with Stage 1 inference and Stage 2 in-process adapters/tracing implemented. The [Stage 2 report](validation/STAGE_2_REPORT.md) identifies measured evidence. Store, trace HTTP and visualization paths below remain future work.
 
 ## Decisions and boundaries
 
@@ -247,6 +247,8 @@ For full attention weights, bytes = `L * Hq * N² * bytes_per_element`, batch 1.
 Eager execution may materialize full scores even when only selected heads are retained. Retention selection alone does not reduce its peak N² allocation. Avoid requesting all `output_attentions` when per-layer streaming capture suffices. Full-position logits cost `N * V * bytes`; at N=512 and float32 this is about 296.75 MiB. Keep last-position vocabulary logits by default and derive other positions on demand from retained final normalized states while the matching weights are available. Ordinary inference should request only necessary logits where the installed release permits it.
 
 Proposed initial configurable limits: 128 input tokens by default, a hard initial trace limit of 512, 256 MiB retained bytes per trace, 512 MiB total retained trace bytes, 30-minute trace TTL, 65,536 elements per slice, and 1 MiB uncompressed JSON per response. These are policy starting points to calibrate against Stage 2 measurements, not hardware promises. Capture plans exceeding estimated budgets fail before execution with a smaller-plan suggestion. Do not silently truncate inputs or lower capture coverage.
+
+Stage 2 applies the existing prompt limit and a 256 MiB default capture cap (`LLM_LAB_TRACE_MAX_BYTES`, configurable up to 1 GiB). It rejects a conservative extra-tensor peak estimate before registering any observer: estimated retained snapshots plus temporary capture/reconstruction/statistics work. The temporary estimate allows sixteen copies of selected operands, increased for a larger GQA grouping ratio. This includes float64 audit scratch and alias overestimation; it is a bound for instrumentation tensors, not model weights, the backend allocator or exact process RSS. Actual retained bytes count unique owned CPU storage. Summary releases per-layer temporary snapshots immediately after residual reconciliation. Selected detailed states survive only through reconstruction and validation, then the run releases its workspace. There is no Trace Store or aggregate trace/TTL policy yet.
 
 Detailed Q/K/V variants and four MLP intermediates scale with sequence length and layers and can exceed attention storage for short prompts. GPU-to-CPU copies can synchronize execution; repeated tiny hooks add latency. Record capture overhead and peak accelerator/host memory separately. A browser must virtualize long layer/token lists and use Canvas for dense heatmaps rather than one React element per cell.
 

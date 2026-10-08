@@ -1,6 +1,6 @@
 # Implementation stages
 
-Status: **Stage 1 implemented and exercised with real Qwen inference.** The [Stage 1 report](validation/STAGE_1_REPORT.md) records actual completion checks. Stage 2 and subsequent modules, APIs and tests below remain planned; documenting them does not authorize implementation or imply validation.
+Status: **Stage 2 — PASS on CPU and Apple MPS float32.** The [Stage 1 report](validation/STAGE_1_REPORT.md) preserves the trusted inference baseline. Stage 2's [completion report](validation/STAGE_2_REPORT.md) records 137 passing tests per device and real trace evidence. Stage 3 and subsequent APIs, storage and visualizations below remain planned; documenting them does not authorize implementation.
 
 ## Stage execution rules
 
@@ -61,6 +61,8 @@ The dependency chain is Stage 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 
 6. Run numerical tests and record capture overhead and peak host/accelerator memory for bounded prompts. Establish a version/device/dtype compatibility report.
 
 **Expected files/modules:** `models/adapters/base.py`, `qwen3.py`, `registry.py`; `schemas/trace.py`, `schemas/components.py`; `tracing/engine.py`, `collector.py`, `capture_plan.py`, `instrumentation.py`, `provenance.py`; `analysis/metrics.py`, `analysis/attention.py`; `tests/test_trace_equivalence.py`, `test_qwen3_shapes.py`, `test_residual_reconciliation.py`, `test_instrumentation_cleanup.py`, `test_capture_budget.py`.
+
+Implemented placement: provenance is carried by `ComponentSpec`, `TensorDescriptor` and `TraceMetadata`; finite population reductions live in `tracing/collector.py`, and scalar numerical comparisons/reconstruction gates live in `tracing/validation.py`. The reusable command is `python -m llm_lab.trace_validation`. These concrete module boundaries replace separate planned `provenance.py`/`metrics.py` files without changing their responsibilities.
 
 **Test criteria:** Trace output matches matched untraced HF inference; every declared Q/K/V axis agrees with config; GQA head mapping is correct; Q/K normalization precedes RoPE; residual and gated MLP equations reconcile; attention rows/masks/head output reconcile; final pre-norm and normalized states are distinct; handles/wrappers are restored on failure and repeat execution; captured arrays do not retain device storage/graphs or mutable aliases. No inference observer consumes RNG. Unrequested/unsupported data reports the correct availability.
 

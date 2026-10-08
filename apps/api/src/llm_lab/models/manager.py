@@ -14,6 +14,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from llm_lab.config import HF_MODEL_ID, Settings
 from llm_lab.errors import ServiceError
+from llm_lab.models.adapters import create_adapter
 from llm_lab.models.baseline import BaselineResult, direct_hf_baseline
 from llm_lab.models.devices import DeviceSelection, select_device, synchronize
 from llm_lab.schemas.inference import (
@@ -60,6 +61,7 @@ class ModelService:
         self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="llm-model")
         self._model = None
         self._tokenizer = None
+        self._adapter = None
         self._selection: DeviceSelection | None = None
         self._load_future: Future | None = None
         self._load_options: tuple[str, str] | None = None
@@ -99,6 +101,36 @@ class ModelService:
                 raise
 
             def finished(_future):
+                if not _future.cancelled():
+                    exception = _future.exception()
+                    seen = set()
+                    pending = [exception] if exception is not None else []
+                    while pending:
+                        failure = pending.pop()
+                        if id(failure) in seen:
+                            continue
+                        seen.add(id(failure))
+                        if failure.__traceback__ is not None:
+                            origin = "".join(
+                                traceback.format_list(
+                                    traceback.extract_tb(failure.__traceback__, limit=-8)
+                                )
+                            )
+                            failure.add_note(
+                                "Worker origin (frame references released):\n" + origin
+                            )
+                        # Now all model/trace frames have unwound. A retained
+                        # failed Future must not retain their weights/snapshots.
+                        traceback.clear_frames(failure.__traceback__)
+                        # CPython 3.11 cleared frames can still own closure
+                        # cells. Drop the worker traceback itself, preserving
+                        # exception type, message and causal chain.
+                        failure.__traceback__ = None
+                        pending.extend(
+                            linked
+                            for linked in (failure.__cause__, failure.__context__)
+                            if linked is not None
+                        )
                 with self._state_lock:
                     self._status.pending_operations -= 1
                     self._slots.release()
@@ -184,6 +216,7 @@ class ModelService:
                     raise RuntimeError("Model smoke check returned non-finite logits")
             synchronize(selection.device)
             self._model, self._tokenizer, self._selection = model, tokenizer, selection
+            self._adapter = create_adapter(model, tokenizer, revision, selection.device)
             self._update(
                 state="ready",
                 resolved_revision=revision,
@@ -194,7 +227,7 @@ class ModelService:
         except Exception as exc:
             logger.exception("Model loading failed")
             code = exc.code if isinstance(exc, ServiceError) else "MODEL_LOAD_FAILED"
-            self._model = self._tokenizer = self._selection = None
+            self._model = self._tokenizer = self._selection = self._adapter = None
             # A failed Future retains its exception. Drop partially loaded
             # weights and clear unwound frames before retaining the safe error.
             model = tokenizer = result = encoded = None
@@ -235,6 +268,21 @@ class ModelService:
         self._require_ready()
         return self._submit(self._compute, text, top_k, str(uuid4()))
 
+    @property
+    def adapter(self):
+        self._require_ready()
+        return self._adapter
+
+    def trace(self, text: str, plan=None, top_k: int = 10) -> Future:
+        """In-process Stage2 result, serialized with ordinary inference; no store."""
+        self._require_ready()
+        return self._submit(self._trace, text, plan, top_k)
+
+    def _trace(self, text, plan, top_k):
+        from llm_lab.tracing.engine import TraceEngine
+
+        return TraceEngine(self.adapter, self.settings).run(text, plan, top_k, self._compute)
+
     def reference_baseline(self, text: str) -> Future:
         self._require_ready()
         return self._submit(self._reference, text)
@@ -257,7 +305,7 @@ class ModelService:
         assert self._selection is not None
         started = time.perf_counter()
         try:
-            encoded = self._tokenizer(
+            encoded = self._adapter.tokenize(
                 text,
                 add_special_tokens=False,
                 return_tensors="pt",
@@ -280,13 +328,9 @@ class ModelService:
             synchronize(self._selection.device)
             forward_started = time.perf_counter()
             with torch.inference_mode():
-                output = self._model(
+                output = self._adapter.forward(
                     **inputs,
                     logits_to_keep=1,
-                    use_cache=False,
-                    output_hidden_states=False,
-                    output_attentions=False,
-                    return_dict=True,
                 )
                 logits_device = output.logits[0, -1].float()
                 if not bool(torch.isfinite(logits_device).all().item()):
@@ -392,6 +436,6 @@ class ModelService:
             self._closed = True
         self._executor.shutdown(wait=True, cancel_futures=True)
         self._load_future = None
-        self._model = self._tokenizer = self._selection = None
+        self._model = self._tokenizer = self._selection = self._adapter = None
         self._update(state="unloaded", device=None, dtype=None, resolved_revision=None)
         gc.collect()

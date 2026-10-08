@@ -65,7 +65,7 @@ def test_chat_and_special_token_insertion_rejected(client):
         assert client.post("/api/v1/inference", json={"input": body}).status_code == 422
 
 
-def test_no_trace_routes_or_instrumentation():
+def test_no_trace_routes_and_only_scoped_instrumentation():
     schema = create_app(Settings(auto_load=False)).openapi()
     assert set(schema["paths"]) == {
         "/api/v1/health",
@@ -85,8 +85,10 @@ def test_no_trace_routes_or_instrumentation():
     for file in source.rglob("*.py"):
         for node in ast.walk(ast.parse(file.read_text())):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
-                assert node.func.attr not in forbidden, file
-    assert not (source / "tracing").exists()
+                if file == source / "tracing" / "instrumentation.py":
+                    assert node.func.attr not in {"generate", "register_backward_hook"}, file
+                else:
+                    assert node.func.attr not in forbidden, file
 
 
 def test_cors_local_only(client):

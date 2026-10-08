@@ -1,6 +1,6 @@
 # Scientific validation
 
-Status: Stage 1 output/tokenization/baseline gates have been exercised on actual Qwen weights using CPU and Apple MPS float32. See [the completion report](validation/STAGE_1_REPORT.md) and the recorded [MPS](validation/stage1-smoke.json) / [CPU](validation/stage1-smoke-cpu.json) evidence. Internal capture and all later scientific gates remain unimplemented and unverified. This document defines their required evidence.
+Status: Stage 1 output/tokenization/baseline gates and Stage 2 internal capture gates have been exercised on actual pinned Qwen weights using CPU and Apple MPS float32. See the preserved [Stage 1 report](validation/STAGE_1_REPORT.md) and the [Stage 2 report](validation/STAGE_2_REPORT.md) for measured outcomes. Store/API, generation, visualization and intervention gates remain later-stage requirements.
 
 ## Reference experiment and compatibility record
 

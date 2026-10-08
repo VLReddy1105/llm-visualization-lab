@@ -1,6 +1,6 @@
 # Trace design
 
-Status: Stage 0 specification. Schema version planned: `1.0.0`. This document defines semantic meaning; it does not contain measured model data.
+Status: Stage 0 specification with Stage 2 in-process capture implemented. HTTP schema version remains planned: `1.0.0`. Measured evidence belongs in the [Stage 2 report](validation/STAGE_2_REPORT.md).
 
 ## Trace identity and invariants
 
@@ -33,13 +33,14 @@ Classification dimensions are independent. A tensor may be RAW, OPTIONAL, and EX
 | --- | --- | --- |
 | RAW | Observed from the actual forward computation, possibly exposed through a reshape/view | `value_kind: raw`, capture point and execution provenance |
 | DERIVED | Computed from retained operands using a specified method | `value_kind: derived`, method/version/parameters and source components |
+| RECONSTRUCTED | Recreated at a functional model boundary using observed inputs and the installed model recipe | `value_kind: reconstructed`, sources, execution device/dtype, method and comparison with observed downstream values |
 | SUMMARY | Reduced statistics, histogram, or ranked selection over a specified source scope | `value_kind: summary`, axes and reduction definition |
 | OPTIONAL | Adapter/backend/profile may omit it | `optional: true`, support and capture coverage |
 | EXPENSIVE | Materialization, storage, or analysis is significant | `cost_class: expensive`, estimate and limits |
 
 Interpretation adds `evidence_type`: `observation`, `descriptive_metric`, `projection`, `interpretability_method`, or `controlled_intervention`. A projected point is DERIVED with projection evidence, not a RAW hidden state. A norm is SUMMARY/descriptive_metric. Captured attention weights are RAW/observation, not causal evidence.
 
-Support capability is one of `supported`, `derivable`, or `unsupported`. Per-trace availability is `captured`, `derivable`, `not_captured`, `unsupported`, or `failed`. Expiration is a trace-level lifecycle state, not a tensor filled with nulls. A summary-only component exposes its summary and `not_captured` raw availability. Missing data is never represented by an all-zero array.
+Support capability is one of `supported`, `derivable`, or `unsupported`. Planned HTTP availability is `captured`, `derivable`, `not_captured`, `unsupported`, or `failed`. Stage 2 internal descriptors use `captured`, `summary_only` (statistics available; raw storage omitted), or `unavailable` with a reason. Unrequested detailed branches are absent and recorded as omitted by the capture profile. Expiration belongs to Stage 3. Missing data is never represented by an all-zero array.
 
 An advertised derivation includes required operands and whether matching resident model weights are needed. If its prerequisites are missing, it is not available. No GET or slice request reruns inference. Expanded capture creates a new trace with explicit lineage.
 
@@ -131,15 +132,15 @@ Prefix every layer component below with `layer[i].`.
 | `attention.value` | `[B,Hkv,Nq,d]` | RAW, OPTIONAL | Newly projected values |
 | `attention.query.normalized` | `[B,Hq,Nq,d]` | RAW, OPTIONAL | Q per-head normalization where present |
 | `attention.key.normalized` | `[B,Hkv,Nq,d]` | RAW, OPTIONAL | K per-head normalization where present |
-| `attention.query.rotary` | `[B,Hq,Nq,d]` | RAW or explicitly DERIVED, OPTIONAL | Queries after actual positional transform |
-| `attention.key.rotary` | `[B,Hkv,Nq,d]` | RAW or explicitly DERIVED, OPTIONAL | Newly rotated keys |
+| `attention.query.rotary` | `[B,Hq,Nq,d]` | RECONSTRUCTED in installed Qwen3 adapter, OPTIONAL | Queries after functional positional transform, using actual cos/sin |
+| `attention.key.rotary` | `[B,Hkv,Nq,d]` | RECONSTRUCTED in installed Qwen3 adapter, OPTIONAL | Newly rotated keys using actual cos/sin |
 | `attention.key.context` | `[B,Hkv,Nk,d]` | RAW, OPTIONAL | Keys supplied to attention, including cache positions |
 | `attention.value.context` | `[B,Hkv,Nk,d]` | RAW, OPTIONAL | Values supplied to attention |
 | `attention.similarity` | `[B,Hq,Nq,Nk]` | Usually DERIVED, OPTIONAL, EXPENSIVE | Unscaled Q·K per query/KV mapping |
 | `attention.scaled_scores` | `[B,Hq,Nq,Nk]` | RAW if observed; otherwise DERIVED; EXPENSIVE | Scaled dot products before mask |
 | `attention.masked_scores` | `[B,Hq,Nq,Nk]` | RAW if observed; otherwise DERIVED; EXPENSIVE | Actual additive mask applied to scores |
 | `attention.weights` | `[B,Hq,Nq,Nk]` | RAW when observed; OPTIONAL, EXPENSIVE | Actual weights consumed by value mixing, with dropout policy |
-| `attention.weights_reconstructed` | `[B,Hq,Nq,Nk]` | DERIVED, OPTIONAL, EXPENSIVE | Recomputed weights; never relabel as captured |
+| `attention.weights_reconstructed` | `[B,Hq,Nq,Nk]` | RECONSTRUCTED, OPTIONAL, EXPENSIVE | Recomputed weights; never relabel as captured |
 | `attention.head_output` | `[B,Hq,Nq,d]` | RAW when captured through projection input | Weighted values before output projection |
 | `attention.concatenated` | `[B,Nq,Hq*d]` | RAW view/alias | Head concatenation in the model's actual order |
 | `attention.output` | `[B,Nq,D]` | RAW | Projected attention update added to residual |
@@ -186,12 +187,16 @@ The strongest signed/absolute units are descriptive coordinates, not named seman
 | `output.residual_final` | `[B,Nq,D]` | RAW, aliases final layer output |
 | `output.normalized` | `[B,Nq,D]` | RAW, actual final normalization output |
 | `output.logits` | `[B,P,V]` with explicit prediction-position map | RAW, retain last position by default; all positions EXPENSIVE |
-| `output.probabilities` | Same position/vocabulary scope | DERIVED via full-vocabulary float32 softmax, lazy |
+| `output.probabilities` | Same position/vocabulary scope | DERIVED via trusted Stage 1 CPU float64 full-vocabulary softmax, cast to float32 |
 | `output.top_candidates` | Ranked bounded vocabulary items | SUMMARY, include raw logits/probabilities, total omitted mass |
 | `output.sampling_distribution` | Position/vocabulary scope and recipe | DERIVED, separate from base probabilities |
 | `output.selected_token` | Decision metadata | Actual sampled/greedy vocabulary ID and RNG provenance when generation occurs |
 
 Logits at input position `i` predict the next position `i+1`. The final visible prompt position predicts the first generated token. A standalone forward trace can have `selected_token: null`; argmax summary is not evidence that a token was generated.
+
+Stage 2 implementation details: `output.lm_head_input` is the actual `[B,1,D]` sliced input to the LM head. Its local `prediction_position=0` maps to absolute prompt position `N-1`. Final residual and final RMSNorm output remain separate `[B,N,D]` components. `position.ids`, `position.rotary_cos`, `position.rotary_sin`, and `position.attention_mask` preserve actual execution operands. Query/head selection retains every key token in the compact mapped KV heads. `attention.concatenated` retains all head features for the selected token positions; `attention.head_output` obeys the query-head selection and shares verified CPU storage with concatenation when every head is retained.
+
+The implemented summary profile keeps final logits/probabilities and scalar statistics across all 28 layers. Overview keeps base raw states; layer/attention/MLP/deep profiles require explicit selected layers. Statistics use float32 accumulation, population standard deviation (`correction=0`), and finite entries in the recorded retained coordinate scope. Masked-score reductions exclude positions selected by the actual mask, whose sentinel is the execution dtype's finite minimum. Nonfinite counts and undefined reductions remain explicit. Exact aliases count once in retained bytes. Internal `TraceResult` access returns owned copies by default; a borrowed tensor accessor is reserved for read-only internal use.
 
 Top-k display is independent of top-k sampling. Displayed probabilities retain their full-vocabulary denominator, and omitted mass is explicit. A truncated display must not renormalize itself to 100%. Candidate text may encode to multiple IDs, especially with leading spaces. Candidate comparison accepts vocabulary IDs with visible pieces; multi-token word scoring is a separate future analysis.
 

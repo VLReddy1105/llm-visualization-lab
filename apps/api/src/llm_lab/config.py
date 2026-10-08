@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     max_input_tokens: int = Field(default=128, ge=1, le=512)
     max_prompt_characters: int = Field(default=8192, ge=1, le=32768)
     queue_capacity: int = Field(default=3, ge=1, le=3)
+    trace_max_bytes: int = Field(default=256 * 1024 * 1024, ge=1, le=1024 * 1024 * 1024)
     cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @field_validator("cors_origins")
