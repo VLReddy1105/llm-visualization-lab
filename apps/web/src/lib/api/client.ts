@@ -1,5 +1,8 @@
 import type { components } from "@llm-lab/shared/api";
 
+export type TokenMetadata = components["schemas"]["TokenMetadata"];
+export type Candidate = components["schemas"]["Candidate"];
+export type ApiPage = components["schemas"]["Page"];
 export type ModelStatus = components["schemas"]["ModelStatus"];
 export type NextTokenResponse = components["schemas"]["NextTokenResponse"];
 type HealthResponse = components["schemas"]["HealthResponse"];
@@ -22,12 +25,20 @@ type CancellationResponse = components["schemas"]["CancellationResponse"];
 type JsonSliceRequest = Omit<SliceRequest, "format"> & { format?: "json" };
 export type BinaryTensorSlice = {
   data: ArrayBuffer;
-  metadata: Omit<TensorSlice, "values" | "nonfinite" | "masked_flat_indices" | "wire_dtype"> & {
-    wire_dtype: "little_endian_float32"; nonfinite_encoding: string;
+  metadata: Omit<
+    TensorSlice,
+    "values" | "nonfinite" | "masked_flat_indices" | "wire_dtype"
+  > & {
+    wire_dtype: "little_endian_float32";
+    nonfinite_encoding: string;
   };
 };
 type PageOptions = { limit?: number; cursor?: string };
-type HeadOptions = { query_token_index?: number; include_weights?: boolean; include_query?: boolean };
+type HeadOptions = {
+  query_token_index?: number;
+  include_weights?: boolean;
+  include_query?: boolean;
+};
 type ErrorResponse = components["schemas"]["ErrorResponse"];
 
 export const apiBaseUrl = (
@@ -35,43 +46,69 @@ export const apiBaseUrl = (
 ).replace(/\/$/, "");
 
 export class ApiError extends Error {
-  constructor(message: string, public readonly code: string, public readonly status?: number,
+  constructor(
+    message: string,
+    public readonly code: string,
+    public readonly status?: number,
     public readonly details?: ErrorResponse["error"]["details"],
-    public readonly retryable = false, public readonly requestId?: string) {
+    public readonly retryable = false,
+    public readonly requestId?: string,
+  ) {
     super(message);
     this.name = "ApiError";
   }
 }
 
-async function request<T>(path: string, init?: RequestInit, timeoutMs = 15000, binary = false): Promise<T> {
+async function request<T>(
+  path: string,
+  init?: RequestInit,
+  timeoutMs = 15000,
+  binary = false,
+): Promise<T> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(`${apiBaseUrl}${path}`, {
       ...init,
-      signal: controller.signal,
+      signal: init?.signal
+        ? AbortSignal.any([controller.signal, init.signal])
+        : controller.signal,
       cache: "no-store",
     });
     if (response.status === 204) return undefined as T;
     if (response.ok && binary) {
       const header = response.headers.get("X-Tensor-Metadata");
-      if (!header) throw new ApiError("Binary slice metadata is missing.", "INVALID_RESPONSE");
-      return { data: await response.arrayBuffer(), metadata: JSON.parse(header) } as T;
+      if (!header)
+        throw new ApiError(
+          "Binary slice metadata is missing.",
+          "INVALID_RESPONSE",
+        );
+      return {
+        data: await response.arrayBuffer(),
+        metadata: JSON.parse(header),
+      } as T;
     }
     const body = await response.json();
     if (!response.ok) {
       const error = body as Partial<ErrorResponse>;
       throw new ApiError(
         error.error?.message ?? `API request failed (${response.status}).`,
-        error.error?.code ?? "API_ERROR", response.status,
-        error.error?.details, error.error?.retryable, error.error?.request_id,
+        error.error?.code ?? "API_ERROR",
+        response.status,
+        error.error?.details,
+        error.error?.retryable,
+        error.error?.request_id,
       );
     }
     return body as T;
   } catch (error) {
+    if (init?.signal?.aborted) throw error;
     if (error instanceof ApiError) throw error;
     if (error instanceof Error && error.name === "AbortError") {
-      throw new ApiError("The API request timed out. Check the backend status.", "API_TIMEOUT");
+      throw new ApiError(
+        "The API request timed out. Check the backend status.",
+        "API_TIMEOUT",
+      );
     }
     throw new ApiError(
       `Cannot reach FastAPI at ${apiBaseUrl}. Start the backend and check its CORS configuration.`,
@@ -82,7 +119,10 @@ async function request<T>(path: string, init?: RequestInit, timeoutMs = 15000, b
   }
 }
 
-function query(path: string, options: Record<string, string | number | boolean | undefined> = {}): string {
+function query(
+  path: string,
+  options: Record<string, string | number | boolean | undefined> = {},
+): string {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(options)) {
     if (value !== undefined) params.set(key, String(value));
@@ -91,66 +131,150 @@ function query(path: string, options: Record<string, string | number | boolean |
 }
 
 const tracePath = (id: string) => `/api/v1/traces/${encodeURIComponent(id)}`;
-const layerPath = (id: string, layer: number) => `${tracePath(id)}/layers/${layer}`;
+const layerPath = (id: string, layer: number) =>
+  `${tracePath(id)}/layers/${layer}`;
 const componentPath = (id: string, component: string) =>
   `${tracePath(id)}/components/${encodeURIComponent(component)}`;
 const jsonPost = (body: unknown): RequestInit => ({
-  method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
 });
 
 export const api = {
   health: () => request<HealthResponse>("/api/health"),
-  modelStatus: () => request<ModelStatus>("/api/model/status"),
-  loadModel: () => request<ModelStatus>("/api/v1/models/qwen3-0.6b/load", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ device: "auto", dtype_policy: "scientific_default", revision: null }),
-  }),
+  modelStatus: (signal?: AbortSignal) =>
+    request<ModelStatus>("/api/model/status", { signal }),
+  loadModel: () =>
+    request<ModelStatus>("/api/v1/models/qwen3-0.6b/load", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        device: "auto",
+        dtype_policy: "scientific_default",
+        revision: null,
+      }),
+    }),
   nextToken: (text: string, topK: number) => {
     const body: NextTokenRequest = {
-      model_id: "qwen3-0.6b", input: { mode: "raw", text, add_special_tokens: false }, top_k: topK,
+      model_id: "qwen3-0.6b",
+      input: { mode: "raw", text, add_special_tokens: false },
+      top_k: topK,
     };
-    return request<NextTokenResponse>("/api/inference/next-token", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    }, 120000);
+    return request<NextTokenResponse>(
+      "/api/inference/next-token",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
+      120000,
+    );
   },
-  createTrace: (body: CreateTraceRequest, wait = false) =>
-    request<TraceEnvelope>(query("/api/v1/traces", { wait }), jsonPost(body), 120000),
-  trace: (id: string, displayTopK = 10) =>
-    request<TraceEnvelope>(query(tracePath(id), { display_top_k: displayTopK })),
+  createTrace: (body: CreateTraceRequest, wait = false, signal?: AbortSignal) =>
+    request<TraceEnvelope>(
+      query("/api/v1/traces", { wait }),
+      { ...jsonPost(body), signal },
+      120000,
+    ),
+  trace: (id: string, displayTopK = 10, signal?: AbortSignal) =>
+    request<TraceEnvelope>(
+      query(tracePath(id), { display_top_k: displayTopK }),
+      { signal },
+    ),
   traceStatus: () => request<TraceStoreStatus>("/api/v1/traces/status"),
-  listTraces: (options: PageOptions = {}) => request<Page>(query("/api/v1/traces", options)),
-  traceTokens: (id: string, options: PageOptions = {}) =>
-    request<TokenPage>(query(`${tracePath(id)}/tokens`, options)),
-  traceLayers: (id: string, options: PageOptions = {}) =>
-    request<Page>(query(`${tracePath(id)}/layers`, options)),
-  traceLayer: (id: string, layer: number) => request<ComponentGroup>(layerPath(id, layer)),
+  listTraces: (options: PageOptions = {}) =>
+    request<Page>(query("/api/v1/traces", options)),
+  traceTokens: (id: string, options: PageOptions = {}, signal?: AbortSignal) =>
+    request<TokenPage>(query(`${tracePath(id)}/tokens`, options), { signal }),
+  traceLayers: (id: string, options: PageOptions = {}, signal?: AbortSignal) =>
+    request<Page>(query(`${tracePath(id)}/layers`, options), { signal }),
+  traceLayer: (id: string, layer: number, signal?: AbortSignal) =>
+    request<ComponentGroup>(layerPath(id, layer), { signal }),
   traceAttention: (id: string, layer: number) =>
     request<ComponentGroup>(`${layerPath(id, layer)}/attention`),
-  traceHead: (id: string, layer: number, head: number, options: HeadOptions = {}) =>
-    request<AttentionHead>(query(`${layerPath(id, layer)}/attention/heads/${head}`, options)),
-  traceRelation: (id: string, layer: number, head: number, queryToken: number, keyToken: number) =>
-    request<AttentionRelation>(query(`${layerPath(id, layer)}/attention/heads/${head}/relation`, {
-      query_token_index: queryToken, key_token_index: keyToken,
-    })),
-  traceMLP: (id: string, layer: number) => request<ComponentGroup>(`${layerPath(id, layer)}/mlp`),
+  traceHead: (
+    id: string,
+    layer: number,
+    head: number,
+    options: HeadOptions = {},
+  ) =>
+    request<AttentionHead>(
+      query(`${layerPath(id, layer)}/attention/heads/${head}`, options),
+    ),
+  traceRelation: (
+    id: string,
+    layer: number,
+    head: number,
+    queryToken: number,
+    keyToken: number,
+  ) =>
+    request<AttentionRelation>(
+      query(`${layerPath(id, layer)}/attention/heads/${head}/relation`, {
+        query_token_index: queryToken,
+        key_token_index: keyToken,
+      }),
+    ),
+  traceMLP: (id: string, layer: number) =>
+    request<ComponentGroup>(`${layerPath(id, layer)}/mlp`),
   traceResidual: (id: string, layer: number) =>
     request<ComponentGroup>(`${layerPath(id, layer)}/residual`),
-  traceLogits: (id: string, displayTopK = 10, tokenIndex?: number) =>
-    request<TraceLogits>(query(`${tracePath(id)}/logits`, {
-      display_top_k: displayTopK, token_index: tokenIndex,
-    })),
+  traceLogits: (
+    id: string,
+    displayTopK = 10,
+    tokenIndex?: number,
+    signal?: AbortSignal,
+  ) =>
+    request<TraceLogits>(
+      query(`${tracePath(id)}/logits`, {
+        display_top_k: displayTopK,
+        token_index: tokenIndex,
+      }),
+      { signal },
+    ),
   traceComponents: (id: string, options: PageOptions = {}) =>
     request<ComponentPage>(query(`${tracePath(id)}/components`, options)),
-  traceComponent: (id: string, component: string) => request<ComponentDescriptor>(componentPath(id, component)),
-  traceSlice: (id: string, component: string, body: JsonSliceRequest) =>
-    request<TensorSlice>(`${componentPath(id, component)}/slice`, jsonPost(body)),
+  traceComponent: (id: string, component: string, signal?: AbortSignal) =>
+    request<ComponentDescriptor>(componentPath(id, component), { signal }),
+  traceSlice: (
+    id: string,
+    component: string,
+    body: JsonSliceRequest,
+    signal?: AbortSignal,
+  ) =>
+    request<TensorSlice>(`${componentPath(id, component)}/slice`, {
+      ...jsonPost(body),
+      signal,
+    }),
   traceTensorSlice: (id: string, tensor: string, body: JsonSliceRequest) =>
-    request<TensorSlice>(`${tracePath(id)}/tensors/${encodeURIComponent(tensor)}/slice`, jsonPost(body)),
-  traceBinarySlice: (id: string, component: string, body: Omit<SliceRequest, "format">) =>
-    request<BinaryTensorSlice>(`${componentPath(id, component)}/slice`, jsonPost({ ...body, format: "binary" }), 15000, true),
-  traceBinaryTensorSlice: (id: string, tensor: string, body: Omit<SliceRequest, "format">) =>
-    request<BinaryTensorSlice>(`${tracePath(id)}/tensors/${encodeURIComponent(tensor)}/slice`, jsonPost({ ...body, format: "binary" }), 15000, true),
-  deleteTrace: (id: string) => request<CancellationResponse | undefined>(tracePath(id), { method: "DELETE" }),
-
+    request<TensorSlice>(
+      `${tracePath(id)}/tensors/${encodeURIComponent(tensor)}/slice`,
+      jsonPost(body),
+    ),
+  traceBinarySlice: (
+    id: string,
+    component: string,
+    body: Omit<SliceRequest, "format">,
+  ) =>
+    request<BinaryTensorSlice>(
+      `${componentPath(id, component)}/slice`,
+      jsonPost({ ...body, format: "binary" }),
+      15000,
+      true,
+    ),
+  traceBinaryTensorSlice: (
+    id: string,
+    tensor: string,
+    body: Omit<SliceRequest, "format">,
+  ) =>
+    request<BinaryTensorSlice>(
+      `${tracePath(id)}/tensors/${encodeURIComponent(tensor)}/slice`,
+      jsonPost({ ...body, format: "binary" }),
+      15000,
+      true,
+    ),
+  deleteTrace: (id: string) =>
+    request<CancellationResponse | undefined>(tracePath(id), {
+      method: "DELETE",
+    }),
 };

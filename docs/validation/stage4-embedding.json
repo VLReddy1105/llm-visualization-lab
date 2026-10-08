@@ -1,0 +1,67 @@
+{
+  "component_id": "embedding.output",
+  "tensor_id": "tensor-0",
+  "axes": [
+    "batch",
+    "token",
+    "hidden"
+  ],
+  "logical_shape": [
+    1,
+    5,
+    1024
+  ],
+  "storage_shape": [
+    1,
+    5,
+    1024
+  ],
+  "coverage": {
+    "batch": {
+      "count": 1,
+      "start": 0,
+      "stop": 1,
+      "step": 1
+    },
+    "token": {
+      "count": 5,
+      "start": 0,
+      "stop": 5,
+      "step": 1
+    },
+    "hidden": {
+      "count": 1024,
+      "start": 0,
+      "stop": 1024,
+      "step": 1
+    }
+  },
+  "dtype": "float32",
+  "storage_dtype": "float32",
+  "original_device": "mps:0",
+  "storage_device": "cpu",
+  "numel": 5120,
+  "byte_size": 20480,
+  "provenance": "raw",
+  "sources": [],
+  "method": "actual module boundary observed through a run-scoped PyTorch hook",
+  "availability": "captured",
+  "raw_available": true,
+  "unavailable_reason": null,
+  "statistics": {
+    "finite_count": 5120,
+    "nonfinite_count": 0,
+    "min": -0.09130859375,
+    "max": 0.09521484375,
+    "mean": -0.00021146466315258294,
+    "std": 0.02539246529340744,
+    "l2_norm": 1.8169972896575928,
+    "accumulation_dtype": "float32",
+    "value_kind": "summary",
+    "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+    "masked_count": 0,
+    "total_count": 5120,
+    "finite": true,
+    "undefined_fields": []
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "production_source_files": 18,
+  "searched_patterns": [
+    "Berlin",
+    "47\\.7",
+    "16\\.521",
+    "\\b(?:220|264|279|304|315|320|374|785|825|6722|7407|9856|19846|30743|32671)\\b",
+    "\\b(?:151936|1024|28)\\b",
+    "\\bany\\b"
+  ],
+  "matches": [
+    {
+      "file": "apps/web/src/lib/api/client.ts",
+      "line": 74,
+      "pattern": "\\bany\\b",
+      "text": "? AbortSignal.any([controller.signal, init.signal])"
+    },
+    {
+      "file": "apps/web/src/components/model-journey/ModelJourney.tsx",
+      "line": 349,
+      "pattern": "\\bany\\b",
+      "text": ": \"Select any stage to inspect\"}"
+    }
+  ],
+  "classification": "The two any matches are the standard AbortSignal.any cancellation API and English UI copy, not TypeScript any types. No scientific result literals, fixed model dimensions or fixed layer count were found. CSS/SVG geometry is presentation, not scientific data. Recorded fixtures and browser expectations exist only in tests; no production imports reference them.",
+  "unchanged_backend_and_contracts": true,
+  "default_prompt_allowed": "The capital of Germany is"
+}

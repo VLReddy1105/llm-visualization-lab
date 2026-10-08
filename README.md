@@ -2,9 +2,9 @@
 
 An interactive microscope for understanding how a real transformer processes text: tokens, embeddings, attention, residual updates, MLP transformations, vocabulary logits, and next-token generation.
 
-**Current status: Stage 3 — PASS.** The bounded CPU Trace Store, lazy REST access, JSON/binary slices and generated typed client are implemented. Stage 1 and Stage 2 remain validated, with bitwise-identical same-path tracing logits/probabilities. Both CPU and Apple MPS suites pass all 224 tests; retrieval produces zero additional model forwards.
+**Current status: Stage 4 — PASS.** The Model Journey workspace uses real Stage 3 traces: raw prompt submission, lifecycle handling, actual tokens, a horizontal transformer rail, linked selection, and a contextual inspector. All 31 frontend tests pass. The unchanged scientific backend passes all 224 tests on CPU and all 224 on Apple MPS; retrieval produces zero additional model forwards. Stage 5 has not begun.
 
-The initial model is **Qwen/Qwen3-0.6B**, pinned to `c1899de289a04d12100db370d81485cdf75e47ca`. The implemented stack is Next.js / React / TypeScript / Tailwind CSS and Python / FastAPI / PyTorch / Hugging Face Transformers / Pydantic. Stage 2 supplies model adapters and scientific capture; Stage 3 retains these results and exposes bounded lazy access. Stage 4 visualization has not begun.
+The initial model is **Qwen/Qwen3-0.6B**, pinned to `c1899de289a04d12100db370d81485cdf75e47ca`. The implemented stack is Next.js / React / TypeScript / Tailwind CSS, Zustand, TanStack Query and Python / FastAPI / PyTorch / Hugging Face Transformers / Pydantic. Stage 2 supplies model adapters and scientific capture; Stage 3 retains these results and exposes bounded lazy access. Stage 4 consumes those existing contracts without changing the backend or generated schemas.
 
 The central rule is **trace once, visualize many ways**. Every scientific value must originate from real model computation or a named, reproducible transformation of retained data. Missing tensors remain unavailable. Attention patterns, intermediate vocabulary projections, and representation geometry must carry appropriate interpretation limits.
 
@@ -27,6 +27,10 @@ The unchanged [conceptual PDF](docs/reference/LLM_Visualization_Conceptual_Archi
 The [Stage 2 report](docs/validation/STAGE_2_REPORT.md), [MPS trace evidence](docs/validation/stage2-validation.json), and [CPU trace evidence](docs/validation/stage2-validation-cpu.json) record actual semantic shapes, provenance, reconstruction errors, cleanup, memory and timing. Validation uses two short raw prompts and layers 0, 12 and 27. CPU's independent all-position LM-head reference differs slightly within the existing tolerance; same-path tracing remains bitwise identical on both devices.
 
 The [Stage 3 report](docs/validation/STAGE_3_REPORT.md) records the exact file inventory, lifecycle/API contract and all requested completion points. [Actual HTTP evidence](docs/validation/stage3-http-validation.json) proves one capture and zero retrieval forwards. The recorded capital trace retains 1,970,124 unique bytes; Layer 12 attention/MLP detail accompanies all-layer summaries.
+
+The [Stage 4 report](docs/validation/STAGE_4_REPORT.md) records the rendering decision, exact file inventory, all 31 completion points, tests and real-browser screenshots. The default UI uses the existing `overview` capture: all-layer checkpoints, embeddings, final output and logits, without deep attention/MLP tensors. The capital example displays five tokens, 28 layers and the real next-token candidate ` Berlin` at 47.70%. This is an argmax preview, not an autoregressive generation step. See the [completed journey](docs/validation/stage4-model-journey.png) and [Layer 12 inspector](docs/validation/stage4-layer12.png).
+
+Select a token or model stage to inspect its retained data. Wheel/trackpad scrolling, background dragging, arrow/Home/End keys, a layer jump selector, Fit Journey and Reset navigate the horizontal rail. Token selection persists across inspectors. Prompt edits keep the previous trace visible until explicit execution. Expiry, deletion and missing components are explicit; deeper data never triggers automatic recapture.
 
 ## Local setup
 
@@ -96,10 +100,29 @@ From the repository root:
 npm run check:types
 npm run typecheck
 npm run lint
+npm test
 npm run build
 ```
 
 After changing implemented schemas, export OpenAPI without `--check`, then run `npm run generate:types`. Next.js development/build uses supported webpack mode because Turbopack's CSS subprocess port was blocked in this environment. A production preview can run with `npm run start --workspace @llm-lab/web` after building.
+
+With the real backend and frontend running, verify the UI in installed Google Chrome:
+
+```sh
+npm run test:browser
+```
+
+The normal browser run covers real Qwen execution, selection, navigation, changed-prompt output, deletion, mobile layout and an axe accessibility scan. It saves screenshots and JSON evidence under `docs/validation/`. Two fault scenarios run separately because they require different backend availability:
+
+```sh
+# Stop the backend for this scenario; keep the frontend running.
+LLM_LAB_BROWSER_FAULT_MODE=offline npm run test:browser --workspace @llm-lab/web -- lifecycle.spec.ts -g unavailable
+
+# Start the backend with LLM_LAB_TRACE_TTL_SECONDS=5 for this scenario.
+LLM_LAB_BROWSER_FAULT_MODE=expiry npm run test:browser --workspace @llm-lab/web -- lifecycle.spec.ts -g expiry
+```
+
+Restore the normal backend command afterward. Isolated frontend tests mock HTTP using recorded real responses; production and browser validation use the actual API with no scientific fallback fixtures.
 
 ## Trace API
 
@@ -121,4 +144,4 @@ With uvicorn running, reproduce the bounded actual HTTP artifacts from `apps/api
 .venv/bin/python -m llm_lab.trace_http_validation
 ```
 
-The generated typed API client supports creation, polling, metadata pages, head/relation reads, JSON/binary slices and deletion. No debug page, visualization components, new query-library dependency or Stage 4 UI has been added. In-memory traces disappear on restart; the API is for one local process/worker.
+The generated typed API client supports creation, polling, metadata pages, head/relation reads, JSON/binary slices and deletion. Stage 4 adds external cancellation signals for its reads and submission. TanStack Query owns server payloads and polls only pending traces; Zustand owns selection and viewport state. In-memory traces disappear on restart; the API is for one local process/worker. Attention Explorer, full Layer Microscope, Token Journey, logit evolution and generation timeline remain future stages.

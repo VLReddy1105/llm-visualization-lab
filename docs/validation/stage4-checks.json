@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-08",
+  "typescript": {
+    "command": "npm run typecheck",
+    "exit_code": 0
+  },
+  "eslint": {
+    "command": "npm run lint",
+    "exit_code": 0
+  },
+  "generated_types": {
+    "command": "npm run check:types",
+    "exit_code": 0
+  },
+  "openapi": {
+    "command": "apps/api/.venv/bin/python -m llm_lab.export_openapi packages/shared/openapi.json --check",
+    "exit_code": 0
+  },
+  "ruff": {
+    "command": "apps/api/.venv/bin/ruff check apps/api/src apps/api/tests",
+    "exit_code": 0
+  },
+  "ruff_format": {
+    "command": "apps/api/.venv/bin/ruff format --check apps/api/src apps/api/tests",
+    "exit_code": 0
+  },
+  "production_build": {
+    "command": "npm run build",
+    "exit_code": 0,
+    "next_version": "16.4.0",
+    "mode": "webpack",
+    "routes": [
+      "/",
+      "/_not-found",
+      "/icon.svg"
+    ]
+  },
+  "backend_and_generated_contracts_modified": [],
+  "node_version": "v22.23.1",
+  "npm_version": "10.9.8",
+  "frontend-tests": {
+    "artifact": "stage4-frontend-tests.xml",
+    "name": "tests/workspace.test.tsx",
+    "timestamp": "2026-10-08T09:56:56.330Z",
+    "hostname": "wlcl-57-38.eduroam-st.b-tu.de",
+    "tests": "31",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "17.276718416"
+  },
+  "backend-mps": {
+    "artifact": "stage4-backend-mps.xml",
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "224",
+    "time": "21.422",
+    "timestamp": "2026-10-08T11:47:56.437387+02:00",
+    "hostname": "wlcl-57-38.eduroam-st.b-tu.de"
+  },
+  "backend-cpu": {
+    "artifact": "stage4-backend-cpu.xml",
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "224",
+    "time": "18.690",
+    "timestamp": "2026-10-08T11:48:21.898149+02:00",
+    "hostname": "wlcl-57-38.eduroam-st.b-tu.de"
+  },
+  "browser": {
+    "artifact": "stage4-browser-results.json",
+    "startTime": "2026-10-08T09:58:42.680Z",
+    "duration": 14687.782,
+    "expected": 1,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browser-offline": {
+    "artifact": "stage4-browser-offline-results.json",
+    "startTime": "2026-10-08T09:47:56.571Z",
+    "duration": 11670.689,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browser-expiry": {
+    "artifact": "stage4-browser-expiry-results.json",
+    "startTime": "2026-10-08T09:49:50.425Z",
+    "duration": 19151.657,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

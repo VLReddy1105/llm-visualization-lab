@@ -1,0 +1,14 @@
+{
+  "trace_id": "ffb6c0b3-2406-4d36-bddb-5d79c5e74775",
+  "status": "running",
+  "created_at": "2026-10-08T09:25:02.739948+00:00",
+  "last_access_at": "2026-10-08T09:25:02.739948+00:00",
+  "completed_at": null,
+  "expires_at": null,
+  "retained_bytes": 0,
+  "reserved_bytes": 4726824,
+  "error": null,
+  "metadata": null,
+  "schema_version": "1.0.0",
+  "overview": null
+}

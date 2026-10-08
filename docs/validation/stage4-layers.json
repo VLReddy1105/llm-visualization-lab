@@ -1,0 +1,3646 @@
+{
+  "items": [
+    {
+      "layer_index": 0,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[0].residual.before",
+        "layer[0].attention.output",
+        "layer[0].residual.after_attention",
+        "layer[0].mlp.output",
+        "layer[0].residual.after_mlp",
+        "layer[0].output"
+      ],
+      "raw_components": [
+        "layer[0].residual.before",
+        "layer[0].attention.output",
+        "layer[0].residual.after_attention",
+        "layer[0].mlp.output",
+        "layer[0].residual.after_mlp",
+        "layer[0].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -0.09130859375,
+          "max": 0.09521484375,
+          "mean": -0.00021146466315258294,
+          "std": 0.02539246529340744,
+          "l2_norm": 1.8169972896575928,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.3492414951324463,
+          "max": 2.984814167022705,
+          "mean": 0.00020366479293443263,
+          "std": 0.19114430248737335,
+          "l2_norm": 13.677180290222168,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.3244612216949463,
+          "max": 2.932568073272705,
+          "mean": -7.799826562404633e-06,
+          "std": 0.19191977381706238,
+          "l2_norm": 13.732661247253418,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.3913953304290771,
+          "max": 3.854309320449829,
+          "mean": 0.0005045800353400409,
+          "std": 0.17020274698734283,
+          "l2_norm": 12.178771018981934,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.7158565521240234,
+          "max": 6.786877632141113,
+          "mean": 0.0004967804998159409,
+          "std": 0.2902795672416687,
+          "l2_norm": 20.770742416381836,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[0].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[0].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[0].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 1,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[1].residual.before",
+        "layer[1].attention.output",
+        "layer[1].residual.after_attention",
+        "layer[1].mlp.output",
+        "layer[1].residual.after_mlp",
+        "layer[1].output"
+      ],
+      "raw_components": [
+        "layer[1].residual.before",
+        "layer[1].attention.output",
+        "layer[1].residual.after_attention",
+        "layer[1].mlp.output",
+        "layer[1].residual.after_mlp",
+        "layer[1].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.7158565521240234,
+          "max": 6.786877632141113,
+          "mean": 0.0004967804998159409,
+          "std": 0.2902795672416687,
+          "l2_norm": 20.770742416381836,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -0.8791863918304443,
+          "max": 0.43038469552993774,
+          "mean": 0.005354186054319143,
+          "std": 0.09726332128047943,
+          "l2_norm": 6.970131874084473,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.5890910625457764,
+          "max": 6.025651931762695,
+          "mean": 0.005850966088473797,
+          "std": 0.3007710576057434,
+          "l2_norm": 21.525497436523438,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.615227222442627,
+          "max": 3.2728805541992188,
+          "mean": -0.003579171374440193,
+          "std": 0.24910084903240204,
+          "l2_norm": 17.8260440826416,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.119779586791992,
+          "max": 7.841053009033203,
+          "mean": 0.002271795878186822,
+          "std": 0.40741485357284546,
+          "l2_norm": 29.152687072753906,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[1].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[1].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[1].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 2,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[2].residual.before",
+        "layer[2].attention.output",
+        "layer[2].residual.after_attention",
+        "layer[2].mlp.output",
+        "layer[2].residual.after_mlp",
+        "layer[2].output"
+      ],
+      "raw_components": [
+        "layer[2].residual.before",
+        "layer[2].attention.output",
+        "layer[2].residual.after_attention",
+        "layer[2].mlp.output",
+        "layer[2].residual.after_mlp",
+        "layer[2].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.119779586791992,
+          "max": 7.841053009033203,
+          "mean": 0.002271795878186822,
+          "std": 0.40741485357284546,
+          "l2_norm": 29.152687072753906,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -5.078543186187744,
+          "max": 1.683342695236206,
+          "mean": -0.001612563617527485,
+          "std": 0.2459537833929062,
+          "l2_norm": 17.599397659301758,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.962089538574219,
+          "max": 4.407325744628906,
+          "mean": 0.0006592326099053025,
+          "std": 0.48215359449386597,
+          "l2_norm": 34.50012969970703,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -156.02195739746094,
+          "max": 6540.7939453125,
+          "mean": 1.431767225265503,
+          "std": 92.08259582519531,
+          "l2_norm": 6589.68701171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.4069061279297,
+          "max": 6543.556640625,
+          "mean": 1.4324266910552979,
+          "std": 92.12254333496094,
+          "l2_norm": 6592.53857421875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[2].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[2].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[2].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 3,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[3].residual.before",
+        "layer[3].attention.output",
+        "layer[3].residual.after_attention",
+        "layer[3].mlp.output",
+        "layer[3].residual.after_mlp",
+        "layer[3].output"
+      ],
+      "raw_components": [
+        "layer[3].residual.before",
+        "layer[3].attention.output",
+        "layer[3].residual.after_attention",
+        "layer[3].mlp.output",
+        "layer[3].residual.after_mlp",
+        "layer[3].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.4069061279297,
+          "max": 6543.556640625,
+          "mean": 1.4324266910552979,
+          "std": 92.12254333496094,
+          "l2_norm": 6592.53857421875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -0.7960531711578369,
+          "max": 0.5474039316177368,
+          "mean": 0.0017818247433751822,
+          "std": 0.0959450826048851,
+          "l2_norm": 6.866455554962158,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.67471313476562,
+          "max": 6542.7607421875,
+          "mean": 1.4342085123062134,
+          "std": 92.11178588867188,
+          "l2_norm": 6591.77099609375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -0.7533969283103943,
+          "max": 2.5732264518737793,
+          "mean": 0.00391955953091383,
+          "std": 0.18319477140903473,
+          "l2_norm": 13.111349105834961,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.64549255371094,
+          "max": 6542.79541015625,
+          "mean": 1.438127875328064,
+          "std": 92.1124038696289,
+          "l2_norm": 6591.81787109375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[3].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[3].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[3].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 4,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[4].residual.before",
+        "layer[4].attention.output",
+        "layer[4].residual.after_attention",
+        "layer[4].mlp.output",
+        "layer[4].residual.after_mlp",
+        "layer[4].output"
+      ],
+      "raw_components": [
+        "layer[4].residual.before",
+        "layer[4].attention.output",
+        "layer[4].residual.after_attention",
+        "layer[4].mlp.output",
+        "layer[4].residual.after_mlp",
+        "layer[4].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.64549255371094,
+          "max": 6542.79541015625,
+          "mean": 1.438127875328064,
+          "std": 92.1124038696289,
+          "l2_norm": 6591.81787109375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -0.5836400389671326,
+          "max": 0.6629037857055664,
+          "mean": 0.0020361472852528095,
+          "std": 0.09809968620538712,
+          "l2_norm": 7.020953178405762,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.9735870361328,
+          "max": 6542.35400390625,
+          "mean": 1.4401639699935913,
+          "std": 92.10627746582031,
+          "l2_norm": 6591.38330078125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.04053795337677,
+          "max": 2.205827236175537,
+          "mean": 0.0028423708863556385,
+          "std": 0.2340264469385147,
+          "l2_norm": 16.746803283691406,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.95553588867188,
+          "max": 6542.392578125,
+          "mean": 1.4430065155029297,
+          "std": 92.10714721679688,
+          "l2_norm": 6591.44580078125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[4].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[4].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[4].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 5,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[5].residual.before",
+        "layer[5].attention.output",
+        "layer[5].residual.after_attention",
+        "layer[5].mlp.output",
+        "layer[5].residual.after_mlp",
+        "layer[5].output"
+      ],
+      "raw_components": [
+        "layer[5].residual.before",
+        "layer[5].attention.output",
+        "layer[5].residual.after_attention",
+        "layer[5].mlp.output",
+        "layer[5].residual.after_mlp",
+        "layer[5].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.95553588867188,
+          "max": 6542.392578125,
+          "mean": 1.4430065155029297,
+          "std": 92.10714721679688,
+          "l2_norm": 6591.44580078125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -0.948582649230957,
+          "max": 1.2751082181930542,
+          "mean": -0.0006442127632908523,
+          "std": 0.17258290946483612,
+          "l2_norm": 12.349113464355469,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -154.6094207763672,
+          "max": 6542.32080078125,
+          "mean": 1.4423625469207764,
+          "std": 92.10653686523438,
+          "l2_norm": 6591.3994140625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.0135369300842285,
+          "max": 0.9757885336875916,
+          "mean": 0.003204626264050603,
+          "std": 0.22220592200756073,
+          "l2_norm": 15.901415824890137,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -154.57713317871094,
+          "max": 6542.32177734375,
+          "mean": 1.4455671310424805,
+          "std": 92.10680389404297,
+          "l2_norm": 6591.42041015625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[5].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[5].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[5].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 6,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[6].residual.before",
+        "layer[6].attention.output",
+        "layer[6].residual.after_attention",
+        "layer[6].mlp.output",
+        "layer[6].residual.after_mlp",
+        "layer[6].output"
+      ],
+      "raw_components": [
+        "layer[6].residual.before",
+        "layer[6].attention.output",
+        "layer[6].residual.after_attention",
+        "layer[6].mlp.output",
+        "layer[6].residual.after_mlp",
+        "layer[6].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -154.57713317871094,
+          "max": 6542.32177734375,
+          "mean": 1.4455671310424805,
+          "std": 92.10680389404297,
+          "l2_norm": 6591.42041015625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.9276360273361206,
+          "max": 0.9316644668579102,
+          "mean": -0.003750797361135483,
+          "std": 0.18550001084804535,
+          "l2_norm": 13.27601146697998,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -155.26699829101562,
+          "max": 6540.5,
+          "mean": 1.4418160915374756,
+          "std": 92.08223724365234,
+          "l2_norm": 6589.65625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.074526309967041,
+          "max": 2.287102699279785,
+          "mean": 0.002852145815268159,
+          "std": 0.2592552602291107,
+          "l2_norm": 18.551916122436523,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -155.24647521972656,
+          "max": 6540.50634765625,
+          "mean": 1.4446680545806885,
+          "std": 92.08257293701172,
+          "l2_norm": 6589.6826171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[6].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[6].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[6].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 7,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[7].residual.before",
+        "layer[7].attention.output",
+        "layer[7].residual.after_attention",
+        "layer[7].mlp.output",
+        "layer[7].residual.after_mlp",
+        "layer[7].output"
+      ],
+      "raw_components": [
+        "layer[7].residual.before",
+        "layer[7].attention.output",
+        "layer[7].residual.after_attention",
+        "layer[7].mlp.output",
+        "layer[7].residual.after_mlp",
+        "layer[7].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -155.24647521972656,
+          "max": 6540.50634765625,
+          "mean": 1.4446680545806885,
+          "std": 92.08257293701172,
+          "l2_norm": 6589.6826171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.8537583351135254,
+          "max": 0.7633582353591919,
+          "mean": 0.00026553813950158656,
+          "std": 0.16807706654071808,
+          "l2_norm": 12.026632308959961,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -156.1111602783203,
+          "max": 6538.65283203125,
+          "mean": 1.4449337720870972,
+          "std": 92.057373046875,
+          "l2_norm": 6587.8798828125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.472164511680603,
+          "max": 5.466909408569336,
+          "mean": 0.004882442764937878,
+          "std": 0.3359091281890869,
+          "l2_norm": 24.038238525390625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -156.11558532714844,
+          "max": 6538.67431640625,
+          "mean": 1.449816346168518,
+          "std": 92.05850982666016,
+          "l2_norm": 6587.9658203125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[7].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[7].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[7].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 8,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[8].residual.before",
+        "layer[8].attention.output",
+        "layer[8].residual.after_attention",
+        "layer[8].mlp.output",
+        "layer[8].residual.after_mlp",
+        "layer[8].output"
+      ],
+      "raw_components": [
+        "layer[8].residual.before",
+        "layer[8].attention.output",
+        "layer[8].residual.after_attention",
+        "layer[8].mlp.output",
+        "layer[8].residual.after_mlp",
+        "layer[8].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -156.11558532714844,
+          "max": 6538.67431640625,
+          "mean": 1.449816346168518,
+          "std": 92.05850982666016,
+          "l2_norm": 6587.9658203125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.83870530128479,
+          "max": 0.6001459956169128,
+          "mean": 0.0006841863505542278,
+          "std": 0.15080314874649048,
+          "l2_norm": 10.7907075881958,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -157.08493041992188,
+          "max": 6534.83544921875,
+          "mean": 1.4505006074905396,
+          "std": 92.00619506835938,
+          "l2_norm": 6584.22314453125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.7347424030303955,
+          "max": 2.523036479949951,
+          "mean": 0.003864884376525879,
+          "std": 0.3194020688533783,
+          "l2_norm": 22.856225967407227,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -157.08770751953125,
+          "max": 6534.8486328125,
+          "mean": 1.4543654918670654,
+          "std": 92.00714874267578,
+          "l2_norm": 6584.2900390625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[8].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[8].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[8].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 9,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[9].residual.before",
+        "layer[9].attention.output",
+        "layer[9].residual.after_attention",
+        "layer[9].mlp.output",
+        "layer[9].residual.after_mlp",
+        "layer[9].output"
+      ],
+      "raw_components": [
+        "layer[9].residual.before",
+        "layer[9].attention.output",
+        "layer[9].residual.after_attention",
+        "layer[9].mlp.output",
+        "layer[9].residual.after_mlp",
+        "layer[9].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -157.08770751953125,
+          "max": 6534.8486328125,
+          "mean": 1.4543654918670654,
+          "std": 92.00714874267578,
+          "l2_norm": 6584.2900390625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -5.619358062744141,
+          "max": 2.022202968597412,
+          "mean": -0.0006099400925450027,
+          "std": 0.24919696152210236,
+          "l2_norm": 17.831138610839844,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.17933654785156,
+          "max": 6529.2294921875,
+          "mean": 1.4537553787231445,
+          "std": 91.93073272705078,
+          "l2_norm": 6578.830078125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.570906162261963,
+          "max": 3.987028121948242,
+          "mean": 0.0034922559279948473,
+          "std": 0.33138906955718994,
+          "l2_norm": 23.713590621948242,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.1741943359375,
+          "max": 6529.21875,
+          "mean": 1.4572473764419556,
+          "std": 91.9312744140625,
+          "l2_norm": 6578.87060546875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[9].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[9].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[9].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 10,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[10].residual.before",
+        "layer[10].attention.output",
+        "layer[10].residual.after_attention",
+        "layer[10].mlp.output",
+        "layer[10].residual.after_mlp",
+        "layer[10].output"
+      ],
+      "raw_components": [
+        "layer[10].residual.before",
+        "layer[10].attention.output",
+        "layer[10].residual.after_attention",
+        "layer[10].mlp.output",
+        "layer[10].residual.after_mlp",
+        "layer[10].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.1741943359375,
+          "max": 6529.21875,
+          "mean": 1.4572473764419556,
+          "std": 91.9312744140625,
+          "l2_norm": 6578.87060546875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.4867701530456543,
+          "max": 1.189399003982544,
+          "mean": 0.00674681831151247,
+          "std": 0.23291261494159698,
+          "l2_norm": 16.672855377197266,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.75640869140625,
+          "max": 6527.5556640625,
+          "mean": 1.4639947414398193,
+          "std": 91.9081039428711,
+          "l2_norm": 6577.21728515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.7247092723846436,
+          "max": 6.953934192657471,
+          "mean": 0.012236817739903927,
+          "std": 0.4305803179740906,
+          "l2_norm": 30.82225227355957,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.72622680664062,
+          "max": 6527.72119140625,
+          "mean": 1.476231336593628,
+          "std": 91.91223907470703,
+          "l2_norm": 6577.52978515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[10].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[10].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[10].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 11,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[11].residual.before",
+        "layer[11].attention.output",
+        "layer[11].residual.after_attention",
+        "layer[11].mlp.output",
+        "layer[11].residual.after_mlp",
+        "layer[11].output"
+      ],
+      "raw_components": [
+        "layer[11].residual.before",
+        "layer[11].attention.output",
+        "layer[11].residual.after_attention",
+        "layer[11].mlp.output",
+        "layer[11].residual.after_mlp",
+        "layer[11].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.72622680664062,
+          "max": 6527.72119140625,
+          "mean": 1.476231336593628,
+          "std": 91.91223907470703,
+          "l2_norm": 6577.52978515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.3457648754119873,
+          "max": 3.9003050327301025,
+          "mean": 0.002758412854745984,
+          "std": 0.33247026801109314,
+          "l2_norm": 23.79045295715332,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -159.62985229492188,
+          "max": 6524.37548828125,
+          "mean": 1.478989601135254,
+          "std": 91.86841583251953,
+          "l2_norm": 6574.396484375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.3459672927856445,
+          "max": 7.028163909912109,
+          "mean": -0.0005988262710161507,
+          "std": 0.35848191380500793,
+          "l2_norm": 25.650915145874023,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -159.6315460205078,
+          "max": 6524.39892578125,
+          "mean": 1.4783910512924194,
+          "std": 91.87017822265625,
+          "l2_norm": 6574.5224609375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[11].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[11].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[11].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 12,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[12].residual.before",
+        "layer[12].attention.output",
+        "layer[12].residual.after_attention",
+        "layer[12].mlp.output",
+        "layer[12].residual.after_mlp",
+        "layer[12].output"
+      ],
+      "raw_components": [
+        "layer[12].residual.before",
+        "layer[12].attention.output",
+        "layer[12].residual.after_attention",
+        "layer[12].mlp.output",
+        "layer[12].residual.after_mlp",
+        "layer[12].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -159.6315460205078,
+          "max": 6524.39892578125,
+          "mean": 1.4783910512924194,
+          "std": 91.87017822265625,
+          "l2_norm": 6574.5224609375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.217583179473877,
+          "max": 0.9940972328186035,
+          "mean": 0.0030387602746486664,
+          "std": 0.18957160413265228,
+          "l2_norm": 13.566383361816406,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.07928466796875,
+          "max": 6522.18115234375,
+          "mean": 1.4814295768737793,
+          "std": 91.84009552001953,
+          "l2_norm": 6572.375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.514047622680664,
+          "max": 7.6002349853515625,
+          "mean": 0.0021345880813896656,
+          "std": 0.3656996786594391,
+          "l2_norm": 26.16777992248535,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.09967041015625,
+          "max": 6522.06005859375,
+          "mean": 1.4835643768310547,
+          "std": 91.84010314941406,
+          "l2_norm": 6572.38232421875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[12].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[12].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[12].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 13,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[13].residual.before",
+        "layer[13].attention.output",
+        "layer[13].residual.after_attention",
+        "layer[13].mlp.output",
+        "layer[13].residual.after_mlp",
+        "layer[13].output"
+      ],
+      "raw_components": [
+        "layer[13].residual.before",
+        "layer[13].attention.output",
+        "layer[13].residual.after_attention",
+        "layer[13].mlp.output",
+        "layer[13].residual.after_mlp",
+        "layer[13].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.09967041015625,
+          "max": 6522.06005859375,
+          "mean": 1.4835643768310547,
+          "std": 91.84010314941406,
+          "l2_norm": 6572.38232421875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.0684871673583984,
+          "max": 0.7523549795150757,
+          "mean": -0.006581027992069721,
+          "std": 0.20604568719863892,
+          "l2_norm": 14.750946044921875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.420654296875,
+          "max": 6519.9111328125,
+          "mean": 1.4769831895828247,
+          "std": 91.81036376953125,
+          "l2_norm": 6570.240234375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.5730375051498413,
+          "max": 5.360013008117676,
+          "mean": 0.011203855276107788,
+          "std": 0.3320665955543518,
+          "l2_norm": 23.77427864074707,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.42881774902344,
+          "max": 6519.8408203125,
+          "mean": 1.488187313079834,
+          "std": 91.81069946289062,
+          "l2_norm": 6570.27685546875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[13].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[13].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[13].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 14,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[14].residual.before",
+        "layer[14].attention.output",
+        "layer[14].residual.after_attention",
+        "layer[14].mlp.output",
+        "layer[14].residual.after_mlp",
+        "layer[14].output"
+      ],
+      "raw_components": [
+        "layer[14].residual.before",
+        "layer[14].attention.output",
+        "layer[14].residual.after_attention",
+        "layer[14].mlp.output",
+        "layer[14].residual.after_mlp",
+        "layer[14].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.42881774902344,
+          "max": 6519.8408203125,
+          "mean": 1.488187313079834,
+          "std": 91.81069946289062,
+          "l2_norm": 6570.27685546875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -5.065899848937988,
+          "max": 1.168705701828003,
+          "mean": -0.0016027502715587616,
+          "std": 0.24523143470287323,
+          "l2_norm": 17.547710418701172,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.13119506835938,
+          "max": 6515.7099609375,
+          "mean": 1.4865844249725342,
+          "std": 91.7533187866211,
+          "l2_norm": 6566.17041015625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -1.931007742881775,
+          "max": 4.627627372741699,
+          "mean": -0.008600995875895023,
+          "std": 0.40392640233039856,
+          "l2_norm": 28.90916633605957,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.13929748535156,
+          "max": 6515.65576171875,
+          "mean": 1.4779833555221558,
+          "std": 91.75422668457031,
+          "l2_norm": 6566.2275390625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[14].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[14].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[14].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 15,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[15].residual.before",
+        "layer[15].attention.output",
+        "layer[15].residual.after_attention",
+        "layer[15].mlp.output",
+        "layer[15].residual.after_mlp",
+        "layer[15].output"
+      ],
+      "raw_components": [
+        "layer[15].residual.before",
+        "layer[15].attention.output",
+        "layer[15].residual.after_attention",
+        "layer[15].mlp.output",
+        "layer[15].residual.after_mlp",
+        "layer[15].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.13929748535156,
+          "max": 6515.65576171875,
+          "mean": 1.4779833555221558,
+          "std": 91.75422668457031,
+          "l2_norm": 6566.2275390625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.2679696083068848,
+          "max": 2.0220730304718018,
+          "mean": -0.0035563004203140736,
+          "std": 0.3052520453929901,
+          "l2_norm": 21.843538284301758,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.6348114013672,
+          "max": 6514.4384765625,
+          "mean": 1.4744269847869873,
+          "std": 91.7388687133789,
+          "l2_norm": 6565.12255859375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.23897123336792,
+          "max": 11.509275436401367,
+          "mean": 0.0016626976430416107,
+          "std": 0.5058305859565735,
+          "l2_norm": 36.19448471069336,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.6020965576172,
+          "max": 6514.40625,
+          "mean": 1.4760894775390625,
+          "std": 91.7416000366211,
+          "l2_norm": 6565.3212890625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[15].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[15].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[15].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 16,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[16].residual.before",
+        "layer[16].attention.output",
+        "layer[16].residual.after_attention",
+        "layer[16].mlp.output",
+        "layer[16].residual.after_mlp",
+        "layer[16].output"
+      ],
+      "raw_components": [
+        "layer[16].residual.before",
+        "layer[16].attention.output",
+        "layer[16].residual.after_attention",
+        "layer[16].mlp.output",
+        "layer[16].residual.after_mlp",
+        "layer[16].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.6020965576172,
+          "max": 6514.40625,
+          "mean": 1.4760894775390625,
+          "std": 91.7416000366211,
+          "l2_norm": 6565.3212890625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.0883331298828125,
+          "max": 1.511404037475586,
+          "mean": -0.007734016980975866,
+          "std": 0.31345996260643005,
+          "l2_norm": 22.43619728088379,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.75804138183594,
+          "max": 6512.89892578125,
+          "mean": 1.4683555364608765,
+          "std": 91.72269439697266,
+          "l2_norm": 6563.9599609375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -5.367072105407715,
+          "max": 11.57723617553711,
+          "mean": 0.015723910182714462,
+          "std": 0.8223938941955566,
+          "l2_norm": 58.856483459472656,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.74412536621094,
+          "max": 6512.87890625,
+          "mean": 1.4840798377990723,
+          "std": 91.73170471191406,
+          "l2_norm": 6564.62353515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[16].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[16].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[16].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 17,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[17].residual.before",
+        "layer[17].attention.output",
+        "layer[17].residual.after_attention",
+        "layer[17].mlp.output",
+        "layer[17].residual.after_mlp",
+        "layer[17].output"
+      ],
+      "raw_components": [
+        "layer[17].residual.before",
+        "layer[17].attention.output",
+        "layer[17].residual.after_attention",
+        "layer[17].mlp.output",
+        "layer[17].residual.after_mlp",
+        "layer[17].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.74412536621094,
+          "max": 6512.87890625,
+          "mean": 1.4840798377990723,
+          "std": 91.73170471191406,
+          "l2_norm": 6564.62353515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -2.887953281402588,
+          "max": 3.4596800804138184,
+          "mean": 0.006138480734080076,
+          "std": 0.47128549218177795,
+          "l2_norm": 33.72530746459961,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.11277770996094,
+          "max": 6513.65966796875,
+          "mean": 1.4902180433273315,
+          "std": 91.74407196044922,
+          "l2_norm": 6565.51806640625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.8583574295043945,
+          "max": 10.813997268676758,
+          "mean": 0.026623021811246872,
+          "std": 0.8694091439247131,
+          "l2_norm": 62.23900604248047,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.06324768066406,
+          "max": 6514.21923828125,
+          "mean": 1.516841173171997,
+          "std": 91.76089477539062,
+          "l2_norm": 6566.75146484375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[17].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[17].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[17].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 18,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[18].residual.before",
+        "layer[18].attention.output",
+        "layer[18].residual.after_attention",
+        "layer[18].mlp.output",
+        "layer[18].residual.after_mlp",
+        "layer[18].output"
+      ],
+      "raw_components": [
+        "layer[18].residual.before",
+        "layer[18].attention.output",
+        "layer[18].residual.after_attention",
+        "layer[18].mlp.output",
+        "layer[18].residual.after_mlp",
+        "layer[18].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -161.06324768066406,
+          "max": 6514.21923828125,
+          "mean": 1.516841173171997,
+          "std": 91.76089477539062,
+          "l2_norm": 6566.75146484375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.0704848766326904,
+          "max": 4.027677536010742,
+          "mean": 0.019152235239744186,
+          "std": 0.5429128408432007,
+          "l2_norm": 38.8718376159668,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.8861846923828,
+          "max": 6517.31298828125,
+          "mean": 1.5359933376312256,
+          "std": 91.80986785888672,
+          "l2_norm": 6570.27783203125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.1308465003967285,
+          "max": 11.508186340332031,
+          "mean": -0.002063928870484233,
+          "std": 0.8727632164955139,
+          "l2_norm": 62.450008392333984,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.8495635986328,
+          "max": 6518.72216796875,
+          "mean": 1.5339291095733643,
+          "std": 91.83930969238281,
+          "l2_norm": 6572.38623046875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[18].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[18].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[18].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 19,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[19].residual.before",
+        "layer[19].attention.output",
+        "layer[19].residual.after_attention",
+        "layer[19].mlp.output",
+        "layer[19].residual.after_mlp",
+        "layer[19].output"
+      ],
+      "raw_components": [
+        "layer[19].residual.before",
+        "layer[19].attention.output",
+        "layer[19].residual.after_attention",
+        "layer[19].mlp.output",
+        "layer[19].residual.after_mlp",
+        "layer[19].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.8495635986328,
+          "max": 6518.72216796875,
+          "mean": 1.5339291095733643,
+          "std": 91.83930969238281,
+          "l2_norm": 6572.38623046875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.353337526321411,
+          "max": 4.268013954162598,
+          "mean": 0.03943600878119469,
+          "std": 0.7550233602523804,
+          "l2_norm": 54.09871292114258,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -160.69125366210938,
+          "max": 6521.1923828125,
+          "mean": 1.573365330696106,
+          "std": 91.87870788574219,
+          "l2_norm": 6575.25634765625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -8.004182815551758,
+          "max": 9.301549911499023,
+          "mean": 0.009018893353641033,
+          "std": 1.2848668098449707,
+          "l2_norm": 91.93984985351562,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.7367401123047,
+          "max": 6528.40673828125,
+          "mean": 1.5823841094970703,
+          "std": 91.9953384399414,
+          "l2_norm": 6583.6083984375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[19].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[19].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[19].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 20,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[20].residual.before",
+        "layer[20].attention.output",
+        "layer[20].residual.after_attention",
+        "layer[20].mlp.output",
+        "layer[20].residual.after_mlp",
+        "layer[20].output"
+      ],
+      "raw_components": [
+        "layer[20].residual.before",
+        "layer[20].attention.output",
+        "layer[20].residual.after_attention",
+        "layer[20].mlp.output",
+        "layer[20].residual.after_mlp",
+        "layer[20].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -158.7367401123047,
+          "max": 6528.40673828125,
+          "mean": 1.5823841094970703,
+          "std": 91.9953384399414,
+          "l2_norm": 6583.6083984375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -5.620251178741455,
+          "max": 5.423460960388184,
+          "mean": 0.010477066040039062,
+          "std": 0.8779671788215637,
+          "l2_norm": 62.82669448852539,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -157.19842529296875,
+          "max": 6533.42529296875,
+          "mean": 1.592861533164978,
+          "std": 92.07633972167969,
+          "l2_norm": 6589.4228515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -9.368839263916016,
+          "max": 22.844194412231445,
+          "mean": 0.006193597801029682,
+          "std": 1.6297173500061035,
+          "l2_norm": 116.61393737792969,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -157.05726623535156,
+          "max": 6534.4833984375,
+          "mean": 1.5990551710128784,
+          "std": 92.1287612915039,
+          "l2_norm": 6593.17431640625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[20].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[20].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[20].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 21,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[21].residual.before",
+        "layer[21].attention.output",
+        "layer[21].residual.after_attention",
+        "layer[21].mlp.output",
+        "layer[21].residual.after_mlp",
+        "layer[21].output"
+      ],
+      "raw_components": [
+        "layer[21].residual.before",
+        "layer[21].attention.output",
+        "layer[21].residual.after_attention",
+        "layer[21].mlp.output",
+        "layer[21].residual.after_mlp",
+        "layer[21].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -157.05726623535156,
+          "max": 6534.4833984375,
+          "mean": 1.5990551710128784,
+          "std": 92.1287612915039,
+          "l2_norm": 6593.17431640625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.882550239562988,
+          "max": 7.5251970291137695,
+          "mean": 0.034294433891773224,
+          "std": 0.6758249998092651,
+          "l2_norm": 48.42031478881836,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -155.56036376953125,
+          "max": 6541.708984375,
+          "mean": 1.6333494186401367,
+          "std": 92.24971771240234,
+          "l2_norm": 6601.87646484375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -7.977814197540283,
+          "max": 37.57848358154297,
+          "mean": -0.027404243126511574,
+          "std": 2.0836215019226074,
+          "l2_norm": 149.1047821044922,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -155.3485107421875,
+          "max": 6542.23974609375,
+          "mean": 1.6059452295303345,
+          "std": 92.32173919677734,
+          "l2_norm": 6606.99951171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[21].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[21].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[21].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 22,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[22].residual.before",
+        "layer[22].attention.output",
+        "layer[22].residual.after_attention",
+        "layer[22].mlp.output",
+        "layer[22].residual.after_mlp",
+        "layer[22].output"
+      ],
+      "raw_components": [
+        "layer[22].residual.before",
+        "layer[22].attention.output",
+        "layer[22].residual.after_attention",
+        "layer[22].mlp.output",
+        "layer[22].residual.after_mlp",
+        "layer[22].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -155.3485107421875,
+          "max": 6542.23974609375,
+          "mean": 1.6059452295303345,
+          "std": 92.32173919677734,
+          "l2_norm": 6606.99951171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.388246536254883,
+          "max": 8.933267593383789,
+          "mean": 0.019111737608909607,
+          "std": 0.9717717170715332,
+          "l2_norm": 69.54777526855469,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -154.50767517089844,
+          "max": 6546.341796875,
+          "mean": 1.6250568628311157,
+          "std": 92.40501403808594,
+          "l2_norm": 6612.970703125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -12.871938705444336,
+          "max": 35.062137603759766,
+          "mean": -0.019458236172795296,
+          "std": 2.661878824234009,
+          "l2_norm": 190.47357177734375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -154.35377502441406,
+          "max": 6546.822265625,
+          "mean": 1.6055988073349,
+          "std": 92.52246856689453,
+          "l2_norm": 6621.35595703125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[22].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[22].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[22].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 23,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[23].residual.before",
+        "layer[23].attention.output",
+        "layer[23].residual.after_attention",
+        "layer[23].mlp.output",
+        "layer[23].residual.after_mlp",
+        "layer[23].output"
+      ],
+      "raw_components": [
+        "layer[23].residual.before",
+        "layer[23].attention.output",
+        "layer[23].residual.after_attention",
+        "layer[23].mlp.output",
+        "layer[23].residual.after_mlp",
+        "layer[23].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -154.35377502441406,
+          "max": 6546.822265625,
+          "mean": 1.6055988073349,
+          "std": 92.52246856689453,
+          "l2_norm": 6621.35595703125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -3.5310330390930176,
+          "max": 13.793745040893555,
+          "mean": 0.03509698063135147,
+          "std": 0.8000375032424927,
+          "l2_norm": 57.301082611083984,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.69915771484375,
+          "max": 6552.88720703125,
+          "mean": 1.6406959295272827,
+          "std": 92.6462173461914,
+          "l2_norm": 6630.25927734375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -7.382956504821777,
+          "max": 32.171669006347656,
+          "mean": 0.018501004204154015,
+          "std": 1.855412483215332,
+          "l2_norm": 132.76907348632812,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.2981414794922,
+          "max": 6553.3447265625,
+          "mean": 1.6591968536376953,
+          "std": 92.74126434326172,
+          "l2_norm": 6637.08056640625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[23].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[23].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[23].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 24,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[24].residual.before",
+        "layer[24].attention.output",
+        "layer[24].residual.after_attention",
+        "layer[24].mlp.output",
+        "layer[24].residual.after_mlp",
+        "layer[24].output"
+      ],
+      "raw_components": [
+        "layer[24].residual.before",
+        "layer[24].attention.output",
+        "layer[24].residual.after_attention",
+        "layer[24].mlp.output",
+        "layer[24].residual.after_mlp",
+        "layer[24].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.2981414794922,
+          "max": 6553.3447265625,
+          "mean": 1.6591968536376953,
+          "std": 92.74126434326172,
+          "l2_norm": 6637.08056640625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4.847471237182617,
+          "max": 25.424304962158203,
+          "mean": 0.05397443100810051,
+          "std": 1.181329607963562,
+          "l2_norm": 84.61724090576172,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.03305053710938,
+          "max": 6557.9853515625,
+          "mean": 1.7131712436676025,
+          "std": 92.89703369140625,
+          "l2_norm": 6648.29443359375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -11.321331024169922,
+          "max": 41.63155746459961,
+          "mean": -0.03182400017976761,
+          "std": 2.6345508098602295,
+          "l2_norm": 188.52687072753906,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -152.8099365234375,
+          "max": 6558.2158203125,
+          "mean": 1.6813474893569946,
+          "std": 93.05703735351562,
+          "l2_norm": 6659.701171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[24].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[24].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[24].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 25,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[25].residual.before",
+        "layer[25].attention.output",
+        "layer[25].residual.after_attention",
+        "layer[25].mlp.output",
+        "layer[25].residual.after_mlp",
+        "layer[25].output"
+      ],
+      "raw_components": [
+        "layer[25].residual.before",
+        "layer[25].attention.output",
+        "layer[25].residual.after_attention",
+        "layer[25].mlp.output",
+        "layer[25].residual.after_mlp",
+        "layer[25].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -152.8099365234375,
+          "max": 6558.2158203125,
+          "mean": 1.6813474893569946,
+          "std": 93.05703735351562,
+          "l2_norm": 6659.701171875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -5.18442440032959,
+          "max": 29.36652946472168,
+          "mean": 0.07636551558971405,
+          "std": 1.371956706047058,
+          "l2_norm": 98.32119750976562,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.5048065185547,
+          "max": 6560.78466796875,
+          "mean": 1.757712960243225,
+          "std": 93.22332000732422,
+          "l2_norm": 6671.69775390625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -10.48378849029541,
+          "max": 49.35246658325195,
+          "mean": 0.014605370350182056,
+          "std": 2.819171905517578,
+          "l2_norm": 201.7261962890625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.34165954589844,
+          "max": 6560.19287109375,
+          "mean": 1.7723182439804077,
+          "std": 93.42168426513672,
+          "l2_norm": 6685.90478515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[25].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[25].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[25].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 26,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[26].residual.before",
+        "layer[26].attention.output",
+        "layer[26].residual.after_attention",
+        "layer[26].mlp.output",
+        "layer[26].residual.after_mlp",
+        "layer[26].output"
+      ],
+      "raw_components": [
+        "layer[26].residual.before",
+        "layer[26].attention.output",
+        "layer[26].residual.after_attention",
+        "layer[26].mlp.output",
+        "layer[26].residual.after_mlp",
+        "layer[26].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.34165954589844,
+          "max": 6560.19287109375,
+          "mean": 1.7723182439804077,
+          "std": 93.42168426513672,
+          "l2_norm": 6685.90478515625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -18.61992645263672,
+          "max": 27.455591201782227,
+          "mean": -0.021367037668824196,
+          "std": 2.225839853286743,
+          "l2_norm": 159.27545166015625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -153.39088439941406,
+          "max": 6544.91064453125,
+          "mean": 1.7509510517120361,
+          "std": 93.25981140136719,
+          "l2_norm": 6674.30224609375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -224.7503662109375,
+          "max": 134.74508666992188,
+          "mean": -0.05184901878237724,
+          "std": 5.045915126800537,
+          "l2_norm": 361.0752258300781,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -106.25721740722656,
+          "max": 6320.16015625,
+          "mean": 1.6991020441055298,
+          "std": 90.48067474365234,
+          "l2_norm": 6475.40869140625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[26].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[26].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[26].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    },
+    {
+      "layer_index": 27,
+      "attention_available": false,
+      "mlp_available": false,
+      "components": [
+        "layer[27].residual.before",
+        "layer[27].attention.output",
+        "layer[27].residual.after_attention",
+        "layer[27].mlp.output",
+        "layer[27].residual.after_mlp",
+        "layer[27].output"
+      ],
+      "raw_components": [
+        "layer[27].residual.before",
+        "layer[27].attention.output",
+        "layer[27].residual.after_attention",
+        "layer[27].mlp.output",
+        "layer[27].residual.after_mlp",
+        "layer[27].output"
+      ],
+      "referenced_bytes": 122880,
+      "byte_scope": "component references; aliases may overlap other layers",
+      "residual_statistics": {
+        "before": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -106.25721740722656,
+          "max": 6320.16015625,
+          "mean": 1.6991020441055298,
+          "std": 90.48067474365234,
+          "l2_norm": 6475.40869140625,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "attention_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -8.004334449768066,
+          "max": 21.549205780029297,
+          "mean": 0.105237677693367,
+          "std": 1.7392503023147583,
+          "l2_norm": 124.67823791503906,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_attention": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -107.94010162353516,
+          "max": 6323.55322265625,
+          "mean": 1.8043400049209595,
+          "std": 90.6570053100586,
+          "l2_norm": 6488.1689453125,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "mlp_update": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -4872.3916015625,
+          "max": 176.75955200195312,
+          "mean": -1.7817493677139282,
+          "std": 70.64339447021484,
+          "l2_norm": 5056.43115234375,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        },
+        "after_mlp": {
+          "finite_count": 5120,
+          "nonfinite_count": 0,
+          "min": -285.910888671875,
+          "max": 1451.16162109375,
+          "mean": 0.022590702399611473,
+          "std": 28.700204849243164,
+          "l2_norm": 2053.619873046875,
+          "accumulation_dtype": "float32",
+          "value_kind": "summary",
+          "reduction_scope": "retained coordinates; finite entries only; std correction=0",
+          "masked_count": 0,
+          "total_count": 5120
+        }
+      },
+      "validation": {
+        "layer[27].residual.attention": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[27].residual.mlp": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        },
+        "layer[27].layer_output": {
+          "passed": true,
+          "bitwise_equal": true,
+          "absolute_tolerance": 1e-05,
+          "relative_tolerance": 0.0001,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relative_l2_epsilon": 1e-12,
+          "comparison_dtype": "float64 audit of original values"
+        }
+      }
+    }
+  ],
+  "total": 28,
+  "next_cursor": null
+}

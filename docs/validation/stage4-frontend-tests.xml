@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="31" failures="0" errors="0" time="17.276718416">
+    <testsuite name="tests/workspace.test.tsx" timestamp="2026-10-08T09:56:56.330Z" hostname="wlcl-57-38.eduroam-st.b-tu.de" tests="31" failures="0" errors="0" skipped="0" time="17.276718416">
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; starts with the raw example and no model results" time="0.111895834">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; submits exact raw text once using overview capture" time="0.634456166">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; shows submitting and actual running states before readiness" time="0.576397875">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; renders all 28 layer buttons and the connected output stages" time="0.658102542">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; shows five real tokens with whitespace intact" time="0.623931542">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; keeps token selection when selecting Layer 12 and reads its endpoint" time="0.671203875">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; switches inspectors for embedding, norm, head and logits" time="0.73840575">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; maintains distinct candidate and input token selection" time="0.713958708">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; shows uncaptured attention and MLP without inference" time="0.6315915">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; does not retrace edits and resets selections on explicit execution" time="1.224310875">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; caches selected layer reads and stops ready polling" time="1.79972575">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; displays structured CAPTURE_BUDGET_EXCEEDED errors" time="0.048047875">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; displays structured TRACE_STORE_BUDGET_EXCEEDED errors" time="0.032218917">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; displays structured MODEL_NOT_READY errors" time="0.02871575">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; displays structured INVALID_REQUEST errors" time="0.028446542">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; handles actual fetch rejection without fallback science" time="0.01754775">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; handles failed envelopes" time="0.543875917">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; expires visible traces without retracing" time="1.428048791">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; turns detail 410 into the global expired state" time="0.621153042">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; handles deleted traces explicitly" time="0.646931417">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="Stage 4 workspace &gt; supports arrow and end keyboard selection" time="0.666326375">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; ignores a late manual status error for a replaced trace" time="0.601899041">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; discards a late deletion result for an old trace" time="1.242015959">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; aborts an obsolete layer read and ignores its late response" time="1.156663709">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; handles a component-not-captured response without rerunning" time="0.619463875">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; paginates real token metadata without truncating" time="0.583801084">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; rejects whitespace-only prompts before submission" time="0.028678666">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; shows queued state and stops when ready" time="0.536254334">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="trace isolation and lifecycle edges &gt; bounds a long trace wait and permits a read-only status check" time="0.059859417">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="selection and cancellation &gt; resets all incompatible global identities atomically" time="0.000776">
+        </testcase>
+        <testcase classname="tests/workspace.test.tsx" name="selection and cancellation &gt; passes external abort signals and preserves cancellation" time="0.0005995">
+        </testcase>
+    </testsuite>
+</testsuites>
