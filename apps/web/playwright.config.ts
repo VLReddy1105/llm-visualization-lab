@@ -11,7 +11,7 @@ export default defineConfig({
     [
       "json",
       {
-        outputFile: `../../docs/validation/stage4-browser${process.env.LLM_LAB_BROWSER_FAULT_MODE ? "-" + process.env.LLM_LAB_BROWSER_FAULT_MODE : ""}-results.json`,
+        outputFile: `../../docs/validation/${process.env.LLM_LAB_BROWSER_STAGE ?? "stage4"}-browser${process.env.LLM_LAB_BROWSER_FAULT_MODE ? "-" + process.env.LLM_LAB_BROWSER_FAULT_MODE : ""}-results.json`,
       },
     ],
   ],

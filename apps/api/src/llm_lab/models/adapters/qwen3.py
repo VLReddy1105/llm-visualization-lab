@@ -5,7 +5,6 @@ from collections.abc import Callable
 from typing import Any
 
 import torch
-from torch.nn import functional as F
 from transformers.models.qwen3 import modeling_qwen3
 
 from llm_lab.models.adapters.base import BaseModelAdapter, HookTarget, Observation
@@ -300,6 +299,16 @@ class Qwen3Adapter(BaseModelAdapter):
             )
             if index not in plan.detailed_layers:
                 continue
+            # Both detailed pathways expose the actual first RMSNorm result.
+            # The MLP profile does not need any QKV or attention-matrix retention.
+            if plan.captures_attention or plan.captures_mlp:
+                targets.append(
+                    self._target(
+                        layer.input_layernorm,
+                        "forward",
+                        (rspec("attention.input_normalized", optional=True), self._output),
+                    )
+                )
             if plan.captures_attention:
 
                 def aspec(
@@ -323,11 +332,6 @@ class Qwen3Adapter(BaseModelAdapter):
 
                 targets.extend(
                     (
-                        self._target(
-                            layer.input_layernorm,
-                            "forward",
-                            (rspec("attention.input_normalized", optional=True), self._output),
-                        ),
                         self._target(
                             layer.self_attn.q_proj,
                             "forward",
@@ -630,14 +634,14 @@ class Qwen3Adapter(BaseModelAdapter):
                     )
         return tuple(specs)
 
-    def native_mlp_projection(self, layer_index: int, gated: torch.Tensor) -> torch.Tensor:
-        projection = self.model.model.layers[layer_index].mlp.down_proj
+    def native_mlp_projection(
+        self, layer_index: int, gated: torch.Tensor, projection: str = "down"
+    ) -> torch.Tensor:
+        if projection not in {"gate", "up", "down"}:
+            raise ValueError("Unknown MLP projection")
+        projection = getattr(self.model.model.layers[layer_index].mlp, projection + "_proj")
         with torch.inference_mode():
-            update = F.linear(
-                gated.to(device=self.device, dtype=projection.weight.dtype),
-                projection.weight,
-                projection.bias,
-            )
+            update = projection.forward(gated.to(device=self.device, dtype=projection.weight.dtype))
             return update.detach().cpu()
 
     def native_rope(
@@ -689,7 +693,5 @@ class Qwen3Adapter(BaseModelAdapter):
     def native_lm_head(self, normalized: torch.Tensor) -> torch.Tensor:
         head = self.model.lm_head
         with torch.inference_mode():
-            logits = F.linear(
-                normalized.to(device=self.device, dtype=head.weight.dtype), head.weight, head.bias
-            )
+            logits = head.forward(normalized.to(device=self.device, dtype=head.weight.dtype))
             return logits.detach().cpu()

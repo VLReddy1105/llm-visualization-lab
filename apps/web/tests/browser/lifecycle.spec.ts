@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { resolve } from "node:path";
 
 const mode = process.env.LLM_LAB_BROWSER_FAULT_MODE;
+const outputDir = process.env.LLM_LAB_BROWSER_OUTPUT_DIR ?? "../../docs/validation";
 test("real backend unavailable state", async ({ page }) => {
   test.skip(mode !== "offline", "Run with the actual backend stopped.");
   await page.goto("/");
@@ -15,7 +16,7 @@ test("real backend unavailable state", async ({ page }) => {
     0,
   );
   await page.screenshot({
-    path: resolve("../../docs/validation/stage4-api-unavailable.png"),
+    path: resolve(outputDir, "stage4-api-unavailable.png"),
     fullPage: true,
   });
 });
@@ -46,7 +47,7 @@ test("real trace expiry without automatic retrace", async ({ page }) => {
   );
   expect(creations).toBe(1);
   await page.screenshot({
-    path: resolve("../../docs/validation/stage4-expired.png"),
+    path: resolve(outputDir, "stage4-expired.png"),
     fullPage: true,
   });
 });

@@ -1,0 +1,20 @@
+
+> llm-visualization-lab@0.1.0 test:browser
+> npm run test:browser --workspace @llm-lab/web journey.spec.ts attention.spec.ts evolution.spec.ts
+
+
+> @llm-lab/web@0.1.0 test:browser
+> playwright test journey.spec.ts attention.spec.ts evolution.spec.ts
+
+
+Running 5 tests using 1 worker
+
+(node:78863) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/attention.spec.ts:69:5 › real Qwen attention: Germany, France, all heads, relation fidelity, reuse and zero forwards (29.3s)
+  ✓  2 tests/browser/attention.spec.ts:367:5 › real longer sequence uses bounded windows and retains full-row normalization (7.4s)
+  ✓  3 tests/browser/evolution.spec.ts:33:7 › Stage 6 real Germany: depth, lens, sampling, reuse and accessibility (13.5s)
+  ✓  4 tests/browser/evolution.spec.ts:33:7 › Stage 6 real France: depth, lens, sampling, reuse and accessibility (12.3s)
+  ✓  5 tests/browser/journey.spec.ts:15:5 › real Qwen Model Journey, linked selection, navigation and presentation (6.4s)
+
+  5 passed (1.2m)

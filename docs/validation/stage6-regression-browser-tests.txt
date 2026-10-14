@@ -1,0 +1,14 @@
+
+> @llm-lab/web@0.1.0 test:browser
+> playwright test journey.spec.ts attention.spec.ts
+
+
+Running 3 tests using 1 worker
+
+(node:4667) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/attention.spec.ts:69:5 › real Qwen attention: Germany, France, all heads, relation fidelity, reuse and zero forwards (18.2s)
+  ✓  2 tests/browser/attention.spec.ts:367:5 › real longer sequence uses bounded windows and retains full-row normalization (6.8s)
+  ✓  3 tests/browser/journey.spec.ts:15:5 › real Qwen Model Journey, linked selection, navigation and presentation (5.8s)
+
+  3 passed (33.6s)

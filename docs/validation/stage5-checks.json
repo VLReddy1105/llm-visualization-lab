@@ -1,0 +1,43 @@
+{
+  "completed_date": "2026-10-09",
+  "stage": 5,
+  "status": "PASS",
+  "backend_mps": {
+    "passed": 230,
+    "seconds": 20.09,
+    "date": "2026-10-08"
+  },
+  "backend_cpu": {
+    "passed": 230,
+    "seconds": 20.2,
+    "date": "2026-10-08"
+  },
+  "frontend": {
+    "passed": 52,
+    "seconds": 18.21
+  },
+  "browser": {
+    "passed": 2,
+    "seconds": 19.6,
+    "real_backend": true,
+    "production_build": true,
+    "prompts": [
+      "The capital of Germany is",
+      "The capital of France is",
+      "28-token extended prompt"
+    ]
+  },
+  "typescript": "PASS",
+  "eslint": "PASS",
+  "production_build": "PASS",
+  "openapi_export_check": "PASS",
+  "generated_types_check": "PASS",
+  "ruff_lint": "PASS",
+  "ruff_format": "PASS",
+  "accessibility": {
+    "violations": 0,
+    "passed_rules": 48,
+    "long_sequence_violations": 0
+  },
+  "stopped_before_stage": 6
+}

@@ -18,6 +18,7 @@ from llm_lab.errors import ServiceError
 from llm_lab.schemas.components import TensorDescriptor
 from llm_lab.schemas.trace import TraceResult
 from llm_lab.schemas.trace_api import IndexSelector, SliceRequest
+from llm_lab.tracing.collector import tensor_statistics
 
 _LAYER_SUFFIXES = {
     "residual.before",
@@ -431,6 +432,29 @@ class TraceSerializer:
                 tensor = tensor.index_select(axis, torch.tensor(indices[axis], dtype=torch.long))
         return d, requested, tensor
 
+    def slice_statistics(self, trace, component_id, request, tensor):
+        """Reduce only an already bounded selection, preserving native mask semantics."""
+        if not request.include_statistics:
+            return None
+        exclude = None
+        if component_id.endswith("attention.masked_scores"):
+            selectors = {k: v for k, v in request.selectors.items() if k != "query_head"}
+            _, _, mask = self.select_tensor(
+                trace, "position.attention_mask", SliceRequest(selectors=selectors)
+            )
+            exclude = ((mask < 0) | ~torch.isfinite(mask)).expand_as(tensor)
+        elif component_id == "position.attention_mask":
+            exclude = (tensor < 0) | ~torch.isfinite(tensor)
+        stats = plain(tensor_statistics(tensor, exclude=exclude))
+        stats["reduction_scope"] = stats["reduction_scope"].replace(
+            "retained coordinates", "requested slice coordinates"
+        )
+        stats["finite"] = stats["nonfinite_count"] == 0
+        stats["undefined_fields"] = [
+            name for name in ("min", "max", "mean", "std", "l2_norm") if stats[name] is None
+        ]
+        return stats
+
     def slice_response(self, trace: TraceResult, component_id: str, request: SliceRequest):
         if request.format == "json":
             return self.response(self.slice(trace, component_id, request))
@@ -463,6 +487,7 @@ class TraceSerializer:
             "storage_dtype": d.storage_dtype,
             "wire_dtype": "little_endian_float32",
             "nonfinite_encoding": "IEEE-754; native mask is a separate component",
+            "statistics": self.slice_statistics(trace, component_id, request, tensor),
         }
         header = json.dumps(metadata, allow_nan=False, ensure_ascii=True, separators=(",", ":"))
         if len(header.encode()) > min(8192, self.settings.trace_api_max_response_bytes):
@@ -524,6 +549,7 @@ class TraceSerializer:
             "values": values,
             "nonfinite": nonfinite,
             "masked_flat_indices": masked,
+            "statistics": self.slice_statistics(trace, component_id, request, tensor),
         }
 
     def head(

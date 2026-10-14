@@ -55,6 +55,7 @@ export function ModelJourney({
 }) {
   const component = useSelection((state) => state.selectedComponent);
   const layer = useSelection((state) => state.selectedLayer);
+  const depth = useSelection((state) => state.selectedDepth);
   const token = useSelection((state) => state.selectedToken);
   const mode = useSelection((state) => state.viewport);
   const setMode = useSelection((state) => state.setViewport);
@@ -83,9 +84,17 @@ export function ModelJourney({
   }));
   const items: JourneyItem[] = [...start, ...layerItems, ...tail];
   const activeKey =
-    component === "layer"
-      ? `layer-${layer}`
-      : items.find((item) => item.component === component)?.key;
+    component === "evolution"
+      ? depth === 0
+        ? "embedding"
+        : layer != null
+          ? `layer-${layer}`
+          : depth != null
+            ? "norm"
+            : undefined
+      : component === "layer" || component === "attention" || component === "residual"
+        ? `layer-${layer}`
+        : items.find((item) => item.component === component)?.key;
   function center(key: string, focus = false) {
     const container = viewport.current;
     const node = container?.querySelector<HTMLButtonElement>(
@@ -170,7 +179,9 @@ export function ModelJourney({
     event.currentTarget.setPointerCapture(event.pointerId);
   }
   return (
-    <div className={`model-journey ${mode}`}>
+    <div
+      className={`model-journey ${mode} ${component === "attention" ? "attention-zoom" : ""}`}
+    >
       <div className="journey-heading">
         <div>
           <p className="eyebrow">THE COMPUTATION</p>

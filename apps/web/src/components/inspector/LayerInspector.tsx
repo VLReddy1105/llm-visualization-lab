@@ -4,6 +4,8 @@ import { layerQuery } from "@/lib/api/queries";
 import { number, RawData } from "@/components/ui/ScientificData";
 import { ApiErrorNotice } from "@/components/trace/ApiErrorNotice";
 
+import { LayerFlow } from "./LayerFlow";
+
 function record(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -43,16 +45,6 @@ export function LayerInspector({
     { suffix: "mlp.output", name: "MLP update" },
     { suffix: "residual.after_mlp", name: "Layer output" },
   ];
-  const steps = [
-    "Residual input",
-    "RMSNorm",
-    "Self attention",
-    "Residual add",
-    "RMSNorm",
-    "MLP",
-    "Residual add",
-    "Output",
-  ];
   return (
     <div className="layer-inspector">
       <div className="inspector-intro">
@@ -67,31 +59,13 @@ export function LayerInspector({
               : "Validation not recorded"}
         </span>
       </div>
-      <div
-        className="layer-flow"
-        role="img"
-        aria-label="Residual input to RMSNorm to self attention to residual addition to RMSNorm to MLP to residual addition to output. Residual bypasses feed both additions."
-      >
-        <span className="residual-bypass first-bypass" aria-hidden="true" />
-        <span className="residual-bypass second-bypass" aria-hidden="true" />
-        {steps.map((step, position) => (
-          <div
-            className={`operation ${position === 2 ? "attention-operation" : position === 5 ? "mlp-operation" : step === "Residual add" ? "addition" : ""}`}
-            key={position}
-          >
-            {step === "Residual add" ? (
-              <>
-                <span aria-hidden="true">+</span>
-                <small>Residual add</small>
-              </>
-            ) : (
-              step
-            )}
-          </div>
-        ))}
-      </div>
+      <LayerFlow
+        index={index}
+        fallbackToken={overview.input.sequence_length - 1}
+        data={data}
+      />
       <p className="fine-print">
-        Qwen3 structural preview · summaries below cover all captured token
+        Qwen3 layer microscope · summaries below cover all captured token
         positions.
       </p>
       <div className="layer-data">

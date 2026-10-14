@@ -1,0 +1,2 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<09:09,  1.77s/it]Loading weights:  69%|██████▉   | 214/311 [00:01<00:00, 159.11it/s]Loading weights: 100%|██████████| 311/311 [00:02<00:00, 109.50it/s]
+Stage 7 mps: PASS — ../../docs/validation/stage7-scientific-mps.json

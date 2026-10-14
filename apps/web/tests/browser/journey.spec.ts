@@ -5,7 +5,9 @@ import { resolve } from "node:path";
 import type { TraceEnvelope, TraceStoreStatus } from "../../src/lib/api/client";
 
 const apiUrl = "http://127.0.0.1:8000/api/v1";
-const output = resolve("../../docs/validation");
+const output = resolve(
+  process.env.LLM_LAB_BROWSER_OUTPUT_DIR ?? "../../docs/validation",
+);
 async function screenshot(page: Page, name: string) {
   await page.screenshot({ path: resolve(output, name), fullPage: true });
 }

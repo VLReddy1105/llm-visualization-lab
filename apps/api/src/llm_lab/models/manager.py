@@ -284,6 +284,11 @@ class ModelService:
         self._require_ready()
         return self._submit(function, *args)
 
+    def submit_analysis_job(self, function, *args) -> Future:
+        """Serialize saved-state readout with loading/tracing; never calls forward."""
+        self._require_ready()
+        return self._submit(function, *args)
+
     def execution_metrics(self) -> dict:
         with self._state_lock:
             return {

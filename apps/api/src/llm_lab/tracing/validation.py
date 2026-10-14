@@ -152,6 +152,24 @@ def validate_detailed_capture(
                     "mask_kind": "actual unpadded causal additive mask with finite dtype minimum",
                 }
         if plan.captures_mlp:
+            if not plan.captures_attention:
+                check(
+                    prefix + "attention.rmsnorm",
+                    tensors[prefix + "attention.input_normalized"],
+                    adapter.native_norm("attention", tensors[prefix + "residual.before"], layer),
+                )
+            for branch in ("gate", "up"):
+                projection_name = prefix + "mlp." + branch + "_projection"
+                if prerequisites(
+                    projection_name, prefix + "mlp.input_normalized", prefix + "mlp." + branch
+                ):
+                    check(
+                        projection_name,
+                        tensors[prefix + "mlp." + branch],
+                        adapter.native_mlp_projection(
+                            layer, tensors[prefix + "mlp.input_normalized"], branch
+                        ),
+                    )
             norm_name = prefix + "mlp.rmsnorm"
             if prerequisites(
                 norm_name, prefix + "residual.after_attention", prefix + "mlp.input_normalized"

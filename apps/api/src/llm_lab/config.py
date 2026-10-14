@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     trace_api_max_elements: int = Field(default=65536, ge=1, le=1048576)
     trace_api_max_response_bytes: int = Field(default=1024 * 1024, ge=1024, le=16 * 1024**2)
     trace_sweep_seconds: float = Field(default=15, gt=0, le=60)
+    analysis_cache_max_bytes: int = Field(default=16 * 1024**2, ge=1024, le=256 * 1024**2)
+    analysis_cache_max_entries: int = Field(default=128, ge=1, le=1024)
+    analysis_ttl_seconds: float = Field(default=600, gt=0, le=3600)
+    analysis_work_max_bytes: int = Field(default=32 * 1024**2, ge=1024, le=256 * 1024**2)
     cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @field_validator("cors_origins")

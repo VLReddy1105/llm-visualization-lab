@@ -1,0 +1,174 @@
+{
+  "observed_at": "2026-10-10T23:51:14.576090+00:00",
+  "device": "mps",
+  "timing_note": "Local HTTP wall time including serialization/polling; cold means uncached analysis on an already retained trace and loaded model, not cold model startup. Single observations are not throughput guarantees.",
+  "before": {
+    "trace_count": 4,
+    "retained_bytes": 14237856,
+    "reserved_bytes": 0,
+    "accounted_bytes": 14237856,
+    "max_bytes": 536870912,
+    "ttl_seconds": 1800.0,
+    "max_entries": 1024,
+    "eviction_count": 0,
+    "expiration_count": 0,
+    "active_leases": 0,
+    "deferred_removals": 0,
+    "tombstone_count": 0,
+    "request_forward_passes": 4,
+    "counter_scope": "adapter.forward attempts from inference/trace; excludes load warmup and independent validation reference",
+    "max_elements": 65536,
+    "max_response_bytes": 1048576
+  },
+  "cases": [
+    {
+      "country": "germany",
+      "trace_id": "c8567e21-559d-4de8-9ffb-514f96c3cd20",
+      "analysis_id": "e02dbe69-96ff-40db-9d31-f9cae59536de",
+      "request": {
+        "kind": "token_evolution",
+        "parameters": {
+          "token_index": 2
+        }
+      },
+      "uncached_ack_was_cache_hit": false,
+      "cold_analysis_ms": 68.49404098466039,
+      "cache_hit_count": 20,
+      "cached_http_p50_ms": 5.894271002034657,
+      "cached_http_p95_ms": 6.281084002694115,
+      "max_response_bytes": 101691,
+      "retained_result_bytes": 101263,
+      "sha256_result": "0a7f5eb97c30788b7c6abe1cefea95a8c0201679c928f475152bc266618c1edb"
+    },
+    {
+      "country": "germany",
+      "trace_id": "c8567e21-559d-4de8-9ffb-514f96c3cd20",
+      "analysis_id": "8c6cfafa-db0b-48cb-a3ff-3d8044a18639",
+      "request": {
+        "kind": "logit_lens",
+        "parameters": {
+          "token_index": 2,
+          "display_top_k": 5,
+          "candidate_ids": [],
+          "recipe": "final_norm_then_lm_head"
+        }
+      },
+      "uncached_ack_was_cache_hit": false,
+      "cold_analysis_ms": 915.8733339863829,
+      "cache_hit_count": 20,
+      "cached_http_p50_ms": 3.3532919915160164,
+      "cached_http_p95_ms": 3.546666994225234,
+      "max_response_bytes": 45770,
+      "retained_result_bytes": 45277,
+      "sha256_result": "a9b10cf8d755374f2c93f052741d0ee98747100199ae22af0804cf22af87a35d"
+    },
+    {
+      "country": "germany",
+      "trace_id": "c8567e21-559d-4de8-9ffb-514f96c3cd20",
+      "analysis_id": "6da2c428-9574-4ec4-bdc5-387ba4da966c",
+      "request": {
+        "kind": "sampling_preview",
+        "parameters": {
+          "token_index": 4,
+          "temperature": 0.9,
+          "top_k": 40,
+          "top_p": 0.95,
+          "display_top_k": 10,
+          "mode": "sample"
+        }
+      },
+      "uncached_ack_was_cache_hit": false,
+      "cold_analysis_ms": 57.29554200661369,
+      "cache_hit_count": 20,
+      "cached_http_p50_ms": 1.2652709992835298,
+      "cached_http_p95_ms": 1.6114589816424996,
+      "max_response_bytes": 4361,
+      "retained_result_bytes": 3859,
+      "sha256_result": "16f699a1e9008e8497952b07b99136ee51fb0711d8ebd7d36afb484e894472ca"
+    },
+    {
+      "country": "france",
+      "trace_id": "cf175a51-0d93-4f76-a1bb-0b23fd2bcc06",
+      "analysis_id": "6a4b544e-5502-48b2-9df4-44f9ae562c45",
+      "request": {
+        "kind": "token_evolution",
+        "parameters": {
+          "token_index": 2
+        }
+      },
+      "uncached_ack_was_cache_hit": false,
+      "cold_analysis_ms": 34.180000016931444,
+      "cache_hit_count": 20,
+      "cached_http_p50_ms": 5.904562000068836,
+      "cached_http_p95_ms": 6.435874995077029,
+      "max_response_bytes": 101691,
+      "retained_result_bytes": 101263,
+      "sha256_result": "178828d3153e991fd1157000ded19fa4ed6d8f7bff3469024ba5225c287b6f01"
+    },
+    {
+      "country": "france",
+      "trace_id": "cf175a51-0d93-4f76-a1bb-0b23fd2bcc06",
+      "analysis_id": "4a34890e-fc78-4024-9663-7cb6ca76dc7e",
+      "request": {
+        "kind": "logit_lens",
+        "parameters": {
+          "token_index": 2,
+          "display_top_k": 5,
+          "candidate_ids": [],
+          "recipe": "final_norm_then_lm_head"
+        }
+      },
+      "uncached_ack_was_cache_hit": false,
+      "cold_analysis_ms": 701.9133339927066,
+      "cache_hit_count": 20,
+      "cached_http_p50_ms": 3.525145511957817,
+      "cached_http_p95_ms": 3.9518330013379455,
+      "max_response_bytes": 45770,
+      "retained_result_bytes": 45277,
+      "sha256_result": "11f5f00e6139fd500be09ba98a1550a4fc9612e19df39d94290df55578639054"
+    },
+    {
+      "country": "france",
+      "trace_id": "cf175a51-0d93-4f76-a1bb-0b23fd2bcc06",
+      "analysis_id": "93c243d3-5948-4e98-adcb-048ca89ea58f",
+      "request": {
+        "kind": "sampling_preview",
+        "parameters": {
+          "token_index": 4,
+          "temperature": 0.9,
+          "top_k": 40,
+          "top_p": 0.95,
+          "display_top_k": 10,
+          "mode": "sample"
+        }
+      },
+      "uncached_ack_was_cache_hit": false,
+      "cold_analysis_ms": 50.6567919801455,
+      "cache_hit_count": 20,
+      "cached_http_p50_ms": 1.4295000000856817,
+      "cached_http_p95_ms": 1.6126669943332672,
+      "max_response_bytes": 4357,
+      "retained_result_bytes": 3855,
+      "sha256_result": "cf658f1e4b8652f6697ec3110fa8bc3d512df2a4d1c70c5ab58e87c1bc9b7ca2"
+    }
+  ],
+  "after": {
+    "trace_count": 4,
+    "retained_bytes": 14237856,
+    "reserved_bytes": 0,
+    "accounted_bytes": 14237856,
+    "max_bytes": 536870912,
+    "ttl_seconds": 1800.0,
+    "max_entries": 1024,
+    "eviction_count": 0,
+    "expiration_count": 0,
+    "active_leases": 0,
+    "deferred_removals": 0,
+    "tombstone_count": 0,
+    "request_forward_passes": 4,
+    "counter_scope": "adapter.forward attempts from inference/trace; excludes load warmup and independent validation reference",
+    "max_elements": 65536,
+    "max_response_bytes": 1048576
+  },
+  "additional_forward_passes": 0
+}

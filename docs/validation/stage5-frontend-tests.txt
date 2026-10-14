@@ -1,0 +1,17 @@
+
+> llm-visualization-lab@0.1.0 test
+> npm run test --workspace @llm-lab/web
+
+
+> @llm-lab/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.3 /Users/likhithreddy/Documents/llm interpreter/apps/web
+
+
+ Test Files  2 passed (2)
+      Tests  52 passed (52)
+   Start at  13:17:56
+   Duration  18.21s (tests 91%, environment 5%, setup 1%, transform 1%, import 1%)
+

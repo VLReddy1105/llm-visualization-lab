@@ -1,6 +1,248 @@
 {
   "components": {
     "schemas": {
+      "AnalysisError": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "retryable": {
+            "default": false,
+            "title": "Retryable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "AnalysisError",
+        "type": "object"
+      },
+      "AnalysisJob": {
+        "additionalProperties": false,
+        "properties": {
+          "analysis_id": {
+            "title": "Analysis Id",
+            "type": "string"
+          },
+          "cache_hit": {
+            "default": false,
+            "title": "Cache Hit",
+            "type": "boolean"
+          },
+          "completed_checkpoints": {
+            "title": "Completed Checkpoints",
+            "type": "integer"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expires_at": {
+            "title": "Expires At",
+            "type": "string"
+          },
+          "method_version": {
+            "default": "stage6.v1",
+            "enum": [
+              "stage6.v1",
+              "stage7.v1"
+            ],
+            "title": "Method Version",
+            "type": "string"
+          },
+          "request": {
+            "discriminator": {
+              "mapping": {
+                "logit_lens": "#/components/schemas/LensRequest",
+                "mlp_internals": "#/components/schemas/MLPInternalsRequest",
+                "residual_stream": "#/components/schemas/ResidualStreamRequest",
+                "sampling_preview": "#/components/schemas/SamplingRequest",
+                "token_evolution": "#/components/schemas/EvolutionRequest"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EvolutionRequest"
+              },
+              {
+                "$ref": "#/components/schemas/LensRequest"
+              },
+              {
+                "$ref": "#/components/schemas/SamplingRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ResidualStreamRequest"
+              },
+              {
+                "$ref": "#/components/schemas/MLPInternalsRequest"
+              }
+            ],
+            "title": "Request"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvolutionResult"
+              },
+              {
+                "$ref": "#/components/schemas/LensResult"
+              },
+              {
+                "$ref": "#/components/schemas/SamplingResult"
+              },
+              {
+                "$ref": "#/components/schemas/ResidualStreamResult"
+              },
+              {
+                "$ref": "#/components/schemas/MLPInternalsResult"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "retained_bytes": {
+            "title": "Retained Bytes",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "ready",
+              "failed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "total_checkpoints": {
+            "title": "Total Checkpoints",
+            "type": "integer"
+          },
+          "trace_id": {
+            "title": "Trace Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "analysis_id",
+          "trace_id",
+          "request",
+          "status",
+          "completed_checkpoints",
+          "total_checkpoints",
+          "created_at",
+          "expires_at",
+          "retained_bytes"
+        ],
+        "title": "AnalysisJob",
+        "type": "object"
+      },
+      "AnalysisSource": {
+        "additionalProperties": false,
+        "properties": {
+          "config_digest": {
+            "title": "Config Digest",
+            "type": "string"
+          },
+          "device": {
+            "title": "Device",
+            "type": "string"
+          },
+          "dtype": {
+            "title": "Dtype",
+            "type": "string"
+          },
+          "hf_model_id": {
+            "title": "Hf Model Id",
+            "type": "string"
+          },
+          "hidden_size": {
+            "title": "Hidden Size",
+            "type": "integer"
+          },
+          "implementation_digest": {
+            "title": "Implementation Digest",
+            "type": "string"
+          },
+          "layer_count": {
+            "title": "Layer Count",
+            "type": "integer"
+          },
+          "model_id": {
+            "title": "Model Id",
+            "type": "string"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "string"
+          },
+          "token": {
+            "$ref": "#/components/schemas/TokenMetadata"
+          },
+          "tokenizer_revision": {
+            "title": "Tokenizer Revision",
+            "type": "string"
+          },
+          "trace_id": {
+            "title": "Trace Id",
+            "type": "string"
+          },
+          "value_kind": {
+            "const": "derived",
+            "default": "derived",
+            "title": "Value Kind",
+            "type": "string"
+          },
+          "vocabulary_size": {
+            "title": "Vocabulary Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "trace_id",
+          "token",
+          "model_id",
+          "hf_model_id",
+          "revision",
+          "tokenizer_revision",
+          "device",
+          "dtype",
+          "layer_count",
+          "hidden_size",
+          "vocabulary_size",
+          "config_digest",
+          "implementation_digest"
+        ],
+        "title": "AnalysisSource",
+        "type": "object"
+      },
       "Architecture": {
         "additionalProperties": false,
         "properties": {
@@ -265,6 +507,207 @@
         "title": "AvailableComponents",
         "type": "object"
       },
+      "BlockOperation": {
+        "additionalProperties": false,
+        "properties": {
+          "component_id": {
+            "title": "Component Id",
+            "type": "string"
+          },
+          "coordinates": {
+            "items": {
+              "$ref": "#/components/schemas/CoordinateValue"
+            },
+            "title": "Coordinates",
+            "type": "array"
+          },
+          "dtype": {
+            "title": "Dtype",
+            "type": "string"
+          },
+          "formula": {
+            "title": "Formula",
+            "type": "string"
+          },
+          "input_components": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Input Components",
+            "type": "array"
+          },
+          "input_shapes": {
+            "items": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "title": "Input Shapes",
+            "type": "array"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "original_device": {
+            "title": "Original Device",
+            "type": "string"
+          },
+          "output_shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Output Shape",
+            "type": "array"
+          },
+          "provenance": {
+            "enum": [
+              "raw",
+              "derived",
+              "reconstructed",
+              "summary"
+            ],
+            "title": "Provenance",
+            "type": "string"
+          },
+          "selected_coordinate": {
+            "$ref": "#/components/schemas/CoordinateValue"
+          },
+          "selected_shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Selected Shape",
+            "type": "array"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/VectorStatistics"
+          },
+          "symbol": {
+            "title": "Symbol",
+            "type": "string"
+          }
+        },
+        "required": [
+          "symbol",
+          "component_id",
+          "name",
+          "formula",
+          "input_components",
+          "input_shapes",
+          "output_shape",
+          "selected_shape",
+          "dtype",
+          "original_device",
+          "provenance",
+          "method",
+          "statistics",
+          "coordinates",
+          "selected_coordinate"
+        ],
+        "title": "BlockOperation",
+        "type": "object"
+      },
+      "BlockParameters": {
+        "additionalProperties": false,
+        "properties": {
+          "hidden_coordinate_index": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Hidden Coordinate Index",
+            "type": "integer"
+          },
+          "intermediate_coordinate_index": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Intermediate Coordinate Index",
+            "type": "integer"
+          },
+          "layer_index": {
+            "minimum": 0.0,
+            "title": "Layer Index",
+            "type": "integer"
+          },
+          "ranking": {
+            "default": "absolute",
+            "enum": [
+              "absolute",
+              "positive",
+              "negative"
+            ],
+            "title": "Ranking",
+            "type": "string"
+          },
+          "token_index": {
+            "minimum": 0.0,
+            "title": "Token Index",
+            "type": "integer"
+          },
+          "top_k": {
+            "default": 12,
+            "maximum": 64.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "token_index",
+          "layer_index"
+        ],
+        "title": "BlockParameters",
+        "type": "object"
+      },
+      "BlockReconciliation": {
+        "additionalProperties": false,
+        "properties": {
+          "formula": {
+            "title": "Formula",
+            "type": "string"
+          },
+          "metrics": {
+            "$ref": "#/components/schemas/ComparisonMetrics"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "provenance": {
+            "default": "derived",
+            "enum": [
+              "derived",
+              "independent_reference"
+            ],
+            "title": "Provenance",
+            "type": "string"
+          },
+          "scope": {
+            "title": "Scope",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sources",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "formula",
+          "sources",
+          "scope",
+          "metrics"
+        ],
+        "title": "BlockReconciliation",
+        "type": "object"
+      },
       "CancellationResponse": {
         "additionalProperties": false,
         "properties": {
@@ -393,6 +836,60 @@
           }
         },
         "title": "CaptureRequest",
+        "type": "object"
+      },
+      "ComparisonMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "absolute_tolerance": {
+            "title": "Absolute Tolerance",
+            "type": "number"
+          },
+          "bitwise_equal": {
+            "title": "Bitwise Equal",
+            "type": "boolean"
+          },
+          "comparison_dtype": {
+            "title": "Comparison Dtype",
+            "type": "string"
+          },
+          "max_absolute_error": {
+            "title": "Max Absolute Error",
+            "type": "number"
+          },
+          "mean_absolute_error": {
+            "title": "Mean Absolute Error",
+            "type": "number"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "relative_l2_epsilon": {
+            "title": "Relative L2 Epsilon",
+            "type": "number"
+          },
+          "relative_l2_error": {
+            "title": "Relative L2 Error",
+            "type": "number"
+          },
+          "relative_tolerance": {
+            "title": "Relative Tolerance",
+            "type": "number"
+          }
+        },
+        "required": [
+          "passed",
+          "bitwise_equal",
+          "absolute_tolerance",
+          "relative_tolerance",
+          "max_absolute_error",
+          "mean_absolute_error",
+          "relative_l2_error",
+          "relative_l2_epsilon",
+          "comparison_dtype"
+        ],
+        "title": "ComparisonMetrics",
         "type": "object"
       },
       "ComponentDescriptor": {
@@ -617,6 +1114,25 @@
         "title": "ComponentPage",
         "type": "object"
       },
+      "CoordinateValue": {
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "index",
+          "value"
+        ],
+        "title": "CoordinateValue",
+        "type": "object"
+      },
       "Coordinates": {
         "additionalProperties": false,
         "properties": {
@@ -819,6 +1335,110 @@
         "title": "ErrorResponse",
         "type": "object"
       },
+      "EvolutionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "token_evolution",
+            "title": "Kind",
+            "type": "string"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/PositionParameters"
+          }
+        },
+        "required": [
+          "kind",
+          "parameters"
+        ],
+        "title": "EvolutionRequest",
+        "type": "object"
+      },
+      "EvolutionResult": {
+        "additionalProperties": false,
+        "properties": {
+          "accumulation_dtype": {
+            "const": "float64",
+            "default": "float64",
+            "title": "Accumulation Dtype",
+            "type": "string"
+          },
+          "checkpoints": {
+            "items": {
+              "$ref": "#/components/schemas/RepresentationMetric"
+            },
+            "title": "Checkpoints",
+            "type": "array"
+          },
+          "comparisons": {
+            "items": {
+              "$ref": "#/components/schemas/LayerComparison"
+            },
+            "title": "Comparisons",
+            "type": "array"
+          },
+          "kind": {
+            "const": "token_evolution",
+            "default": "token_evolution",
+            "title": "Kind",
+            "type": "string"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/components/schemas/AnalysisSource"
+          }
+        },
+        "required": [
+          "source",
+          "checkpoints",
+          "comparisons",
+          "method"
+        ],
+        "title": "EvolutionResult",
+        "type": "object"
+      },
+      "GateCoordinate": {
+        "additionalProperties": false,
+        "properties": {
+          "activated_gate": {
+            "title": "Activated Gate",
+            "type": "number"
+          },
+          "gate": {
+            "title": "Gate",
+            "type": "number"
+          },
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "multiplication_error": {
+            "title": "Multiplication Error",
+            "type": "number"
+          },
+          "product": {
+            "title": "Product",
+            "type": "number"
+          },
+          "up": {
+            "title": "Up",
+            "type": "number"
+          }
+        },
+        "required": [
+          "index",
+          "gate",
+          "activated_gate",
+          "up",
+          "product",
+          "multiplication_error"
+        ],
+        "title": "GateCoordinate",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -920,6 +1540,288 @@
         "title": "InputResult",
         "type": "object"
       },
+      "LayerComparison": {
+        "additionalProperties": false,
+        "properties": {
+          "cosine_similarity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cosine Similarity"
+          },
+          "from_checkpoint": {
+            "title": "From Checkpoint",
+            "type": "integer"
+          },
+          "l2_distance": {
+            "title": "L2 Distance",
+            "type": "number"
+          },
+          "norm_change": {
+            "title": "Norm Change",
+            "type": "number"
+          },
+          "to_checkpoint": {
+            "title": "To Checkpoint",
+            "type": "integer"
+          },
+          "undefined_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undefined Reason"
+          }
+        },
+        "required": [
+          "from_checkpoint",
+          "to_checkpoint",
+          "l2_distance",
+          "norm_change",
+          "cosine_similarity",
+          "undefined_reason"
+        ],
+        "title": "LayerComparison",
+        "type": "object"
+      },
+      "LensCheckpoint": {
+        "additionalProperties": false,
+        "properties": {
+          "checkpoint_index": {
+            "title": "Checkpoint Index",
+            "type": "integer"
+          },
+          "comparison_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "title": "Comparison Candidates",
+            "type": "array"
+          },
+          "component_id": {
+            "title": "Component Id",
+            "type": "string"
+          },
+          "entropy_nats": {
+            "title": "Entropy Nats",
+            "type": "number"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "layer_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Layer Index"
+          },
+          "normalization_applied": {
+            "title": "Normalization Applied",
+            "type": "boolean"
+          },
+          "omitted_probability_mass": {
+            "title": "Omitted Probability Mass",
+            "type": "number"
+          },
+          "probability_sum": {
+            "title": "Probability Sum",
+            "type": "number"
+          },
+          "stage": {
+            "enum": [
+              "embedding",
+              "post_block_residual",
+              "final_normalized"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "top_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "title": "Top Candidates",
+            "type": "array"
+          }
+        },
+        "required": [
+          "checkpoint_index",
+          "component_id",
+          "label",
+          "stage",
+          "layer_index",
+          "normalization_applied",
+          "top_candidates",
+          "comparison_candidates",
+          "probability_sum",
+          "entropy_nats",
+          "omitted_probability_mass"
+        ],
+        "title": "LensCheckpoint",
+        "type": "object"
+      },
+      "LensParameters": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_ids": {
+            "items": {
+              "minimum": 0.0,
+              "type": "integer"
+            },
+            "maxItems": 8,
+            "title": "Candidate Ids",
+            "type": "array"
+          },
+          "display_top_k": {
+            "default": 5,
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Display Top K",
+            "type": "integer"
+          },
+          "recipe": {
+            "const": "final_norm_then_lm_head",
+            "default": "final_norm_then_lm_head",
+            "title": "Recipe",
+            "type": "string"
+          },
+          "token_index": {
+            "minimum": 0.0,
+            "title": "Token Index",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "token_index"
+        ],
+        "title": "LensParameters",
+        "type": "object"
+      },
+      "LensRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "logit_lens",
+            "title": "Kind",
+            "type": "string"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/LensParameters"
+          }
+        },
+        "required": [
+          "kind",
+          "parameters"
+        ],
+        "title": "LensRequest",
+        "type": "object"
+      },
+      "LensResult": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Candidate Ids",
+            "type": "array"
+          },
+          "checkpoints": {
+            "items": {
+              "$ref": "#/components/schemas/LensCheckpoint"
+            },
+            "title": "Checkpoints",
+            "type": "array"
+          },
+          "comparison_note": {
+            "title": "Comparison Note",
+            "type": "string"
+          },
+          "final_logits_comparison": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ComparisonMetrics"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "final_normalization_comparison": {
+            "$ref": "#/components/schemas/ComparisonMetrics"
+          },
+          "final_probabilities_comparison": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ComparisonMetrics"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "kind": {
+            "const": "logit_lens",
+            "default": "logit_lens",
+            "title": "Kind",
+            "type": "string"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "next_position": {
+            "title": "Next Position",
+            "type": "integer"
+          },
+          "prediction_position": {
+            "title": "Prediction Position",
+            "type": "integer"
+          },
+          "probability_policy": {
+            "title": "Probability Policy",
+            "type": "string"
+          },
+          "rank_policy": {
+            "title": "Rank Policy",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/components/schemas/AnalysisSource"
+          }
+        },
+        "required": [
+          "source",
+          "prediction_position",
+          "next_position",
+          "candidate_ids",
+          "checkpoints",
+          "final_logits_comparison",
+          "final_probabilities_comparison",
+          "final_normalization_comparison",
+          "comparison_note",
+          "method",
+          "rank_policy",
+          "probability_policy"
+        ],
+        "title": "LensResult",
+        "type": "object"
+      },
       "LogitsResponse": {
         "additionalProperties": false,
         "properties": {
@@ -973,6 +1875,92 @@
           "probabilities"
         ],
         "title": "LogitsResponse",
+        "type": "object"
+      },
+      "MLPInternalsRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "mlp_internals",
+            "title": "Kind",
+            "type": "string"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/BlockParameters"
+          }
+        },
+        "required": [
+          "kind",
+          "parameters"
+        ],
+        "title": "MLPInternalsRequest",
+        "type": "object"
+      },
+      "MLPInternalsResult": {
+        "additionalProperties": false,
+        "properties": {
+          "gate_coordinates": {
+            "items": {
+              "$ref": "#/components/schemas/GateCoordinate"
+            },
+            "title": "Gate Coordinates",
+            "type": "array"
+          },
+          "intermediate_size": {
+            "title": "Intermediate Size",
+            "type": "integer"
+          },
+          "kind": {
+            "const": "mlp_internals",
+            "default": "mlp_internals",
+            "title": "Kind",
+            "type": "string"
+          },
+          "layer_index": {
+            "title": "Layer Index",
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "operations": {
+            "items": {
+              "$ref": "#/components/schemas/BlockOperation"
+            },
+            "title": "Operations",
+            "type": "array"
+          },
+          "ranking_policy": {
+            "title": "Ranking Policy",
+            "type": "string"
+          },
+          "reconciliation": {
+            "items": {
+              "$ref": "#/components/schemas/BlockReconciliation"
+            },
+            "title": "Reconciliation",
+            "type": "array"
+          },
+          "selected_gate_coordinate": {
+            "$ref": "#/components/schemas/GateCoordinate"
+          },
+          "source": {
+            "$ref": "#/components/schemas/AnalysisSource"
+          }
+        },
+        "required": [
+          "source",
+          "layer_index",
+          "intermediate_size",
+          "operations",
+          "selected_gate_coordinate",
+          "gate_coordinates",
+          "reconciliation",
+          "method",
+          "ranking_policy"
+        ],
+        "title": "MLPInternalsResult",
         "type": "object"
       },
       "ModelLoadRequest": {
@@ -1311,6 +2299,100 @@
         "title": "Nonfinite",
         "type": "object"
       },
+      "OutputComparison": {
+        "additionalProperties": false,
+        "properties": {
+          "compatible": {
+            "title": "Compatible",
+            "type": "boolean"
+          },
+          "logits": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logits"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "mismatches": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Mismatches",
+            "type": "array"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "probabilities": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probabilities"
+          },
+          "provenance": {
+            "const": "derived",
+            "title": "Provenance",
+            "type": "string"
+          },
+          "reference_trace_id": {
+            "title": "Reference Trace Id",
+            "type": "string"
+          },
+          "same_top_token": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Same Top Token"
+          },
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "trace_id": {
+            "title": "Trace Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "trace_id",
+          "reference_trace_id",
+          "compatible",
+          "mismatches",
+          "passed",
+          "same_top_token",
+          "logits",
+          "probabilities",
+          "provenance",
+          "sources",
+          "method"
+        ],
+        "title": "OutputComparison",
+        "type": "object"
+      },
       "Page": {
         "additionalProperties": false,
         "properties": {
@@ -1343,6 +2425,21 @@
           "total"
         ],
         "title": "Page",
+        "type": "object"
+      },
+      "PositionParameters": {
+        "additionalProperties": false,
+        "properties": {
+          "token_index": {
+            "minimum": 0.0,
+            "title": "Token Index",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "token_index"
+        ],
+        "title": "PositionParameters",
         "type": "object"
       },
       "Prediction": {
@@ -1452,6 +2549,352 @@
         "title": "RawInput",
         "type": "object"
       },
+      "RepresentationMetric": {
+        "additionalProperties": false,
+        "properties": {
+          "checkpoint_index": {
+            "title": "Checkpoint Index",
+            "type": "integer"
+          },
+          "component_id": {
+            "title": "Component Id",
+            "type": "string"
+          },
+          "consecutive_distance": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Consecutive Distance"
+          },
+          "cosine_embedding": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cosine Embedding"
+          },
+          "cosine_final_residual": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cosine Final Residual"
+          },
+          "cosine_previous": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cosine Previous"
+          },
+          "l2_norm": {
+            "title": "L2 Norm",
+            "type": "number"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "layer_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Layer Index"
+          },
+          "norm_change": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Norm Change"
+          },
+          "stage": {
+            "enum": [
+              "embedding",
+              "post_block_residual",
+              "final_normalized"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/Statistics"
+          },
+          "undefined": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Undefined",
+            "type": "object"
+          }
+        },
+        "required": [
+          "checkpoint_index",
+          "component_id",
+          "label",
+          "stage",
+          "layer_index",
+          "l2_norm",
+          "norm_change",
+          "consecutive_distance",
+          "cosine_previous",
+          "cosine_embedding",
+          "cosine_final_residual",
+          "undefined",
+          "statistics"
+        ],
+        "title": "RepresentationMetric",
+        "type": "object"
+      },
+      "ResidualComparison": {
+        "additionalProperties": false,
+        "properties": {
+          "after_norm": {
+            "title": "After Norm",
+            "type": "number"
+          },
+          "after_symbol": {
+            "title": "After Symbol",
+            "type": "string"
+          },
+          "before_norm": {
+            "title": "Before Norm",
+            "type": "number"
+          },
+          "before_symbol": {
+            "title": "Before Symbol",
+            "type": "string"
+          },
+          "coordinates": {
+            "items": {
+              "$ref": "#/components/schemas/ResidualCoordinate"
+            },
+            "title": "Coordinates",
+            "type": "array"
+          },
+          "cosine_before_after": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cosine Before After"
+          },
+          "delta_norm": {
+            "title": "Delta Norm",
+            "type": "number"
+          },
+          "name": {
+            "enum": [
+              "attention",
+              "mlp",
+              "block"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "selected_coordinate": {
+            "$ref": "#/components/schemas/ResidualCoordinate"
+          },
+          "undefined": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Undefined",
+            "type": "object"
+          },
+          "update_norm": {
+            "title": "Update Norm",
+            "type": "number"
+          },
+          "update_provenance": {
+            "enum": [
+              "raw",
+              "derived"
+            ],
+            "title": "Update Provenance",
+            "type": "string"
+          },
+          "update_symbol": {
+            "title": "Update Symbol",
+            "type": "string"
+          },
+          "update_to_residual_ratio": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Update To Residual Ratio"
+          }
+        },
+        "required": [
+          "name",
+          "before_symbol",
+          "update_symbol",
+          "after_symbol",
+          "update_provenance",
+          "before_norm",
+          "update_norm",
+          "after_norm",
+          "delta_norm",
+          "cosine_before_after",
+          "update_to_residual_ratio",
+          "undefined",
+          "coordinates",
+          "selected_coordinate"
+        ],
+        "title": "ResidualComparison",
+        "type": "object"
+      },
+      "ResidualCoordinate": {
+        "additionalProperties": false,
+        "properties": {
+          "addition_error": {
+            "title": "Addition Error",
+            "type": "number"
+          },
+          "after": {
+            "title": "After",
+            "type": "number"
+          },
+          "before": {
+            "title": "Before",
+            "type": "number"
+          },
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "signed_delta": {
+            "title": "Signed Delta",
+            "type": "number"
+          },
+          "update": {
+            "title": "Update",
+            "type": "number"
+          }
+        },
+        "required": [
+          "index",
+          "before",
+          "update",
+          "after",
+          "signed_delta",
+          "addition_error"
+        ],
+        "title": "ResidualCoordinate",
+        "type": "object"
+      },
+      "ResidualStreamRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "residual_stream",
+            "title": "Kind",
+            "type": "string"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/BlockParameters"
+          }
+        },
+        "required": [
+          "kind",
+          "parameters"
+        ],
+        "title": "ResidualStreamRequest",
+        "type": "object"
+      },
+      "ResidualStreamResult": {
+        "additionalProperties": false,
+        "properties": {
+          "comparisons": {
+            "items": {
+              "$ref": "#/components/schemas/ResidualComparison"
+            },
+            "title": "Comparisons",
+            "type": "array"
+          },
+          "kind": {
+            "const": "residual_stream",
+            "default": "residual_stream",
+            "title": "Kind",
+            "type": "string"
+          },
+          "layer_index": {
+            "title": "Layer Index",
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "operations": {
+            "items": {
+              "$ref": "#/components/schemas/BlockOperation"
+            },
+            "title": "Operations",
+            "type": "array"
+          },
+          "ranking_policy": {
+            "title": "Ranking Policy",
+            "type": "string"
+          },
+          "reconciliation": {
+            "items": {
+              "$ref": "#/components/schemas/BlockReconciliation"
+            },
+            "title": "Reconciliation",
+            "type": "array"
+          },
+          "source": {
+            "$ref": "#/components/schemas/AnalysisSource"
+          }
+        },
+        "required": [
+          "source",
+          "layer_index",
+          "operations",
+          "comparisons",
+          "reconciliation",
+          "method",
+          "ranking_policy"
+        ],
+        "title": "ResidualStreamResult",
+        "type": "object"
+      },
       "RuntimeMetadata": {
         "additionalProperties": false,
         "properties": {
@@ -1515,6 +2958,208 @@
         "title": "RuntimeMetadata",
         "type": "object"
       },
+      "SamplingCandidate": {
+        "additionalProperties": false,
+        "properties": {
+          "decoded_token": {
+            "title": "Decoded Token",
+            "type": "string"
+          },
+          "eligible": {
+            "title": "Eligible",
+            "type": "boolean"
+          },
+          "model_probability": {
+            "title": "Model Probability",
+            "type": "number"
+          },
+          "probability": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Probability",
+            "type": "number"
+          },
+          "processed_logit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Processed Logit"
+          },
+          "rank": {
+            "title": "Rank",
+            "type": "integer"
+          },
+          "raw_logit": {
+            "title": "Raw Logit",
+            "type": "number"
+          },
+          "token_id": {
+            "title": "Token Id",
+            "type": "integer"
+          },
+          "tokenizer_piece": {
+            "title": "Tokenizer Piece",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rank",
+          "token_id",
+          "tokenizer_piece",
+          "decoded_token",
+          "raw_logit",
+          "probability",
+          "model_probability",
+          "processed_logit",
+          "eligible"
+        ],
+        "title": "SamplingCandidate",
+        "type": "object"
+      },
+      "SamplingParameters": {
+        "additionalProperties": false,
+        "properties": {
+          "display_top_k": {
+            "default": 10,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Display Top K",
+            "type": "integer"
+          },
+          "mode": {
+            "default": "sample",
+            "enum": [
+              "sample",
+              "greedy"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "temperature": {
+            "default": 1.0,
+            "exclusiveMinimum": 0.0,
+            "maximum": 100.0,
+            "title": "Temperature",
+            "type": "number"
+          },
+          "token_index": {
+            "minimum": 0.0,
+            "title": "Token Index",
+            "type": "integer"
+          },
+          "top_k": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Top K",
+            "type": "integer"
+          },
+          "top_p": {
+            "default": 1.0,
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Top P",
+            "type": "number"
+          }
+        },
+        "required": [
+          "token_index"
+        ],
+        "title": "SamplingParameters",
+        "type": "object"
+      },
+      "SamplingRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "sampling_preview",
+            "title": "Kind",
+            "type": "string"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/SamplingParameters"
+          }
+        },
+        "required": [
+          "kind",
+          "parameters"
+        ],
+        "title": "SamplingRequest",
+        "type": "object"
+      },
+      "SamplingResult": {
+        "additionalProperties": false,
+        "properties": {
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/SamplingCandidate"
+            },
+            "title": "Candidates",
+            "type": "array"
+          },
+          "eligible_count": {
+            "title": "Eligible Count",
+            "type": "integer"
+          },
+          "kind": {
+            "const": "sampling_preview",
+            "default": "sampling_preview",
+            "title": "Kind",
+            "type": "string"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "omitted_probability_mass": {
+            "title": "Omitted Probability Mass",
+            "type": "number"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/SamplingParameters"
+          },
+          "probability_policy": {
+            "title": "Probability Policy",
+            "type": "string"
+          },
+          "probability_sum": {
+            "title": "Probability Sum",
+            "type": "number"
+          },
+          "processor_order": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Processor Order",
+            "type": "array"
+          },
+          "rank_policy": {
+            "title": "Rank Policy",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/components/schemas/AnalysisSource"
+          }
+        },
+        "required": [
+          "source",
+          "parameters",
+          "candidates",
+          "eligible_count",
+          "probability_sum",
+          "omitted_probability_mass",
+          "processor_order",
+          "method",
+          "rank_policy",
+          "probability_policy"
+        ],
+        "title": "SamplingResult",
+        "type": "object"
+      },
       "ServiceStatus": {
         "additionalProperties": false,
         "properties": {
@@ -1556,6 +3201,11 @@
             ],
             "title": "Format",
             "type": "string"
+          },
+          "include_statistics": {
+            "default": false,
+            "title": "Include Statistics",
+            "type": "boolean"
           },
           "selectors": {
             "additionalProperties": {
@@ -1861,6 +3511,16 @@
             },
             "title": "Sources",
             "type": "array"
+          },
+          "statistics": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Statistics"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "storage_dtype": {
             "title": "Storage Dtype",
@@ -2452,6 +4112,51 @@
           "type"
         ],
         "title": "ValidationError",
+        "type": "object"
+      },
+      "VectorStatistics": {
+        "additionalProperties": false,
+        "properties": {
+          "accumulation_dtype": {
+            "const": "float64",
+            "default": "float64",
+            "title": "Accumulation Dtype",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "l2_norm": {
+            "title": "L2 Norm",
+            "type": "number"
+          },
+          "max": {
+            "title": "Max",
+            "type": "number"
+          },
+          "mean": {
+            "title": "Mean",
+            "type": "number"
+          },
+          "min": {
+            "title": "Min",
+            "type": "number"
+          },
+          "std": {
+            "title": "Std",
+            "type": "number"
+          }
+        },
+        "required": [
+          "count",
+          "min",
+          "max",
+          "mean",
+          "std",
+          "l2_norm"
+        ],
+        "title": "VectorStatistics",
         "type": "object"
       }
     }
@@ -3350,6 +5055,516 @@
           }
         },
         "summary": "Overview",
+        "tags": [
+          "traces"
+        ]
+      }
+    },
+    "/api/v1/traces/{trace_id}/analyses": {
+      "post": {
+        "operationId": "create_analysis_api_v1_traces__trace_id__analyses_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trace_id",
+            "required": true,
+            "schema": {
+              "title": "Trace Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "discriminator": {
+                  "mapping": {
+                    "logit_lens": "#/components/schemas/LensRequest",
+                    "mlp_internals": "#/components/schemas/MLPInternalsRequest",
+                    "residual_stream": "#/components/schemas/ResidualStreamRequest",
+                    "sampling_preview": "#/components/schemas/SamplingRequest",
+                    "token_evolution": "#/components/schemas/EvolutionRequest"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/EvolutionRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LensRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SamplingRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ResidualStreamRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MLPInternalsRequest"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisJob"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Create Analysis",
+        "tags": [
+          "traces"
+        ]
+      }
+    },
+    "/api/v1/traces/{trace_id}/analyses/{analysis_id}": {
+      "delete": {
+        "operationId": "cancel_analysis_api_v1_traces__trace_id__analyses__analysis_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trace_id",
+            "required": true,
+            "schema": {
+              "title": "Trace Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "analysis_id",
+            "required": true,
+            "schema": {
+              "title": "Analysis Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisJob"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Cancel Analysis",
+        "tags": [
+          "traces"
+        ]
+      },
+      "get": {
+        "operationId": "get_analysis_api_v1_traces__trace_id__analyses__analysis_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trace_id",
+            "required": true,
+            "schema": {
+              "title": "Trace Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "analysis_id",
+            "required": true,
+            "schema": {
+              "title": "Analysis Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisJob"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Analysis",
+        "tags": [
+          "traces"
+        ]
+      }
+    },
+    "/api/v1/traces/{trace_id}/compare-output/{reference_trace_id}": {
+      "get": {
+        "operationId": "output_comparison_api_v1_traces__trace_id__compare_output__reference_trace_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trace_id",
+            "required": true,
+            "schema": {
+              "title": "Trace Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "reference_trace_id",
+            "required": true,
+            "schema": {
+              "title": "Reference Trace Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutputComparison"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Output Comparison",
         "tags": [
           "traces"
         ]
@@ -5106,6 +7321,128 @@
           }
         },
         "summary": "Tokens",
+        "tags": [
+          "traces"
+        ]
+      }
+    },
+    "/api/v1/traces/{trace_id}/tokens/{token_index}/journey": {
+      "get": {
+        "operationId": "token_journey_api_v1_traces__trace_id__tokens__token_index__journey_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trace_id",
+            "required": true,
+            "schema": {
+              "title": "Trace Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "token_index",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "title": "Token Index",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisJob"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Token Journey",
         "tags": [
           "traces"
         ]

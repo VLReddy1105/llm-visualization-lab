@@ -1,0 +1,8 @@
+
+> llm-visualization-lab@0.1.0 typecheck
+> npm run typecheck --workspace @llm-lab/web
+
+
+> @llm-lab/web@0.1.0 typecheck
+> tsc --noEmit
+

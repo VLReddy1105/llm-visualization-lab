@@ -1,6 +1,6 @@
 # System architecture
 
-Status: Stage 0 blueprint with Stages 1–3 implemented. The [Stage 3 report](validation/STAGE_3_REPORT.md) records the bounded store, lazy HTTP contract and measured evidence; scientific Stage 2 infrastructure remains intact. Visualization and later analyses remain future work.
+Status: Stage 0 blueprint with Stages 1–7 implemented. The [Stage 3 report](validation/STAGE_3_REPORT.md) records the bounded trace store and lazy HTTP contract. Stages 4–5 add the horizontal Model Journey and Layer Microscope; the [Stage 6 report](validation/STAGE_6_REPORT.md) records saved-state evolution, diagnostic Logit Lens and sampling preview. Stage 2 capture infrastructure remains intact. Later-stage sections remain architectural plans.
 
 ## Decisions and boundaries
 
@@ -281,3 +281,19 @@ Additional adapters provide a semantic operation graph with ordered operations, 
 | Interpretation overclaims | Provenance badges, formula context, human claim review |
 
 The [validation plan](SCIENTIFIC_VALIDATION.md) defines experimental evidence. The [stages](IMPLEMENTATION_STAGES.md) specify when each gate must pass.
+
+## Stage 6 analysis integration
+
+`analysis/token_journey.py`, `logit_lens.py`, `sampling.py`, `distributions.py` and `jobs.py` extend the existing scientific layer. `schemas/analysis.py` is the generated-contract authority and `api/analyses.py` uses the trace routes' registration/alias conventions and bounded serializer. The original trace engine, capture plans, immutable tensor storage and lease implementation remain unchanged.
+
+Overview already captures all required depth states. Selected absolute coordinates are resolved from descriptors before tensor access. Representation metrics and sampling run on a bounded single analysis worker; readout projections additionally submit to `ModelService.submit_analysis_job`, sharing the existing one-thread executor with trace capture and loading. `native_norm("final", ...)` and `native_lm_head(...)` reuse resident modules. No analysis loads weights or calls adapter.forward, model.forward or generate. The adapter head helper now invokes the resident head's own forward method rather than expressing its linear operation separately.
+
+The summary-only analysis cache reserves encoded-response capacity before work, deduplicates canonical source/version/parameter requests, acquires existing source leases, checks source TTL during progress and before publication, and limits both entries and bytes. It does not duplicate the trace tensor store or model weights. Detailed budgets and cancellation/expiry semantics are in the Stage 6 API section.
+
+The existing inspector now offers Token Journey, Representation Evolution, Logit Lens, Candidate Evolution and Sampling Lab. TanStack Query owns job acknowledgements/results; Zustand holds selected token/checkpoint/layer/candidate, pinned IDs, applied sampling settings and explicit-capture associations. Horizontal checkpoint navigation, SVG chart points and the Model Journey selection are linked. Missing retained data requires an explicit overview capture, with late-acknowledgement isolation and trace-qualified microscope navigation. Stage 7 extends this same inspector and job infrastructure with residual/MLP exploration.
+
+## Stage 7 integration
+
+`analysis/block_internals.py` extends the existing scientific layer with selected-block residual and MLP diagnostics. The existing `AnalysisService`, Pydantic discriminated contract, cache, worker and TraceStore leases are reused. The MLP capture profile adds one selected input-RMSNorm observation and capture-time gate/up projection reference checks. No tensor database, execution queue, model instance or tracing architecture is added.
+
+`components/residual/BlockWorkspace.tsx`, `BlockFlow.tsx` and `BlockDiagnostics.tsx` extend the contextual Inspector with Residual Stream and MLP Explorer. The existing capture hook supports explicit selected-layer/token MLP captures and stores UUID associations in Zustand; TanStack Query owns bounded jobs. Model Journey, token strip, Microscope and Stage 6 selection remain linked. Source identity, numerical reconciliation and undefined diagnostic states are visible; exploration never initiates a model forward. Independent audit tooling lives under backend tests so production observer registration remains confined to `tracing/instrumentation.py`.

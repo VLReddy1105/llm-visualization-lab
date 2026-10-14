@@ -1,0 +1,12 @@
+
+> @llm-lab/web@0.1.0 test:browser
+> playwright test residual.spec.ts -g analysis expiry
+
+
+Running 1 test using 1 worker
+
+(node:80524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/browser/residual.spec.ts:27:5 › Stage 7 real analysis expiry, saved-data recompute and source expiry (19.7s)
+
+  1 passed (26.4s)

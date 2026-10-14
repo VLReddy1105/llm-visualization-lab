@@ -1,0 +1,42 @@
+{
+  "method": "Read-only Git object scan; exact pre-edit SHA-256 match required",
+  "targets": [
+    "docs/validation/stage6-france-analysis.json",
+    "docs/validation/stage6-france-candidates.png",
+    "docs/validation/stage6-france-http-fixtures.json",
+    "docs/validation/stage6-france-journey.png",
+    "docs/validation/stage6-france-lens.png",
+    "docs/validation/stage6-france-narrow.png",
+    "docs/validation/stage6-france-representation.png",
+    "docs/validation/stage6-france-sampling.png",
+    "docs/validation/stage6-germany-analysis.json",
+    "docs/validation/stage6-germany-candidates.png",
+    "docs/validation/stage6-germany-http-fixtures.json",
+    "docs/validation/stage6-germany-journey.png",
+    "docs/validation/stage6-germany-lens.png",
+    "docs/validation/stage6-germany-narrow.png",
+    "docs/validation/stage6-germany-representation.png",
+    "docs/validation/stage6-germany-sampling.png"
+  ],
+  "matched_objects": {
+    "docs/validation/stage6-france-lens.png": "02a033102f3232c4fd4c3c26023aea31180e3449",
+    "docs/validation/stage6-france-narrow.png": "1e8cd2055ed548bbce70223836fd10e6fd28a0b4",
+    "docs/validation/stage6-germany-candidates.png": "37ad66d7e1389f62e47012a8768bba0687a42c10",
+    "docs/validation/stage6-germany-sampling.png": "42419898cfe94c82dd65197d90e06ca63963efa7",
+    "docs/validation/stage6-france-candidates.png": "5a401984a21efb4dd0d84bb0174f4f939a8343af",
+    "docs/validation/stage6-germany-narrow.png": "6c79990b09694fe7ff82ab5674f316764f600aab",
+    "docs/validation/stage6-germany-analysis.json": "6cd13f66c8d4c20f5a8a20ff317fb8123f4d39d9",
+    "docs/validation/stage6-germany-journey.png": "9782ca3424667aaeab26c25e1ece8ea7bd9ee64f",
+    "docs/validation/stage6-france-http-fixtures.json": "9aebd375339678b53950d21537eca17a4c86ba59",
+    "docs/validation/stage6-france-sampling.png": "b25bcfb641e42c8953afe3c5ef12c0c0f6fd48f8",
+    "docs/validation/stage6-france-analysis.json": "b541d4613e3902f97361a23500e204f99bd5424f",
+    "docs/validation/stage6-france-representation.png": "c94cc3f81d6a8240dfdf914f357d7cfc58125b1b",
+    "docs/validation/stage6-germany-lens.png": "ca90002fd99288b96e83dd6393fb6647630b1f76",
+    "docs/validation/stage6-france-journey.png": "cda045ae0476b4ebf43b3c2ea1d45b6f60ba6e05",
+    "docs/validation/stage6-germany-representation.png": "e6a4c90f82d0b0255401e3ff5b9af39b9db8f320",
+    "docs/validation/stage6-germany-http-fixtures.json": "f71ab8cde06937b44b6e0f5f7bd4367cef4631bb"
+  },
+  "scanned_blob_count": 468,
+  "restored_exactly": true,
+  "new_regression_evidence_directory": "docs/validation/stage7-regression"
+}

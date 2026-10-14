@@ -1,0 +1,223 @@
+{
+  "model": {
+    "model_id": "qwen3-0.6b",
+    "hf_model_id": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "device": "mps",
+    "dtype": "float32",
+    "architecture": {
+      "layers": 28,
+      "hidden_size": 1024,
+      "intermediate_size": 3072,
+      "query_heads": 16,
+      "kv_heads": 8,
+      "head_dim": 128,
+      "vocabulary_size": 151936,
+      "rms_norm_epsilon": 1e-06,
+      "rope_theta": 1000000,
+      "tied_embeddings": true,
+      "attention_dropout": 0,
+      "attention_backend": "eager",
+      "config_digest": "7870eed078fc404f7c0621149c22cb265a52664129662bb5519eaaf4ef1809d3",
+      "implementation_digest": "ca9535e36ea4e689c76d7d753b91aec9ea00da837fbf223c8ea4c01a3b50cac0",
+      "adapter_id": "qwen3",
+      "adapter_version": "1.0.0"
+    }
+  },
+  "capture": {
+    "profile": "attention",
+    "layers": [
+      12
+    ],
+    "token_indices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "query_heads": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "raw_tensors": true,
+    "statistics": true,
+    "max_bytes": 268435456
+  },
+  "summary": {
+    "layer_count": 28,
+    "retained_bytes": 1703884,
+    "estimated_bytes": 1765324,
+    "transient_estimated_bytes": 30211264,
+    "duration_ms": 450.5293749971315,
+    "forward_duration_ms": 411.14737500902265,
+    "retention_policy": "ttl_or_capacity"
+  },
+  "validation": {
+    "counts": {
+      "passed": 96
+    },
+    "failed": [],
+    "scope": "existing Stage 2 checks; HTTP does not recompute scientific gates"
+  },
+  "layer12_validation": {
+    "layer[12].residual.attention": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].residual.mlp": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].layer_output": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.rmsnorm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].query_norm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].key_norm": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.weights": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.head_output": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "layer[12].attention.row_normalization": {
+      "passed": true,
+      "max_absolute_error": 1.1082738637924194e-07,
+      "absolute_tolerance": 1e-05,
+      "scope": "full key rows for selected query heads and absolute query positions"
+    },
+    "layer[12].attention.causal_mask": {
+      "passed": true,
+      "masked_count": 160,
+      "max_masked_weight": 0,
+      "absolute_tolerance": 0
+    },
+    "layer[12].attention.actual_mask": {
+      "passed": true,
+      "mask_sentinel": -3.4028234663852886e+38,
+      "mask_kind": "actual unpadded causal additive mask with finite dtype minimum"
+    }
+  },
+  "output_comparison": {
+    "trace_id": "700f8496-bc57-48dd-badb-913c4f262fdb",
+    "reference_trace_id": "6bd23005-a85e-4dd1-8d4b-c9d7e039675e",
+    "compatible": true,
+    "mismatches": [],
+    "passed": true,
+    "same_top_token": true,
+    "logits": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-05,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "probabilities": {
+      "passed": true,
+      "bitwise_equal": true,
+      "absolute_tolerance": 1e-06,
+      "relative_tolerance": 0.0001,
+      "max_absolute_error": 0,
+      "mean_absolute_error": 0,
+      "relative_l2_error": 0,
+      "relative_l2_epsilon": 1e-12,
+      "comparison_dtype": "float64 audit of original values"
+    },
+    "provenance": "derived",
+    "sources": [
+      "700f8496-bc57-48dd-badb-913c4f262fdb:output.logits",
+      "700f8496-bc57-48dd-badb-913c4f262fdb:output.probabilities",
+      "6bd23005-a85e-4dd1-8d4b-c9d7e039675e:output.logits",
+      "6bd23005-a85e-4dd1-8d4b-c9d7e039675e:output.probabilities"
+    ],
+    "method": "Compare full retained final-position vocabulary outputs with Stage 2 elementwise tolerances; float64 audit of native values. No model forward."
+  }
+}

@@ -75,7 +75,9 @@ class BaseModelAdapter(ABC):
     ) -> tuple[ComponentSpec, ...]: ...
 
     @abstractmethod
-    def native_mlp_projection(self, layer_index: int, gated: torch.Tensor) -> torch.Tensor: ...
+    def native_mlp_projection(
+        self, layer_index: int, gated: torch.Tensor, projection: str = "down"
+    ) -> torch.Tensor: ...
 
     @abstractmethod
     def native_rope(
