@@ -1,0 +1,53 @@
+{
+  "overall": "PASS",
+  "completed_date": "2026-10-14",
+  "timezone": "Europe/Berlin",
+  "backend": {
+    "cpu": {
+      "passed": 340,
+      "failed": 0
+    },
+    "mps": {
+      "passed": 340,
+      "failed": 0
+    }
+  },
+  "independent_comparisons": {
+    "cpu": 264,
+    "mps": 264,
+    "failed": 0
+  },
+  "frontend": {
+    "passed": 73,
+    "failed": 0
+  },
+  "production_browser": {
+    "stage7_normal": 2,
+    "stage7_analysis_and_source_expiry": 1,
+    "stage4_to_6_regressions": 5,
+    "offline": 1,
+    "original_expiry": 1,
+    "total_passed": 10,
+    "failed": 0,
+    "conditional_normal_skip": "Expiry gate executed and passed separately"
+  },
+  "browser_axe_violations": 0,
+  "maximum_http_response_bytes": 63491,
+  "http_cache_hits": 240,
+  "additional_exploration_forwards": 0,
+  "openapi": "PASS",
+  "generated_types": "PASS",
+  "typescript": "PASS",
+  "eslint": "PASS",
+  "ruff": "PASS",
+  "production_build": "PASS",
+  "diff_whitespace": "PASS",
+  "preservation": "PASS",
+  "known_untested": [
+    "CUDA",
+    "Other models/revisions/dtypes/backends",
+    "Total-process and accelerator peak memory",
+    "Exhaustive assistive-technology coverage",
+    "Arbitrary long-context Stage 7 throughput"
+  ]
+}

@@ -36,7 +36,7 @@ def test_trace_routes_exist_only_in_canonical_openapi(client):
     paths = schema["paths"]
     assert "/api/v1/traces" in paths
     assert "/api/traces" not in paths
-    assert len([p for p in paths if p.startswith("/api/v1/traces")]) == 16
+    assert len([p for p in paths if p.startswith("/api/v1/traces")]) == 20
     assert "201" in paths["/api/v1/traces"]["post"]["responses"]
     assert "204" in paths["/api/v1/traces/{trace_id}"]["delete"]["responses"]
 
@@ -488,4 +488,132 @@ def test_real_binary_slice_agrees_with_json_without_forward(http_trace):
         torch.frombuffer(bytearray(response.content), dtype=torch.float32).tolist()
         == expected["values"]
     )
+    assert service.execution_metrics()["request_forward_passes"] == before
+
+
+@pytest.mark.real_model
+def test_selected_vector_statistics_and_binary_match_retained_tensor(http_trace):
+    import torch
+
+    from llm_lab.schemas.trace_api import Statistics
+    from llm_lab.tracing.collector import tensor_statistics
+
+    client, envelope, service = http_trace
+    identity = envelope["trace_id"]
+    before = service.execution_metrics()["request_forward_passes"]
+    for suffix, head_axis, token_axis, head in (
+        ("query.projected", "query_head", "query_token", 4),
+        ("query.normalized", "query_head", "query_token", 4),
+        ("query.rotary", "query_head", "query_token", 4),
+        ("key.rotary", "kv_head", "key_token", 2),
+        ("value", "kv_head", "key_token", 2),
+        ("head_output", "query_head", "query_token", 4),
+    ):
+        component = f"layer[12].attention.{suffix}"
+        body = {
+            "selectors": {
+                "batch": {"index": 0},
+                head_axis: {"index": head},
+                token_axis: {"index": 3},
+            },
+            "include_statistics": True,
+        }
+        url = f"/api/traces/{identity}/components/{component}/slice"
+        response = client.post(url, json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        TensorSlice.model_validate(data)
+        Statistics.model_validate(data["statistics"])
+        assert len(data["values"]) == 128
+        expected = tensor_statistics(torch.tensor(data["values"], dtype=torch.float32))
+        for field in ("min", "max", "mean", "std", "l2_norm"):
+            assert data["statistics"][field] == getattr(expected, field)
+        assert "requested slice" in data["statistics"]["reduction_scope"]
+        binary = client.post(url, json={**body, "format": "binary"})
+        assert binary.status_code == 200
+        import json
+
+        assert json.loads(binary.headers["X-Tensor-Metadata"])["statistics"] == data["statistics"]
+    assert service.execution_metrics()["request_forward_passes"] == before
+
+
+@pytest.mark.real_model
+def test_output_comparison_uses_retained_full_vocabulary(http_trace):
+    from llm_lab.schemas.trace_api import OutputComparison
+
+    client, deep, service = http_trace
+    overview = client.post(
+        "/api/traces?wait=true", json={"prompt": PROMPT, "capture": {"profile": "overview"}}
+    ).json()
+    before = service.execution_metrics()["request_forward_passes"]
+    response = client.get(f"/api/traces/{deep['trace_id']}/compare-output/{overview['trace_id']}")
+    assert response.status_code == 200, response.text
+    data = response.json()
+    OutputComparison.model_validate(data)
+    assert data["compatible"] and data["passed"] and data["same_top_token"]
+    assert data["logits"]["bitwise_equal"] and data["probabilities"]["bitwise_equal"]
+    assert data["logits"]["absolute_tolerance"] == 1e-5
+    assert data["probabilities"]["absolute_tolerance"] == 1e-6
+    assert service.execution_metrics()["request_forward_passes"] == before
+    with client.app.state.trace_store.acquire(deep["trace_id"]) as (_, trace):
+        from dataclasses import replace
+
+        from llm_lab.analysis.trace_comparison import compare_outputs
+
+        different = replace(trace, metadata=replace(trace.metadata, prompt="different"))
+        incompatible = compare_outputs(different, trace)
+        assert not incompatible["compatible"] and incompatible["mismatches"] == ["prompt"]
+        changed = dict(trace._tensors)
+        changed["output.logits"] = trace.tensor("output.logits").clone() + 1
+        altered = replace(trace, _tensors=changed)
+        assert not compare_outputs(altered, trace)["passed"]
+
+
+@pytest.mark.real_model
+def test_masked_slice_statistics_exclude_native_mask_sentinels(http_trace):
+    client, envelope, _ = http_trace
+    response = client.post(
+        f"/api/traces/{envelope['trace_id']}/components/layer[12].attention.masked_scores/slice",
+        json={
+            "selectors": {"batch": {"index": 0}, "query_head": {"index": 4}},
+            "include_statistics": True,
+        },
+    )
+    data = response.json()
+    assert response.status_code == 200, data
+    assert data["statistics"]["masked_count"] == 10
+    assert data["statistics"]["finite_count"] == 15
+    assert data["statistics"]["total_count"] == 25
+    assert data["statistics"]["min"] > -1e6
+
+
+@pytest.mark.real_model
+def test_all_query_heads_native_gqa_matrix_and_relation_identity(http_trace):
+    client, envelope, service = http_trace
+    identity = envelope["trace_id"]
+    before = service.execution_metrics()["request_forward_passes"]
+    with client.app.state.trace_store.acquire(identity) as (_, trace):
+        mapping = trace.layers[12].attention.query_to_kv_head
+        raw = trace.tensor("layer[12].attention.weights", copy=False)
+        reconstructed = trace.tensor("layer[12].attention.weights_reconstructed", copy=False)
+        import torch
+
+        assert torch.equal(raw, reconstructed)
+        for head in range(trace.metadata.architecture.query_heads):
+            base = f"/api/traces/{identity}/layers/12/attention/heads/{head}"
+            data = client.get(base).json()
+            assert data["kv_head_index"] == mapping[head]
+            matrix = client.post(
+                f"/api/traces/{identity}/components/layer[12].attention.weights_reconstructed/slice",
+                json={"selectors": {"batch": {"index": 0}, "query_head": {"index": head}}},
+            ).json()
+            assert matrix["provenance"] == "reconstructed"
+            assert matrix["values"] == reconstructed[0, head].flatten().tolist()
+            relation = client.get(base + "/relation?query_token_index=4&key_token_index=3").json()
+            assert (
+                relation["observations"]["weights_reconstructed"]["values"][0]
+                == matrix["values"][23]
+            )
+            masked = client.get(base + "/relation?query_token_index=3&key_token_index=4").json()
+            assert masked["masked"] and not relation["masked"]
     assert service.execution_metrics()["request_forward_passes"] == before

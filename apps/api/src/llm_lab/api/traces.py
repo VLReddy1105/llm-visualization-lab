@@ -5,6 +5,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Query, Request, Response
 
+from llm_lab.analysis.trace_comparison import compare_outputs
 from llm_lab.errors import ServiceError
 from llm_lab.schemas.model import ErrorResponse
 from llm_lab.schemas.trace_api import (
@@ -16,6 +17,7 @@ from llm_lab.schemas.trace_api import (
     ComponentPage,
     CreateTraceRequest,
     LogitsResponse,
+    OutputComparison,
     Page,
     SliceRequest,
     StoreStatus,
@@ -37,11 +39,11 @@ BINARY_RESPONSE = {
 ERRORS = {code: {"model": ErrorResponse} for code in (404, 409, 410, 413, 422, 429, 500, 503)}
 
 
-def endpoint(path: str, method: str, model, **kwargs):
+def endpoint(path: str, method: str, model, *, target=router, **kwargs):
     responses = {**ERRORS, **kwargs.pop("responses", {})}
 
     def register(function):
-        router.add_api_route(
+        target.add_api_route(
             "/api/v1/traces" + path,
             function,
             methods=[method],
@@ -50,7 +52,7 @@ def endpoint(path: str, method: str, model, **kwargs):
             responses=responses,
             **kwargs,
         )
-        router.add_api_route(
+        target.add_api_route(
             "/api/traces" + path,
             function,
             methods=[method],
@@ -217,6 +219,16 @@ def logits(
         return serializer.response(
             serializer.logits(ready(snapshot, trace), display_top_k, token_index)
         )
+
+
+@endpoint("/{trace_id}/compare-output/{reference_trace_id}", "GET", OutputComparison)
+def output_comparison(trace_id: str, reference_trace_id: str, request: Request):
+    store = request.app.state.trace_store
+    with store.acquire(trace_id) as (snapshot, trace):
+        with store.acquire(reference_trace_id) as (reference_snapshot, reference):
+            return request.app.state.trace_serializer.response(
+                compare_outputs(ready(snapshot, trace), ready(reference_snapshot, reference))
+            )
 
 
 @endpoint("/{trace_id}/components", "GET", ComponentPage)

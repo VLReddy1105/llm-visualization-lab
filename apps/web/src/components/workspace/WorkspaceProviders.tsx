@@ -19,13 +19,22 @@ function ServerStateProvider({ children }: { children: ReactNode }) {
             const state = selection.getState();
             if (
               query.queryKey[0] === "trace" &&
-              query.queryKey[1] === state.traceId &&
               error instanceof ApiError &&
               ["TRACE_EXPIRED", "TRACE_EVICTED", "TRACE_NOT_FOUND"].includes(
                 error.code,
               )
             ) {
-              state.setTraceIssue(error);
+              const id = query.queryKey[1];
+              if (id === state.traceId) state.setTraceIssue(error);
+              else if (
+                typeof id === "string" &&
+                [
+                  ...Object.values(state.attentionTraces),
+                  ...Object.values(state.evolutionTraces),
+                  ...Object.values(state.blockTraces),
+                ].includes(id)
+              )
+                state.setDetailIssue(id, error);
             }
           },
         }),

@@ -1,6 +1,6 @@
 # API contract
 
-Status: Stages 1–3 are implemented. Trace Store, lazy trace APIs and typed client are validated on CPU and Apple MPS. Endpoints assigned to Stages 6–10 remain future designs. Base path: `/api/v1`; `/api/traces` is a shared-handler alias. Trace schema: `1.0.0`. Pydantic models generate the implemented OpenAPI and TypeScript types. Examples below describe contracts and lifecycle states; they contain no invented scientific measurements.
+Status: Stages 1–7 are implemented. Trace Store, lazy trace APIs, attention inspection and bounded saved-data analyses use generated contracts. Stage 6 validation is recorded in the [Stage 6 report](validation/STAGE_6_REPORT.md). Stage 7 expands existing analysis kinds; endpoints assigned to Stages 8–10 remain future designs. Base path: `/api/v1`; `/api/traces` is a shared-handler alias. Trace schema: `1.0.0`; analysis method: `stage6.v1`. Pydantic models generate the implemented OpenAPI and TypeScript types. Examples below describe contracts and lifecycle states; they contain no invented scientific measurements.
 
 Stage 1 also exposes compatibility aliases `GET /api/health`, `GET /api/model/status` and `POST /api/inference/next-token`. These aliases share canonical handlers and response schemas and are omitted from OpenAPI to avoid duplicate generated operations. `/api/v1/status` returns `inference_ready` plus the full model status; it has no trace-store fields yet. Model loading reports `loading_tokenizer`, `loading_weights`, `moving_to_device` and `smoke_check`; states remain `unloaded`, `loading`, `ready`, `failed`.
 
@@ -8,7 +8,7 @@ Stage 1 also exposes compatibility aliases `GET /api/health`, `GET /api/model/st
 
 JSON uses snake_case and ISO 8601 UTC timestamps. IDs are opaque UUIDs; `model_id` is a registry slug such as `qwen3-0.6b`, distinct from the Hugging Face ID. All tensor axes and index conventions follow [Trace design](TRACE_DESIGN.md). Unknown request fields are rejected. HTTP statuses and a typed error code communicate distinct conditions.
 
-Stage 1 provides health/model loading and a minimal synchronous inference result. Stage 3 provides asynchronous traces and lazy retained data, with an optional synchronous wait. Derived-analysis and generation endpoints become available only in their assigned later stages. Schema examples are not promises that future endpoints are present in Stage 1.
+Stage 1 provides health/model loading and a minimal synchronous inference result. Stage 3 provides asynchronous traces and lazy retained data, with an optional synchronous wait. Stage 6 adds saved-data analysis jobs. Generation endpoints remain future work. Schema examples are not promises that future endpoints are present.
 
 Long inference runs are submitted to a bounded serialized executor; status endpoints stay responsive. Trace creation acknowledges with 202 and a Location header. Once ready, GET returns an overview, never a huge tensor dump. No retrieval request performs model inference. Model-dependent derived analysis can execute vocabulary projections from saved states but requires the exact matching resident weights; it never silently reloads or changes a trace.
 
@@ -40,9 +40,10 @@ Long inference runs are submitted to a bounded serialized executor; status endpo
 | `GET /traces/{trace_id}/logits` | Bounded top candidates for final prediction position; arbitrary vocabulary values through slices | 3 |
 | `POST /traces/{trace_id}/components/{component_id}/slice` | Bounded component slice, JSON or binary | 3 |
 | `POST /traces/{trace_id}/tensors/{tensor_id}/slice` | Read-only bounded tensor retrieval with structured selectors | 3 |
-| `GET /traces/{trace_id}/tokens/{token_index}/journey` | All-depth saved scalar summaries for one position | 6 |
+| `GET /traces/{trace_id}/tokens/{token_index}/journey` | 202 creates/reuses a saved-data token evolution job | 6 |
 | `POST /traces/{trace_id}/analyses` | 202 parameterized derived analysis | 6; kinds expanded later |
-| `GET /traces/{trace_id}/analyses/{analysis_id}` | Analysis status, provenance, bounded result/pages | 6 |
+| `GET /traces/{trace_id}/analyses/{analysis_id}` | Analysis status, provenance and bounded result | 6 |
+| `DELETE /traces/{trace_id}/analyses/{analysis_id}` | 200 cancelled analysis with result cleared | 6 |
 | `POST /generations` | 202 bounded autoregressive run | 8 |
 | `GET /generations/{generation_id}` | Status/settings/termination and paginated step mapping | 8 |
 | `GET /generations/{generation_id}/steps/{generation_step}` | Decision record and associated trace ID | 8 |
@@ -178,7 +179,7 @@ Collection endpoints use `limit` (default 50, maximum 200) and opaque offset `cu
 
 `GET /traces/{id}/logits?display_top_k=10` returns final-position descriptors and 1–100 original ranked candidates, with full-vocabulary probabilities and descriptive omitted mass. Optional `token_index` must be the captured final prediction position; another valid input position returns 409, out-of-bounds is 422. Arbitrary vocabulary values use explicit bounded logits/probability slices. No all-position LM-head projection, candidate-only softmax or sampling runs here.
 
-The following analyses remain future scope. Analysis kinds and stage ownership are `logit_lens` and `sampling_preview` (6), `pca`/`umap` (9), and `intervention_comparison` (10). Analyses are queued/read like traces, keyed by source IDs and full parameters; they cannot mutate source records. Example sampling-preview request:
+Stage 6 implements `token_evolution`, `logit_lens` and `sampling_preview`. `pca`/`umap` (9) and `intervention_comparison` (10) remain future scope. Analyses are queued/read like traces, keyed by source IDs and full parameters; they cannot mutate source records. Example sampling-preview request:
 
 ```json
 {
@@ -235,6 +236,19 @@ Malformed JSON also uses the existing structured 422 `INVALID_REQUEST` schema. A
 
 DELETE of a running job returns 202 `{trace_id,status:"cancelled",cancellation_requested:true}`. Cancellation prevents storage of its result, releases reservations on safe completion, and leaves a bounded cancelled status record. It does not interrupt a native kernel. Terminal DELETE returns 204, marks inaccessible immediately, and reclaims data after readers release. Repeat DELETE returns 204 while its deleted tombstone remains; subsequent GET returns 404.
 
+## Stage 5 retained-output comparison and slice statistics (implemented)
+
+Stage 5 adds two bounded read capabilities without changing capture profiles, the trace engine, or the trace store:
+
+- JSON and binary slice requests accept optional `include_statistics: true` (default `false`). The response adds nullable `statistics`, using the existing statistics schema and collector. Reductions cover **only the requested slice**, after semantic selectors and element limits have passed. Population standard deviation, finite/nonfinite counts, undefined values and float32 accumulation retain Stage 2 semantics. Native mask positions are excluded when reducing masked scores or the mask itself. Binary responses carry these statistics in `X-Tensor-Metadata`; existing byte/header limits still apply.
+- `GET /api/v1/traces/{trace_id}/compare-output/{reference_trace_id}` compares two ready retained executions. The alias under `/api/traces` is also supported. The route acquires both read leases; the analysis helper compares the complete retained final-position logits and probabilities and the top vocabulary ID. It never creates a trace or accesses resident model weights.
+
+The comparison checks model/tokenizer revisions, device, dtype, raw prompt, token IDs, architecture/implementation metadata and prediction position. Incompatible inputs return `compatible: false`, named `mismatches`, `passed: false`, and null numerical comparisons. Compatible inputs return Stage 2 comparison metrics, `same_top_token`, a combined `passed` flag, `provenance: derived`, trace-qualified `sources` and the method. Float32 logits use `atol=1e-5, rtol=1e-4`; probabilities use `atol=1e-6, rtol=1e-4`. The helper retains the existing lower-precision tolerance policy, but Stage 5 validation covers CPU/MPS float32 only. Missing, expired or unready sources keep the existing structured errors.
+
+The comparison response contains scalar metrics only, not full vocabulary arrays; response-byte limits remain enforced. All scientific computation stays in the collector/analysis layer, outside route handlers. Generated OpenAPI and TypeScript contracts include both additions.
+
+The Stage 5 UI creates an explicit second execution with `capture: {profile: "attention", layers: [selectedLayer]}` only after the user requests it. It omits token/head restrictions so the selected layer retains all query heads and full key context. Session associations link the source overview ID, layer and profile to that separate detailed trace ID. Reconstructed heatmaps request `attention.weights_reconstructed`; the native `include_weights` head response remains RAW and is not relabeled.
+
 ## Expiration and retention
 
 `LLM_LAB_TRACE_TTL_SECONDS=1800` is absolute after completion for ready/failed/cancelled records. Reads update last access and LRU order without renewing TTL. Lookup and reservation sweep expiry synchronously; a 15-second configurable background sweep also cleans idle records. All mutations/counters use an RLock. A lease increments under that lock; CPU serialization occurs outside it. Expiry/deletion deny new reads immediately and defer physical removal while leased. Deferred bytes remain charged.
@@ -252,3 +266,64 @@ Initial settings come from [System architecture](SYSTEM_ARCHITECTURE.md#capture-
 Bind locally by default, allow only configured local frontend origins, restrict model IDs to the adapter registry, and keep prompts/tensors out of default logs. Request IDs, phases, durations, byte counts, and safe errors support debugging. Remote multi-user deployment would require its own authentication/isolation scope.
 
 Clients must not automatically retry trace/generation mutations, which could create duplicate real executions. Retrying reads and identical analysis lookups is safe. A later idempotency mechanism needs an explicit request fingerprint and contract. Schema/API version compatibility, immutable revisions, capture recipes, sampler settings, and method parameters are part of any future reproducible experiment export.
+
+## Stage 6 bounded analyses (implemented)
+
+Canonical endpoints reuse the `/api/traces` aliases and shared error/response-byte conventions:
+
+| Method and path | Contract |
+| --- | --- |
+| `POST /api/v1/traces/{trace_id}/analyses` | 202 `AnalysisJob`, including a cache hit when an identical live job exists |
+| `GET /api/v1/traces/{trace_id}/analyses/{analysis_id}` | 200 status/progress or a bounded ready result |
+| `DELETE /api/v1/traces/{trace_id}/analyses/{analysis_id}` | 200 cancelled job, with its result removed; running native operations finish safely |
+| `GET /api/v1/traces/{trace_id}/tokens/{token_index}/journey` | 202, creates/reuses the same `token_evolution` saved-data job |
+
+Requests are discriminated by `kind`; each contains a typed `parameters` object. `token_evolution` accepts `token_index`. `logit_lens` adds `display_top_k` (1–20, default 5), unique `candidate_ids` (at most 8, vocabulary IDs, canonical sorted order), and recipe `final_norm_then_lm_head`. `sampling_preview` accepts the documented sampled/greedy settings, `display_top_k` (1–100), and requires the original final prediction position. Temperature is finite and in (0,100]; top-p is finite in (0,1]; top-k is an integer from 0 to the actual vocabulary size. Numerically overflowing temperature processing fails explicitly. Unknown fields and unsupported kinds are rejected.
+
+Jobs carry `analysis_id`, source `trace_id`, complete canonical request, method version `stage6.v1`, `queued|running|ready|failed|cancelled` status, completed/total checkpoints, creation/absolute expiry, encoded result bytes, cache-hit flag, typed error and a discriminated result. The source-qualified GET rejects an ID belonging to another trace. An identical live queued/running/ready request returns the same ID. Failed/cancelled/expired jobs can be explicitly requested again. All results identify the exact selected token, tokenizer mapping, model/revision/configuration/implementation, device and dtype.
+
+`EvolutionResult` returns embedding → every ordered post-block residual → separately labeled final-normalized state. Metrics use selected-token, all-hidden-coordinate float64 L2, differences and cosine; optional collector statistics retain float32 semantics. Zero-norm cosines are null with reasons. Its bounded upper-triangular comparison list supports any checkpoint pair; signed norm change runs from the lower checkpoint index to the higher. No vectors are returned.
+
+`LensResult` applies the resident final normalization independently to each raw checkpoint, then the resident head over every vocabulary entry. Captured `output.normalized` uses the head alone. It returns per-checkpoint top candidates and up to eight comparison candidates, including up to three default candidates from the selected position’s final readout. Each has exact ID/native piece/decoded text, raw logit, full-vocabulary probability and full-vocabulary rank. Ranks sort descending logits, with exact ties ordered by ascending ID. Entropy uses the returned float32 probability distribution with float64 reductions. Probabilities use the established full-vocabulary CPU float64 softmax, cast to float32; a displayed subset never changes the denominator.
+
+Final-normalization consistency is checked at every selected position. Final logit/probability comparisons are present only at the original final prompt position; other positions explicitly lack retained original logits. Float32 logit gates remain atol 1e-5/rtol 1e-4, probabilities atol 1e-6/rtol 1e-4. Results disclose diagnostics rather than internal beliefs or causal claims. Stage 6 readout supports the validated float32 Qwen execution; mismatched/unready resident weights return explicit errors without loading or a transformer forward.
+
+`SamplingResult` uses saved final logits and retained candidate identity metadata. CPU float64 processing calls the pinned Transformers temperature → top-k → top-p implementations, then the validated full-remaining-vocabulary normalization. Top-k keeps cutoff ties; top-p uses the pinned ascending-sort threshold and keeps at least one token. The table separates raw/processed logits, model probabilities and adjusted probabilities, with eligible count, omitted mass and processor provenance. No RNG is consumed and no token is drawn. Exact tied candidates outside a trace’s retained token metadata return `CANDIDATE_METADATA_NOT_CAPTURED`; no text is invented. API traces retain 100 candidate identities.
+
+The analysis cache stores encoded summaries only: default **16 MiB / 128 entries**, configured by `LLM_LAB_ANALYSIS_CACHE_MAX_BYTES` and `LLM_LAB_ANALYSIS_CACHE_MAX_ENTRIES`. Each admitted active job reserves one maximum-response slot; admission is atomic. At most the configured queue capacity (default 3) is active/queued. One CPU analysis worker orchestrates jobs; weight-dependent readouts additionally use the existing serialized model executor. CPU metrics/sampling and completed cache hits need no resident weights. New lens work requires an exactly matching resident adapter.
+
+Analysis TTL is the earlier of source expiry and 600 seconds from admission (`LLM_LAB_ANALYSIS_TTL_SECONDS`). Reads do not renew it. Source leases defer physical tensor reclamation while work is active; progress and publication check source liveness and cancellation. Expired/deleted sources cannot be revived. Eligible terminal analyses are LRU-evicted; at most twice the configured entry limit is retained as removed-ID metadata. Completed cache entries are swept together with the existing trace-store sweep. `ANALYSIS_EXPIRED` covers remembered expiry/eviction (410); unknown/cross-trace IDs return `ANALYSIS_NOT_FOUND` (404). No persistence is added.
+
+The default tensor-work estimate limit is **32 MiB** (`LLM_LAB_ANALYSIS_WORK_MAX_BYTES`). Preflight estimates selected-state scratch plus vocabulary processing scratch; the readout streams one checkpoint at a time and never stores a depth × vocabulary matrix. Existing 1 MiB response limits apply; results exceeding them fail rather than truncate. Budgets describe tensors and encoded summaries, not total Python/PyTorch RSS, allocator caches or the already resident model weights.
+
+If complete depth vectors are absent, the UI offers an explicit ordinary `overview` capture for the same prompt. It retains both source IDs, associates the new execution with the current exploration session, and performs all depth analyses and linked microscope reads against that new overview. Ordinary token/layer/candidate/view selection and sampling controls cannot create traces.
+
+## Stage 7 residual and MLP analyses
+
+`POST /traces/{trace_id}/analyses` additionally accepts `residual_stream` and `mlp_internals`, using the same lifecycle, leases, cache, cancellation and response limits. These jobs carry method version `stage7.v1`; existing Stage 6 jobs retain `stage6.v1`. Both kinds require all eleven actual block operands from one source trace. Missing operands or original learned-module reference checks return `COMPONENT_NOT_CAPTURED` and an explicit selected-layer/token MLP capture hint. Exploration never captures or calls the model automatically.
+
+Example bounded request:
+
+```json
+{
+  "kind": "mlp_internals",
+  "parameters": {
+    "token_index": 4,
+    "layer_index": 12,
+    "hidden_coordinate_index": 19,
+    "intermediate_coordinate_index": 17,
+    "top_k": 12,
+    "ranking": "absolute"
+  }
+}
+```
+
+Indices are strict nonnegative integers and validated against source dimensions. `top_k` is 1–64 (default 12); ranking is `absolute`, `positive` or `negative`. Sign-filtered tables contain only strictly positive/negative coordinates and may be empty. Exact ties use ascending original coordinate. No matrix or complete model history is sent to the browser.
+
+Operations return semantic component IDs, formula, full input/output shapes, selected-vector shape, native dtype/device, direct-capture provenance, backend float64 statistics, bounded ranked coordinates and one exact selected coordinate. Residual results return before/update/after norms, after-minus-before delta magnitude, cosine, update-to-residual ratio, signed coordinate differences and comparisons for attention, MLP and the complete block. Direct attention/MLP updates remain distinct from subtraction-derived deltas and the derived combined update `a+m`. Zero norm ratios/cosines return null plus a reason.
+
+MLP results expose actual normalized input, gate, up, SiLU, elementwise product, down-projected hidden-size update and residual output. A selected intermediate coordinate returns gate/SiLU/up/product and a multiplication audit error. All results identify exact source UUID, token ID/piece/absolute position, layer, model/tokenizer revision, implementation/configuration digests and execution precision.
+
+Reconciliation uses the existing float32 componentwise `1e-5 + 1e-4*abs(reference)` gate, float64 audit reductions, max absolute error and relative L2 with declared 1e-12 reference-norm floor. Saved-operand comparisons and independent learned-module validation references are separately labeled with their actual scope. Failed checks return `RECONCILIATION_FAILED`; nonfinite operands return `NONFINITE_ANALYSIS`. Identity/axis/device mismatch returns `SOURCE_IDENTITY_MISMATCH`; unsupported model/runtime returns `ANALYSIS_UNSUPPORTED`; invalid indices use `INVALID_LAYER`, `INVALID_TOKEN` or `INVALID_COORDINATE`. Existing source-expiry, cache-budget and response-budget errors apply unchanged.
+
+The Stage 7 scratch estimate is `(7*hidden_size + 4*intermediate_size)*8*12` bytes; a conservative encoded-response admission estimate is `24000 + top_k*2400` bytes. Active jobs still reserve one max-response slot and terminal caches retain only encoded summaries. No resident weights are needed for analysis. Explicit detail capture uses the existing trace endpoint with `{"profile":"mlp","layers":[12],"tokens":[4]}`, creating an independently identified source execution.

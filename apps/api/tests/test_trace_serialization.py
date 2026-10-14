@@ -193,3 +193,30 @@ def test_binary_cannot_bypass_element_limit_or_round_integer_ids(transport):
     with pytest.raises(ServiceError) as failure:
         serializer.slice_response(trace, "embedding.output", SliceRequest(format="binary"))
     assert failure.value.code == "INVALID_SLICE"
+
+
+def test_opt_in_statistics_preserve_nonfinite_semantics_and_slice_scope(transport):
+    serializer, trace, _ = transport
+    body = serializer.slice(trace, "embedding.output", SliceRequest(include_statistics=True))
+    stats = body["statistics"]
+    assert stats["finite_count"] == 1 and stats["nonfinite_count"] == 3
+    assert stats["l2_norm"] == 1 and stats["std"] == 0 and not stats["finite"]
+    assert "requested slice" in stats["reduction_scope"]
+    empty = serializer.slice(
+        trace,
+        "embedding.output",
+        SliceRequest(selectors={"token": {"index": 3}}, include_statistics=True),
+    )
+    assert empty["statistics"]["finite_count"] == 0
+    assert empty["statistics"]["l2_norm"] is None
+    assert "l2_norm" in empty["statistics"]["undefined_fields"]
+    assert serializer.slice(trace, "embedding.output", SliceRequest())["statistics"] is None
+
+
+def test_statistics_request_cannot_bypass_element_budget(transport):
+    _, trace, _ = transport
+    serializer = TraceSerializer(Settings(auto_load=False, trace_api_max_elements=2))
+    trace.tensor = lambda *args, **kwargs: pytest.fail("tensor accessed before limit check")
+    with pytest.raises(ServiceError) as failure:
+        serializer.slice(trace, "embedding.output", SliceRequest(include_statistics=True))
+    assert failure.value.code == "RESPONSE_TOO_LARGE"

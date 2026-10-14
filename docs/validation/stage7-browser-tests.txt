@@ -1,0 +1,19 @@
+
+> llm-visualization-lab@0.1.0 test:browser
+> npm run test:browser --workspace @llm-lab/web residual.spec.ts
+
+
+> @llm-lab/web@0.1.0 test:browser
+> playwright test residual.spec.ts
+
+
+Running 3 tests using 1 worker
+
+(node:79544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  1 tests/browser/residual.spec.ts:27:5 › Stage 7 real analysis expiry, saved-data recompute and source expiry
+  ✓  2 tests/browser/residual.spec.ts:67:7 › Stage 7 real Germany: residuals, gated MLP, capture scope and zero exploration forwards (14.0s)
+  ✓  3 tests/browser/residual.spec.ts:67:7 › Stage 7 real France: residuals, gated MLP, capture scope and zero exploration forwards (12.7s)
+
+  1 skipped
+  2 passed (29.0s)

@@ -314,7 +314,7 @@ function Workspace() {
       )}
       <footer className="workspace-footer">
         <span>One trace. A continuous model journey.</span>
-        <span>Stage 4 · Model Journey</span>
+        <span>Stage 7 · Residual Stream and MLP</span>
       </footer>
     </main>
   );

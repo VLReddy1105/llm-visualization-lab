@@ -159,6 +159,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/traces/{trace_id}/analyses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Analysis */
+        post: operations["create_analysis_api_v1_traces__trace_id__analyses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/traces/{trace_id}/analyses/{analysis_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Analysis */
+        get: operations["get_analysis_api_v1_traces__trace_id__analyses__analysis_id__get"];
+        put?: never;
+        post?: never;
+        /** Cancel Analysis */
+        delete: operations["cancel_analysis_api_v1_traces__trace_id__analyses__analysis_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/traces/{trace_id}/compare-output/{reference_trace_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Output Comparison */
+        get: operations["output_comparison_api_v1_traces__trace_id__compare_output__reference_trace_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/traces/{trace_id}/components": {
         parameters: {
             query?: never;
@@ -380,10 +432,115 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/traces/{trace_id}/tokens/{token_index}/journey": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Token Journey */
+        get: operations["token_journey_api_v1_traces__trace_id__tokens__token_index__journey_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AnalysisError */
+        AnalysisError: {
+            /** Code */
+            code: string;
+            /** Details */
+            details?: {
+                [key: string]: unknown;
+            };
+            /** Message */
+            message: string;
+            /**
+             * Retryable
+             * @default false
+             */
+            retryable: boolean;
+        };
+        /** AnalysisJob */
+        AnalysisJob: {
+            /** Analysis Id */
+            analysis_id: string;
+            /**
+             * Cache Hit
+             * @default false
+             */
+            cache_hit: boolean;
+            /** Completed Checkpoints */
+            completed_checkpoints: number;
+            /** Created At */
+            created_at: string;
+            error?: components["schemas"]["AnalysisError"] | null;
+            /** Expires At */
+            expires_at: string;
+            /**
+             * Method Version
+             * @default stage6.v1
+             * @enum {string}
+             */
+            method_version: "stage6.v1" | "stage7.v1";
+            /** Request */
+            request: components["schemas"]["EvolutionRequest"] | components["schemas"]["LensRequest"] | components["schemas"]["SamplingRequest"] | components["schemas"]["ResidualStreamRequest"] | components["schemas"]["MLPInternalsRequest"];
+            /** Result */
+            result?: components["schemas"]["EvolutionResult"] | components["schemas"]["LensResult"] | components["schemas"]["SamplingResult"] | components["schemas"]["ResidualStreamResult"] | components["schemas"]["MLPInternalsResult"] | null;
+            /** Retained Bytes */
+            retained_bytes: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "ready" | "failed" | "cancelled";
+            /** Total Checkpoints */
+            total_checkpoints: number;
+            /** Trace Id */
+            trace_id: string;
+        };
+        /** AnalysisSource */
+        AnalysisSource: {
+            /** Config Digest */
+            config_digest: string;
+            /** Device */
+            device: string;
+            /** Dtype */
+            dtype: string;
+            /** Hf Model Id */
+            hf_model_id: string;
+            /** Hidden Size */
+            hidden_size: number;
+            /** Implementation Digest */
+            implementation_digest: string;
+            /** Layer Count */
+            layer_count: number;
+            /** Model Id */
+            model_id: string;
+            /** Revision */
+            revision: string;
+            token: components["schemas"]["TokenMetadata"];
+            /** Tokenizer Revision */
+            tokenizer_revision: string;
+            /** Trace Id */
+            trace_id: string;
+            /**
+             * Value Kind
+             * @default derived
+             * @constant
+             */
+            value_kind: "derived";
+            /** Vocabulary Size */
+            vocabulary_size: number;
+        };
         /** Architecture */
         Architecture: {
             /** Adapter Id */
@@ -478,6 +635,86 @@ export interface components {
             /** Raw Component Count */
             raw_component_count: number;
         };
+        /** BlockOperation */
+        BlockOperation: {
+            /** Component Id */
+            component_id: string;
+            /** Coordinates */
+            coordinates: components["schemas"]["CoordinateValue"][];
+            /** Dtype */
+            dtype: string;
+            /** Formula */
+            formula: string;
+            /** Input Components */
+            input_components: string[];
+            /** Input Shapes */
+            input_shapes: number[][];
+            /** Method */
+            method: string;
+            /** Name */
+            name: string;
+            /** Original Device */
+            original_device: string;
+            /** Output Shape */
+            output_shape: number[];
+            /**
+             * Provenance
+             * @enum {string}
+             */
+            provenance: "raw" | "derived" | "reconstructed" | "summary";
+            selected_coordinate: components["schemas"]["CoordinateValue"];
+            /** Selected Shape */
+            selected_shape: number[];
+            statistics: components["schemas"]["VectorStatistics"];
+            /** Symbol */
+            symbol: string;
+        };
+        /** BlockParameters */
+        BlockParameters: {
+            /**
+             * Hidden Coordinate Index
+             * @default 0
+             */
+            hidden_coordinate_index: number;
+            /**
+             * Intermediate Coordinate Index
+             * @default 0
+             */
+            intermediate_coordinate_index: number;
+            /** Layer Index */
+            layer_index: number;
+            /**
+             * Ranking
+             * @default absolute
+             * @enum {string}
+             */
+            ranking: "absolute" | "positive" | "negative";
+            /** Token Index */
+            token_index: number;
+            /**
+             * Top K
+             * @default 12
+             */
+            top_k: number;
+        };
+        /** BlockReconciliation */
+        BlockReconciliation: {
+            /** Formula */
+            formula: string;
+            metrics: components["schemas"]["ComparisonMetrics"];
+            /** Name */
+            name: string;
+            /**
+             * Provenance
+             * @default derived
+             * @enum {string}
+             */
+            provenance: "derived" | "independent_reference";
+            /** Scope */
+            scope: string;
+            /** Sources */
+            sources: string[];
+        };
         /** CancellationResponse */
         CancellationResponse: {
             /**
@@ -522,6 +759,27 @@ export interface components {
             profile: "summary" | "overview" | "layer" | "attention" | "mlp" | "deep";
             /** Tokens */
             tokens?: number[] | null;
+        };
+        /** ComparisonMetrics */
+        ComparisonMetrics: {
+            /** Absolute Tolerance */
+            absolute_tolerance: number;
+            /** Bitwise Equal */
+            bitwise_equal: boolean;
+            /** Comparison Dtype */
+            comparison_dtype: string;
+            /** Max Absolute Error */
+            max_absolute_error: number;
+            /** Mean Absolute Error */
+            mean_absolute_error: number;
+            /** Passed */
+            passed: boolean;
+            /** Relative L2 Epsilon */
+            relative_l2_epsilon: number;
+            /** Relative L2 Error */
+            relative_l2_error: number;
+            /** Relative Tolerance */
+            relative_tolerance: number;
         };
         /** ComponentDescriptor */
         ComponentDescriptor: {
@@ -596,6 +854,13 @@ export interface components {
             /** Total */
             total: number;
         };
+        /** CoordinateValue */
+        CoordinateValue: {
+            /** Index */
+            index: number;
+            /** Value */
+            value: number;
+        };
         /** Coordinates */
         Coordinates: {
             /** Count */
@@ -662,6 +927,52 @@ export interface components {
         ErrorResponse: {
             error: components["schemas"]["ErrorInfo"];
         };
+        /** EvolutionRequest */
+        EvolutionRequest: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "token_evolution";
+            parameters: components["schemas"]["PositionParameters"];
+        };
+        /** EvolutionResult */
+        EvolutionResult: {
+            /**
+             * Accumulation Dtype
+             * @default float64
+             * @constant
+             */
+            accumulation_dtype: "float64";
+            /** Checkpoints */
+            checkpoints: components["schemas"]["RepresentationMetric"][];
+            /** Comparisons */
+            comparisons: components["schemas"]["LayerComparison"][];
+            /**
+             * Kind
+             * @default token_evolution
+             * @constant
+             */
+            kind: "token_evolution";
+            /** Method */
+            method: string;
+            source: components["schemas"]["AnalysisSource"];
+        };
+        /** GateCoordinate */
+        GateCoordinate: {
+            /** Activated Gate */
+            activated_gate: number;
+            /** Gate */
+            gate: number;
+            /** Index */
+            index: number;
+            /** Multiplication Error */
+            multiplication_error: number;
+            /** Product */
+            product: number;
+            /** Up */
+            up: number;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -717,6 +1028,105 @@ export interface components {
             /** Tokens */
             tokens: components["schemas"]["TokenRecord"][];
         };
+        /** LayerComparison */
+        LayerComparison: {
+            /** Cosine Similarity */
+            cosine_similarity: number | null;
+            /** From Checkpoint */
+            from_checkpoint: number;
+            /** L2 Distance */
+            l2_distance: number;
+            /** Norm Change */
+            norm_change: number;
+            /** To Checkpoint */
+            to_checkpoint: number;
+            /** Undefined Reason */
+            undefined_reason: string | null;
+        };
+        /** LensCheckpoint */
+        LensCheckpoint: {
+            /** Checkpoint Index */
+            checkpoint_index: number;
+            /** Comparison Candidates */
+            comparison_candidates: components["schemas"]["Candidate"][];
+            /** Component Id */
+            component_id: string;
+            /** Entropy Nats */
+            entropy_nats: number;
+            /** Label */
+            label: string;
+            /** Layer Index */
+            layer_index: number | null;
+            /** Normalization Applied */
+            normalization_applied: boolean;
+            /** Omitted Probability Mass */
+            omitted_probability_mass: number;
+            /** Probability Sum */
+            probability_sum: number;
+            /**
+             * Stage
+             * @enum {string}
+             */
+            stage: "embedding" | "post_block_residual" | "final_normalized";
+            /** Top Candidates */
+            top_candidates: components["schemas"]["Candidate"][];
+        };
+        /** LensParameters */
+        LensParameters: {
+            /** Candidate Ids */
+            candidate_ids?: number[];
+            /**
+             * Display Top K
+             * @default 5
+             */
+            display_top_k: number;
+            /**
+             * Recipe
+             * @default final_norm_then_lm_head
+             * @constant
+             */
+            recipe: "final_norm_then_lm_head";
+            /** Token Index */
+            token_index: number;
+        };
+        /** LensRequest */
+        LensRequest: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "logit_lens";
+            parameters: components["schemas"]["LensParameters"];
+        };
+        /** LensResult */
+        LensResult: {
+            /** Candidate Ids */
+            candidate_ids: number[];
+            /** Checkpoints */
+            checkpoints: components["schemas"]["LensCheckpoint"][];
+            /** Comparison Note */
+            comparison_note: string;
+            final_logits_comparison: components["schemas"]["ComparisonMetrics"] | null;
+            final_normalization_comparison: components["schemas"]["ComparisonMetrics"];
+            final_probabilities_comparison: components["schemas"]["ComparisonMetrics"] | null;
+            /**
+             * Kind
+             * @default logit_lens
+             * @constant
+             */
+            kind: "logit_lens";
+            /** Method */
+            method: string;
+            /** Next Position */
+            next_position: number;
+            /** Prediction Position */
+            prediction_position: number;
+            /** Probability Policy */
+            probability_policy: string;
+            /** Rank Policy */
+            rank_policy: string;
+            source: components["schemas"]["AnalysisSource"];
+        };
         /** LogitsResponse */
         LogitsResponse: {
             logits: components["schemas"]["ComponentDescriptor"];
@@ -735,6 +1145,40 @@ export interface components {
             trace_id: string;
             /** Vocabulary Size */
             vocabulary_size: number;
+        };
+        /** MLPInternalsRequest */
+        MLPInternalsRequest: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "mlp_internals";
+            parameters: components["schemas"]["BlockParameters"];
+        };
+        /** MLPInternalsResult */
+        MLPInternalsResult: {
+            /** Gate Coordinates */
+            gate_coordinates: components["schemas"]["GateCoordinate"][];
+            /** Intermediate Size */
+            intermediate_size: number;
+            /**
+             * Kind
+             * @default mlp_internals
+             * @constant
+             */
+            kind: "mlp_internals";
+            /** Layer Index */
+            layer_index: number;
+            /** Method */
+            method: string;
+            /** Operations */
+            operations: components["schemas"]["BlockOperation"][];
+            /** Ranking Policy */
+            ranking_policy: string;
+            /** Reconciliation */
+            reconciliation: components["schemas"]["BlockReconciliation"][];
+            selected_gate_coordinate: components["schemas"]["GateCoordinate"];
+            source: components["schemas"]["AnalysisSource"];
         };
         /** ModelLoadRequest */
         ModelLoadRequest: {
@@ -875,6 +1319,38 @@ export interface components {
              */
             kind: "nan" | "positive_infinity" | "negative_infinity";
         };
+        /** OutputComparison */
+        OutputComparison: {
+            /** Compatible */
+            compatible: boolean;
+            /** Logits */
+            logits: {
+                [key: string]: unknown;
+            } | null;
+            /** Method */
+            method: string;
+            /** Mismatches */
+            mismatches: string[];
+            /** Passed */
+            passed: boolean;
+            /** Probabilities */
+            probabilities: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Provenance
+             * @constant
+             */
+            provenance: "derived";
+            /** Reference Trace Id */
+            reference_trace_id: string;
+            /** Same Top Token */
+            same_top_token: boolean | null;
+            /** Sources */
+            sources: string[];
+            /** Trace Id */
+            trace_id: string;
+        };
         /** Page */
         Page: {
             /** Items */
@@ -885,6 +1361,11 @@ export interface components {
             next_cursor?: string | null;
             /** Total */
             total: number;
+        };
+        /** PositionParameters */
+        PositionParameters: {
+            /** Token Index */
+            token_index: number;
         };
         /** Prediction */
         Prediction: {
@@ -932,6 +1413,123 @@ export interface components {
             /** Text */
             text: string;
         };
+        /** RepresentationMetric */
+        RepresentationMetric: {
+            /** Checkpoint Index */
+            checkpoint_index: number;
+            /** Component Id */
+            component_id: string;
+            /** Consecutive Distance */
+            consecutive_distance: number | null;
+            /** Cosine Embedding */
+            cosine_embedding: number | null;
+            /** Cosine Final Residual */
+            cosine_final_residual: number | null;
+            /** Cosine Previous */
+            cosine_previous: number | null;
+            /** L2 Norm */
+            l2_norm: number;
+            /** Label */
+            label: string;
+            /** Layer Index */
+            layer_index: number | null;
+            /** Norm Change */
+            norm_change: number | null;
+            /**
+             * Stage
+             * @enum {string}
+             */
+            stage: "embedding" | "post_block_residual" | "final_normalized";
+            statistics: components["schemas"]["Statistics"];
+            /** Undefined */
+            undefined: {
+                [key: string]: string;
+            };
+        };
+        /** ResidualComparison */
+        ResidualComparison: {
+            /** After Norm */
+            after_norm: number;
+            /** After Symbol */
+            after_symbol: string;
+            /** Before Norm */
+            before_norm: number;
+            /** Before Symbol */
+            before_symbol: string;
+            /** Coordinates */
+            coordinates: components["schemas"]["ResidualCoordinate"][];
+            /** Cosine Before After */
+            cosine_before_after: number | null;
+            /** Delta Norm */
+            delta_norm: number;
+            /**
+             * Name
+             * @enum {string}
+             */
+            name: "attention" | "mlp" | "block";
+            selected_coordinate: components["schemas"]["ResidualCoordinate"];
+            /** Undefined */
+            undefined: {
+                [key: string]: string;
+            };
+            /** Update Norm */
+            update_norm: number;
+            /**
+             * Update Provenance
+             * @enum {string}
+             */
+            update_provenance: "raw" | "derived";
+            /** Update Symbol */
+            update_symbol: string;
+            /** Update To Residual Ratio */
+            update_to_residual_ratio: number | null;
+        };
+        /** ResidualCoordinate */
+        ResidualCoordinate: {
+            /** Addition Error */
+            addition_error: number;
+            /** After */
+            after: number;
+            /** Before */
+            before: number;
+            /** Index */
+            index: number;
+            /** Signed Delta */
+            signed_delta: number;
+            /** Update */
+            update: number;
+        };
+        /** ResidualStreamRequest */
+        ResidualStreamRequest: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "residual_stream";
+            parameters: components["schemas"]["BlockParameters"];
+        };
+        /** ResidualStreamResult */
+        ResidualStreamResult: {
+            /** Comparisons */
+            comparisons: components["schemas"]["ResidualComparison"][];
+            /**
+             * Kind
+             * @default residual_stream
+             * @constant
+             */
+            kind: "residual_stream";
+            /** Layer Index */
+            layer_index: number;
+            /** Method */
+            method: string;
+            /** Operations */
+            operations: components["schemas"]["BlockOperation"][];
+            /** Ranking Policy */
+            ranking_policy: string;
+            /** Reconciliation */
+            reconciliation: components["schemas"]["BlockReconciliation"][];
+            source: components["schemas"]["AnalysisSource"];
+        };
         /** RuntimeMetadata */
         RuntimeMetadata: {
             /**
@@ -971,6 +1569,94 @@ export interface components {
             /** Transformers Version */
             transformers_version: string;
         };
+        /** SamplingCandidate */
+        SamplingCandidate: {
+            /** Decoded Token */
+            decoded_token: string;
+            /** Eligible */
+            eligible: boolean;
+            /** Model Probability */
+            model_probability: number;
+            /** Probability */
+            probability: number;
+            /** Processed Logit */
+            processed_logit: number | null;
+            /** Rank */
+            rank: number;
+            /** Raw Logit */
+            raw_logit: number;
+            /** Token Id */
+            token_id: number;
+            /** Tokenizer Piece */
+            tokenizer_piece: string;
+        };
+        /** SamplingParameters */
+        SamplingParameters: {
+            /**
+             * Display Top K
+             * @default 10
+             */
+            display_top_k: number;
+            /**
+             * Mode
+             * @default sample
+             * @enum {string}
+             */
+            mode: "sample" | "greedy";
+            /**
+             * Temperature
+             * @default 1
+             */
+            temperature: number;
+            /** Token Index */
+            token_index: number;
+            /**
+             * Top K
+             * @default 0
+             */
+            top_k: number;
+            /**
+             * Top P
+             * @default 1
+             */
+            top_p: number;
+        };
+        /** SamplingRequest */
+        SamplingRequest: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "sampling_preview";
+            parameters: components["schemas"]["SamplingParameters"];
+        };
+        /** SamplingResult */
+        SamplingResult: {
+            /** Candidates */
+            candidates: components["schemas"]["SamplingCandidate"][];
+            /** Eligible Count */
+            eligible_count: number;
+            /**
+             * Kind
+             * @default sampling_preview
+             * @constant
+             */
+            kind: "sampling_preview";
+            /** Method */
+            method: string;
+            /** Omitted Probability Mass */
+            omitted_probability_mass: number;
+            parameters: components["schemas"]["SamplingParameters"];
+            /** Probability Policy */
+            probability_policy: string;
+            /** Probability Sum */
+            probability_sum: number;
+            /** Processor Order */
+            processor_order: string[];
+            /** Rank Policy */
+            rank_policy: string;
+            source: components["schemas"]["AnalysisSource"];
+        };
         /** ServiceStatus */
         ServiceStatus: {
             /** Inference Ready */
@@ -987,6 +1673,11 @@ export interface components {
              * @enum {string}
              */
             format: "json" | "binary";
+            /**
+             * Include Statistics
+             * @default false
+             */
+            include_statistics: boolean;
             /** Selectors */
             selectors?: {
                 [key: string]: components["schemas"]["IndexSelector"] | components["schemas"]["RangeSelector"];
@@ -1094,6 +1785,7 @@ export interface components {
             shape: number[];
             /** Sources */
             sources: string[];
+            statistics?: components["schemas"]["Statistics"] | null;
             /** Storage Dtype */
             storage_dtype: string;
             /** Tensor Id */
@@ -1299,6 +1991,27 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** VectorStatistics */
+        VectorStatistics: {
+            /**
+             * Accumulation Dtype
+             * @default float64
+             * @constant
+             */
+            accumulation_dtype: "float64";
+            /** Count */
+            count: number;
+            /** L2 Norm */
+            l2_norm: number;
+            /** Max */
+            max: number;
+            /** Mean */
+            mean: number;
+            /** Min */
+            min: number;
+            /** Std */
+            std: number;
         };
     };
     responses: never;
@@ -1965,6 +2678,389 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gone */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_analysis_api_v1_traces__trace_id__analyses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trace_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EvolutionRequest"] | components["schemas"]["LensRequest"] | components["schemas"]["SamplingRequest"] | components["schemas"]["ResidualStreamRequest"] | components["schemas"]["MLPInternalsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisJob"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gone */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_analysis_api_v1_traces__trace_id__analyses__analysis_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trace_id: string;
+                analysis_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisJob"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gone */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    cancel_analysis_api_v1_traces__trace_id__analyses__analysis_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trace_id: string;
+                analysis_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisJob"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gone */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    output_comparison_api_v1_traces__trace_id__compare_output__reference_trace_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trace_id: string;
+                reference_trace_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutputComparison"];
+                };
             };
             /** @description Not Found */
             404: {
@@ -3226,6 +4322,101 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TokenPage"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Gone */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Request Entity Too Large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    token_journey_api_v1_traces__trace_id__tokens__token_index__journey_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trace_id: string;
+                token_index: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisJob"];
                 };
             };
             /** @description Not Found */

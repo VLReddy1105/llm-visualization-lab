@@ -5,6 +5,19 @@ export type Candidate = components["schemas"]["Candidate"];
 export type ApiPage = components["schemas"]["Page"];
 export type ModelStatus = components["schemas"]["ModelStatus"];
 export type NextTokenResponse = components["schemas"]["NextTokenResponse"];
+export type AnalysisJob = components["schemas"]["AnalysisJob"];
+export type AnalysisRequest = AnalysisJob["request"];
+export type EvolutionResult = components["schemas"]["EvolutionResult"];
+export type LensResult = components["schemas"]["LensResult"];
+export type SamplingResult = components["schemas"]["SamplingResult"];
+export type SamplingParameters = components["schemas"]["SamplingParameters"];
+export type BlockParameters = components["schemas"]["BlockParameters"];
+export type ResidualStreamResult = components["schemas"]["ResidualStreamResult"];
+export type MLPInternalsResult = components["schemas"]["MLPInternalsResult"];
+export type Checkpoint = Pick<
+  EvolutionResult["checkpoints"][number],
+  "checkpoint_index" | "component_id" | "label" | "stage" | "layer_index"
+>;
 type HealthResponse = components["schemas"]["HealthResponse"];
 type NextTokenRequest = components["schemas"]["NextTokenRequest"];
 export type CreateTraceRequest = components["schemas"]["CreateTraceRequest"];
@@ -16,13 +29,17 @@ export type TensorSlice = components["schemas"]["TensorSlice"];
 export type SliceRequest = components["schemas"]["SliceRequest"];
 export type AttentionHead = components["schemas"]["AttentionHead"];
 export type AttentionRelation = components["schemas"]["AttentionRelation"];
+export type OutputComparison = components["schemas"]["OutputComparison"];
 export type TraceLogits = components["schemas"]["LogitsResponse"];
 export type TraceStoreStatus = components["schemas"]["StoreStatus"];
 export type TokenPage = components["schemas"]["TokenPage"];
 export type ComponentPage = components["schemas"]["ComponentPage"];
 type Page = components["schemas"]["Page"];
 type CancellationResponse = components["schemas"]["CancellationResponse"];
-type JsonSliceRequest = Omit<SliceRequest, "format"> & { format?: "json" };
+type JsonSliceRequest = Omit<SliceRequest, "format" | "include_statistics"> & {
+  format?: "json";
+  include_statistics?: boolean;
+};
 export type BinaryTensorSlice = {
   data: ArrayBuffer;
   metadata: Omit<
@@ -191,16 +208,23 @@ export const api = {
     request<Page>(query(`${tracePath(id)}/layers`, options), { signal }),
   traceLayer: (id: string, layer: number, signal?: AbortSignal) =>
     request<ComponentGroup>(layerPath(id, layer), { signal }),
-  traceAttention: (id: string, layer: number) =>
-    request<ComponentGroup>(`${layerPath(id, layer)}/attention`),
+  compareOutputs: (id: string, reference: string, signal?: AbortSignal) =>
+    request<OutputComparison>(
+      `${tracePath(id)}/compare-output/${encodeURIComponent(reference)}`,
+      { signal },
+    ),
+  traceAttention: (id: string, layer: number, signal?: AbortSignal) =>
+    request<ComponentGroup>(`${layerPath(id, layer)}/attention`, { signal }),
   traceHead: (
     id: string,
     layer: number,
     head: number,
     options: HeadOptions = {},
+    signal?: AbortSignal,
   ) =>
     request<AttentionHead>(
       query(`${layerPath(id, layer)}/attention/heads/${head}`, options),
+      { signal },
     ),
   traceRelation: (
     id: string,
@@ -208,12 +232,14 @@ export const api = {
     head: number,
     queryToken: number,
     keyToken: number,
+    signal?: AbortSignal,
   ) =>
     request<AttentionRelation>(
       query(`${layerPath(id, layer)}/attention/heads/${head}/relation`, {
         query_token_index: queryToken,
         key_token_index: keyToken,
       }),
+      { signal },
     ),
   traceMLP: (id: string, layer: number) =>
     request<ComponentGroup>(`${layerPath(id, layer)}/mlp`),
@@ -272,6 +298,21 @@ export const api = {
       jsonPost({ ...body, format: "binary" }),
       15000,
       true,
+    ),
+  createAnalysis: (id: string, body: AnalysisRequest, signal?: AbortSignal) =>
+    request<AnalysisJob>(`${tracePath(id)}/analyses`, {
+      ...jsonPost(body),
+      signal,
+    }),
+  analysis: (id: string, analysisId: string, signal?: AbortSignal) =>
+    request<AnalysisJob>(
+      `${tracePath(id)}/analyses/${encodeURIComponent(analysisId)}`,
+      { signal },
+    ),
+  cancelAnalysis: (id: string, analysisId: string) =>
+    request<AnalysisJob>(
+      `${tracePath(id)}/analyses/${encodeURIComponent(analysisId)}`,
+      { method: "DELETE" },
     ),
   deleteTrace: (id: string) =>
     request<CancellationResponse | undefined>(tracePath(id), {

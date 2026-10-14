@@ -2,9 +2,9 @@
 
 An interactive microscope for understanding how a real transformer processes text: tokens, embeddings, attention, residual updates, MLP transformations, vocabulary logits, and next-token generation.
 
-**Current status: Stage 4 — PASS.** The Model Journey workspace uses real Stage 3 traces: raw prompt submission, lifecycle handling, actual tokens, a horizontal transformer rail, linked selection, and a contextual inspector. All 31 frontend tests pass. The unchanged scientific backend passes all 224 tests on CPU and all 224 on Apple MPS; retrieval produces zero additional model forwards. Stage 5 has not begun.
+**Current status: Stage 7 — PASS (2026-10-14).** Residual Stream and MLP Explorer inspect the real selected-token/layer checkpoints, attention/MLP updates, learned RMSNorm boundaries and gate/up/SiLU/product/down pathway. All 340 backend tests pass on CPU and Apple MPS; all 73 frontend tests pass. Ten real production Chrome checks cover Stage 7, prior views, expiry and unavailable sources, with zero extra forwards during exploration. See the [Stage 7 validation report](docs/validation/STAGE_7_REPORT.md) for numerical evidence, exact files and limitations.
 
-The initial model is **Qwen/Qwen3-0.6B**, pinned to `c1899de289a04d12100db370d81485cdf75e47ca`. The implemented stack is Next.js / React / TypeScript / Tailwind CSS, Zustand, TanStack Query and Python / FastAPI / PyTorch / Hugging Face Transformers / Pydantic. Stage 2 supplies model adapters and scientific capture; Stage 3 retains these results and exposes bounded lazy access. Stage 4 consumes those existing contracts without changing the backend or generated schemas.
+The initial model is **Qwen/Qwen3-0.6B**, pinned to `c1899de289a04d12100db370d81485cdf75e47ca`. The implemented stack is Next.js / React / TypeScript / Tailwind CSS, Zustand, TanStack Query and Python / FastAPI / PyTorch / Hugging Face Transformers / Pydantic. Stage 2 supplies model adapters and scientific capture; Stage 3 retains these results and exposes bounded lazy access. Stage 4 consumes those contracts. Stage 5 adds bounded-slice statistics and a retained-output comparison endpoint. Stage 6 adds bounded, versioned analysis jobs using existing source leases and the resident model executor; the trace engine and store remain intact.
 
 The central rule is **trace once, visualize many ways**. Every scientific value must originate from real model computation or a named, reproducible transformation of retained data. Missing tensors remain unavailable. Attention patterns, intermediate vocabulary projections, and representation geometry must carry appropriate interpretation limits.
 
@@ -31,6 +31,14 @@ The [Stage 3 report](docs/validation/STAGE_3_REPORT.md) records the exact file i
 The [Stage 4 report](docs/validation/STAGE_4_REPORT.md) records the rendering decision, exact file inventory, all 31 completion points, tests and real-browser screenshots. The default UI uses the existing `overview` capture: all-layer checkpoints, embeddings, final output and logits, without deep attention/MLP tensors. The capital example displays five tokens, 28 layers and the real next-token candidate ` Berlin` at 47.70%. This is an argmax preview, not an autoregressive generation step. See the [completed journey](docs/validation/stage4-model-journey.png) and [Layer 12 inspector](docs/validation/stage4-layer12.png).
 
 Select a token or model stage to inspect its retained data. Wheel/trackpad scrolling, background dragging, arrow/Home/End keys, a layer jump selector, Fit Journey and Reset navigate the horizontal rail. Token selection persists across inspectors. Prompt edits keep the previous trace visible until explicit execution. Expiry, deletion and missing components are explicit; deeper data never triggers automatic recapture.
+
+The [Stage 5 report](docs/validation/STAGE_5_REPORT.md) contains all 38 completion points, the exact file inventory, API additions, scientific evidence, tests and screenshots. From Layer 12, choose Attention and explicitly **Capture Layer 12 Attention**. This creates a separate execution for the same raw prompt and retains all query heads for that layer. Returning to the layer reuses the detailed trace; head, token and cell changes never run the model. Trace Details distinguishes both executions and compares their complete final outputs.
+
+The [attention explorer](docs/validation/stage5-attention-heatmap.png) and [Q/K/V inspector](docs/validation/stage5-qkv-inspector.png) show actual reconstructed weights and backend statistics. Query head 4 maps to KV head 2; the Germany example’s `" is" → " Germany"` relation has weight **0.4407791793346405**. Masked cells are hatched and cannot select a valid relation. The matrix renders at most 16 × 16 cells, retaining full-row normalization; longer sequences use scrolling and window controls. Attention describes internal routing, not causal attribution. Detailed residual and MLP exploration is now implemented in Stage 7.
+
+The [Stage 6 report](docs/validation/STAGE_6_REPORT.md) records the complete file inventory, numerical examples, unchanged output tolerances, cache measurements and CPU/MPS/browser evidence. Open Token Journey, Representation Evolution, Logit Lens, Candidate Evolution or Sampling Lab from the inspector. A horizontal keyboard-accessible timeline and clickable charts share token/layer selection with the Microscope. Missing vectors offer explicit overview recapture. Sampling settings operate on retained final-position logits without drawing a token or running another transformer forward.
+
+The [candidate evolution view](docs/validation/stage6-germany-candidates.png) projects through the actual resident final normalization and LM head over all 151,936 vocabulary entries. Intermediate projections are diagnostics, not evidence of internal beliefs or causal reasoning. The Germany final projection's maximum absolute logit error is **3.814697265625e-6**, within the established tolerance; France is bitwise equal. [Performance evidence](docs/validation/stage6-performance.json) verifies 120 identical cache hits and no additional model forwards. Analysis results default to a 16 MiB / 128-entry cache with a 600-second absolute lifetime capped by the source trace; each response remains below 1 MiB.
 
 ## Local setup
 
@@ -144,4 +152,36 @@ With uvicorn running, reproduce the bounded actual HTTP artifacts from `apps/api
 .venv/bin/python -m llm_lab.trace_http_validation
 ```
 
-The generated typed API client supports creation, polling, metadata pages, head/relation reads, JSON/binary slices and deletion. Stage 4 adds external cancellation signals for its reads and submission. TanStack Query owns server payloads and polls only pending traces; Zustand owns selection and viewport state. In-memory traces disappear on restart; the API is for one local process/worker. Attention Explorer, full Layer Microscope, Token Journey, logit evolution and generation timeline remain future stages.
+The generated typed API client supports creation, polling, metadata pages, head/relation reads, JSON/binary slices and deletion. Stage 4 adds external cancellation signals for its reads and submission. TanStack Query owns server payloads and polls only pending traces; Zustand owns selection and viewport state. In-memory traces disappear on restart; the API is for one local process/worker. Attention Explorer, Layer Microscope, Token Journey, Logit Lens and residual/MLP exploration are implemented. The generation timeline remains Stage 8 scope.
+
+To reproduce the Stage 5 real-model browser checks with the local backend and production frontend running:
+
+```sh
+LLM_LAB_BROWSER_STAGE=stage5 npm run test:browser -- attention.spec.ts
+```
+
+This refreshes only Stage 5 evidence. Isolated attention tests replay recorded real HTTP responses from `docs/validation/stage5-http-fixtures.json`; production code does not import those fixtures.
+
+## Stage 7 inspection and reproduction
+
+Select an input token and a layer, then choose **Residual Stream** or **MLP Explorer** in the contextual Inspector. **Capture Layer L Token T Details** explicitly runs the original prompt once with the existing narrow MLP profile. The new source UUID supplies every displayed value; operation, coordinate, ranking, token and layer changes read retained data. Missing coverage requires another explicit capture. Coordinate ranks and update magnitudes are descriptive measurements.
+
+The residual flow exposes both real branch updates and additions, signed changes, ratios/cosines with undefined-zero handling, and recorded numerical errors. The horizontal MLP pathway branches gate/up from one learned-normalized input, shows SiLU and product coordinates, maps the 3,072-dimensional product to the 1,024-dimensional update, and shows its residual addition. Responses contain at most 64 ranked coordinates per operation. All arithmetic is in Python.
+
+From `apps/api`, reproduce the independent numerical audits:
+
+```sh
+LLM_LAB_DEVICE=cpu .venv/bin/pytest -q --real-model
+LLM_LAB_DEVICE=mps .venv/bin/pytest -q --real-model
+.venv/bin/python tests/stage7_validation.py --device cpu --output ../../docs/validation/stage7-scientific-cpu.json
+.venv/bin/python tests/stage7_validation.py --device mps --output ../../docs/validation/stage7-scientific-mps.json
+```
+
+With the production frontend and real backend running, use these root commands:
+
+```sh
+LLM_LAB_BROWSER_STAGE=stage7 npm run test:browser --workspace @llm-lab/web -- residual.spec.ts
+LLM_LAB_BROWSER_STAGE=stage7-regression LLM_LAB_BROWSER_OUTPUT_DIR=../../docs/validation/stage7-regression npm run test:browser --workspace @llm-lab/web -- journey.spec.ts attention.spec.ts evolution.spec.ts
+```
+
+The normal Stage 7 run conditionally skips the separately executed expiry scenario. To reproduce it, start the backend temporarily with `LLM_LAB_ANALYSIS_TTL_SECONDS=3 LLM_LAB_TRACE_TTL_SECONDS=12`, then run `LLM_LAB_BROWSER_STAGE=stage7 LLM_LAB_BROWSER_FAULT_MODE=analysis-expiry npm run test:browser --workspace @llm-lab/web -- residual.spec.ts -g 'analysis expiry'`. Restore normal TTL settings afterward. The HTTP resource benchmark (`.venv/bin/python tests/stage7_http_validation.py` from `apps/api`) requires the same live backend and source UUIDs from the normal browser run.

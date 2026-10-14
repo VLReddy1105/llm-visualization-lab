@@ -1,0 +1,16 @@
+{
+  "torch": "2.14.1",
+  "transformers": "5.19.0",
+  "fastapi": "0.142.2",
+  "pydantic": "2.13.5",
+  "pytest": "9.1.1",
+  "ruff": "0.16.10",
+  "python": "3.11.15",
+  "node": "v22.23.1",
+  "next": "16.4.0",
+  "react": "19.3.0",
+  "typescript": "5.9.3",
+  "vitest": "5.0.3",
+  "@playwright/test": "1.64.0",
+  "@axe-core/playwright": "4.13.0"
+}

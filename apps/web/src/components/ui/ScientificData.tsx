@@ -1,10 +1,20 @@
 import type { ComponentDescriptor } from "@/lib/api/client";
 
 export const percent = (value: number) => `${(value * 100).toFixed(2)}%`;
-export const number = (value: number | null | undefined) =>
+export const number = (
+  value: number | null | undefined,
+  significantDigits?: number,
+) =>
   value == null
     ? "Unavailable"
-    : value.toLocaleString("en", { maximumFractionDigits: 3 });
+    : significantDigits && value !== 0 && Math.abs(value) < 0.0001
+      ? value.toExponential(Math.min(significantDigits - 1, 4))
+      : value.toLocaleString(
+          "en",
+          significantDigits
+            ? { maximumSignificantDigits: significantDigits }
+            : { maximumFractionDigits: 3 },
+        );
 export const visibleWhitespace = (text: string) =>
   text
     .replaceAll(" ", "·")

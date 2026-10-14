@@ -1,0 +1,2 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<07:17,  1.41s/it]Loading weights:  68%|██████▊   | 213/311 [00:01<00:00, 195.20it/s]Loading weights: 100%|██████████| 311/311 [00:02<00:00, 141.40it/s]
+Stage 7 cpu: PASS — ../../docs/validation/stage7-scientific-cpu.json

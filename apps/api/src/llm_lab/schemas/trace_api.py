@@ -44,6 +44,7 @@ class SliceRequest(StrictModel):
     component_id: str | None = Field(default=None, max_length=128)
     selectors: dict[str, IndexSelector | RangeSelector] = Field(default_factory=dict, max_length=6)
     format: Literal["json", "binary"] = "json"
+    include_statistics: bool = False
 
 
 class Coordinates(StrictModel):
@@ -259,6 +260,21 @@ class TensorSlice(StrictModel):
     values: list[float | int | None]
     nonfinite: list[Nonfinite]
     masked_flat_indices: list[int]
+    statistics: Statistics | None = None
+
+
+class OutputComparison(StrictModel):
+    trace_id: str
+    reference_trace_id: str
+    compatible: bool
+    mismatches: list[str]
+    passed: bool
+    same_top_token: bool | None
+    logits: dict[str, Any] | None
+    probabilities: dict[str, Any] | None
+    provenance: Literal["derived"]
+    sources: list[str]
+    method: str
 
 
 class AttentionHead(StrictModel):

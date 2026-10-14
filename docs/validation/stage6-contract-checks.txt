@@ -1,0 +1,6 @@
+OpenAPI snapshot matches implemented Pydantic routes.
+
+> llm-visualization-lab@0.1.0 check:types
+> openapi-typescript packages/shared/openapi.json -o packages/shared/src/generated/api.ts --check
+
+✨ openapi-typescript 7.13.0

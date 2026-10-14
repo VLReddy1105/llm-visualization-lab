@@ -1,6 +1,6 @@
 # Implementation stages
 
-Status: **Stage 3 — PASS on CPU and Apple MPS float32.** The [Stage 1 report](validation/STAGE_1_REPORT.md) and [Stage 2 report](validation/STAGE_2_REPORT.md) preserve predecessor validation. The [Stage 3 report](validation/STAGE_3_REPORT.md) records 224 passing tests per device, store/API lifecycle checks and actual HTTP evidence. Stage 4 and subsequent visualizations/analyses remain planned and require explicit authorization.
+Status: **Stage 7 — PASS on CPU and Apple MPS float32 (2026-10-14).** The [Stage 7 report](validation/STAGE_7_REPORT.md) records residual/MLP capture, numerical reconciliation, bounded analyses, production-browser checks and preserved predecessor evidence. Stages 8–11 remain planned and require separate authorization.
 
 ## Stage execution rules
 

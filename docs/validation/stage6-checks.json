@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "completed_local_date": "2026-10-11",
+  "backend_cpu": {
+    "passed": 269,
+    "seconds": 97.98,
+    "evidence": "stage6-cpu-tests.txt"
+  },
+  "backend_mps": {
+    "passed": 269,
+    "seconds": 39.98,
+    "evidence": "stage6-mps-tests.txt"
+  },
+  "frontend": {
+    "passed": 68,
+    "seconds": 19.03,
+    "evidence": "stage6-frontend-tests.txt"
+  },
+  "browser": {
+    "stage6-browser-results.json": {
+      "startTime": "2026-10-10T23:48:23.785Z",
+      "duration": 30992.604,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "stage6-regression-browser-results.json": {
+      "startTime": "2026-10-10T23:51:35.661Z",
+      "duration": 33599.237,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "stage6-regression-browser-offline-results.json": {
+      "startTime": "2026-10-10T23:44:17.708Z",
+      "duration": 11625.285,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "stage6-regression-browser-expiry-results.json": {
+      "startTime": "2026-10-10T23:52:22.929Z",
+      "duration": 22741.361,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "typescript": "PASS",
+  "eslint": "PASS",
+  "production_build": "PASS",
+  "openapi_drift": "PASS",
+  "generated_types_drift": "PASS",
+  "ruff": "PASS",
+  "ruff_format": {
+    "status": "PASS",
+    "files": 65
+  },
+  "diff_whitespace": "PASS",
+  "scientific_evidence": "stage6-scientific-validation.json",
+  "performance_evidence": "stage6-performance.json",
+  "no_fake_data_audit": {
+    "status": "PASS",
+    "production_fixture_imports": 0,
+    "scientific_reductions": "backend only",
+    "model_forward_during_exploration": 0,
+    "sampling_rng_draws": 0,
+    "missing_data_policy": "explicit unavailability; no numeric fallback"
+  },
+  "stage7_started": false
+}

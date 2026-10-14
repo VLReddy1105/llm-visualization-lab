@@ -1,6 +1,6 @@
 # Scientific validation
 
-Status: Stage 1 output/tokenization/baseline gates and Stage 2 internal capture gates have been exercised on actual pinned Qwen weights using CPU and Apple MPS float32. See the preserved [Stage 1 report](validation/STAGE_1_REPORT.md) and the [Stage 2 report](validation/STAGE_2_REPORT.md) for measured outcomes. Store/API, generation, visualization and intervention gates remain later-stage requirements.
+Status: Stages 1–7 have been validated on actual pinned Qwen3 weights using CPU and Apple MPS float32. The [Stage 7 report](validation/STAGE_7_REPORT.md) records independent residual/MLP references, unchanged reconciliation tolerances, source integrity, resource/lifecycle tests and production-browser evidence. Generation, representation fitting and intervention gates remain future scope.
 
 ## Reference experiment and compatibility record
 
