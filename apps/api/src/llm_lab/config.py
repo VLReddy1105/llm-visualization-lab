@@ -27,6 +27,17 @@ class Settings(BaseSettings):
     analysis_cache_max_entries: int = Field(default=128, ge=1, le=1024)
     analysis_ttl_seconds: float = Field(default=600, gt=0, le=3600)
     analysis_work_max_bytes: int = Field(default=32 * 1024**2, ge=1024, le=256 * 1024**2)
+    generation_max_new_tokens: int = Field(default=16, ge=1, le=32)
+    generation_max_prefix_tokens: int = Field(default=64, ge=1, le=128)
+    generation_max_sessions: int = Field(default=16, ge=1, le=64)
+    generation_max_inflight: int = Field(default=2, ge=1, le=3)
+    generation_max_traces: int = Field(default=4, ge=0, le=8)
+    generation_session_max_bytes: int = Field(default=1024 * 1024, ge=16384, le=4 * 1024**2)
+    generation_state_max_bytes: int = Field(default=16 * 1024**2, ge=65536, le=64 * 1024**2)
+    generation_trace_max_bytes: int = Field(default=32 * 1024**2, ge=1, le=128 * 1024**2)
+    generation_scratch_max_bytes: int = Field(default=32 * 1024**2, ge=1024**2, le=512 * 1024**2)
+    generation_duration_seconds: float = Field(default=120, gt=0, le=300)
+    generation_ttl_seconds: float = Field(default=600, gt=0, le=3600)
     cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @field_validator("cors_origins")

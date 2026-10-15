@@ -294,7 +294,7 @@ class ModelService:
             return {
                 "request_forward_passes": self._request_forward_passes,
                 "counter_scope": (
-                    "adapter.forward attempts from inference/trace; "
+                    "adapter.forward attempts from inference/trace/generation; "
                     "excludes load warmup and independent validation reference"
                 ),
             }
@@ -315,9 +315,11 @@ class ModelService:
     def _response_only(self, text: str, top_k: int, request_id: str) -> NextTokenResponse:
         return self._compute(text, top_k, request_id).response
 
-    def _compute(self, text: str, top_k: int, request_id: str) -> InferenceResult:
+    def _compute(
+        self, text: str, top_k: int, request_id: str, token_ids_override=None
+    ) -> InferenceResult:
         self._require_ready()
-        if not text.strip():
+        if token_ids_override is None and not text.strip():
             raise ServiceError("EMPTY_PROMPT", "Enter a non-empty prompt.", 422)
         if not 1 <= top_k <= 100 or isinstance(top_k, bool):
             raise ServiceError("INVALID_TOP_K", "top_k must be an integer between 1 and 100.", 422)
@@ -326,25 +328,39 @@ class ModelService:
         assert self._selection is not None
         started = time.perf_counter()
         try:
-            encoded = self._adapter.tokenize(
-                text,
-                add_special_tokens=False,
-                return_tensors="pt",
-                truncation=False,
-                return_offsets_mapping=True,
-            )
-            token_ids = encoded["input_ids"][0].tolist()
+            if token_ids_override is None:
+                encoded = self._adapter.tokenize(
+                    text,
+                    add_special_tokens=False,
+                    return_tensors="pt",
+                    truncation=False,
+                    return_offsets_mapping=True,
+                )
+                token_ids = encoded["input_ids"][0].tolist()
+                offsets = encoded.pop("offset_mapping")[0].tolist()
+            else:
+                token_ids = list(token_ids_override)
+                if any(
+                    type(t) is not int or not 0 <= t < self._model.config.vocab_size
+                    for t in token_ids
+                ):
+                    raise ServiceError("INVALID_TOKEN", "Prefix has invalid vocabulary IDs.", 422)
+                encoded = {
+                    "input_ids": torch.tensor([token_ids], dtype=torch.long),
+                    "attention_mask": torch.ones((1, len(token_ids)), dtype=torch.long),
+                }
+                # Exact-ID forwards have no character-offset mapping; -1 means unavailable.
+                offsets = [None] * len(token_ids)
             if not token_ids or len(token_ids) > self.settings.max_input_tokens:
                 raise ServiceError(
                     "INPUT_LIMIT_EXCEEDED",
-                    "Prompt exceeds the configured token limit.",
+                    "Prompt exceeds token limit.",
                     413,
                     details={
                         "token_count": len(token_ids),
                         "max_input_tokens": self.settings.max_input_tokens,
                     },
                 )
-            offsets = encoded.pop("offset_mapping")[0].tolist()
             inputs = {key: value.to(self._selection.device) for key, value in encoded.items()}
             synchronize(self._selection.device)
             forward_started = time.perf_counter()
@@ -377,8 +393,8 @@ class ModelService:
                     decoded_token=self._decode(token_id),
                     position_id=index,
                     is_special=token_id in special_ids,
-                    character_start=offsets[index][0],
-                    character_end=offsets[index][1],
+                    character_start=offsets[index][0] if offsets[index] is not None else None,
+                    character_end=offsets[index][1] if offsets[index] is not None else None,
                 )
                 for index, token_id in enumerate(token_ids)
             ]

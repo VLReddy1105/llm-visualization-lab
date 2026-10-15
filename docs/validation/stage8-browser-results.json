@@ -1,0 +1,361 @@
+{
+  "config": {
+    "argv": [
+      "/Users/likhithreddy/.nvm/versions/node/v22.23.1/bin/node",
+      "/Users/likhithreddy/Documents/llm interpreter/node_modules/.bin/playwright",
+      "test",
+      "tests/browser/generation.spec.ts"
+    ],
+    "configFile": "/Users/likhithreddy/Documents/llm interpreter/apps/web/playwright.config.ts",
+    "rootDir": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/likhithreddy/Documents/llm interpreter/apps/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/likhithreddy/Documents/llm interpreter/apps/web/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser",
+        "snapshotDir": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 90000,
+        "use": {
+          "baseURL": "http://127.0.0.1:3000",
+          "channel": "chrome",
+          "headless": true,
+          "viewport": {
+            "width": 1440,
+            "height": 1100
+          },
+          "reducedMotion": "reduce"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../docs/validation/stage8-browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "generation.spec.ts",
+      "file": "generation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "real Germany greedy generation links exact steps to original inspectors",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5441,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T19:55:33.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3fa35f77379691647ef9-4a466d170460395c48b3",
+          "file": "generation.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "real France sampled generation reports selected token separately from argmax",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2742,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T19:55:39.328Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3fa35f77379691647ef9-9067fb7a255060d412d1",
+          "file": "generation.spec.ts",
+          "line": 128,
+          "column": 5
+        },
+        {
+          "title": "cancellation stops before publishing another generation step",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T19:55:42.083Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3fa35f77379691647ef9-f10750f957d632062666",
+          "file": "generation.spec.ts",
+          "line": 189,
+          "column": 5
+        },
+        {
+          "title": "invalid generation settings are rejected in the browser before inference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T19:55:44.200Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3fa35f77379691647ef9-bb11829d07ada9fe2d61",
+          "file": "generation.spec.ts",
+          "line": 225,
+          "column": 5
+        },
+        {
+          "title": "generation session expires without retaining stale decisions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Run with an actual short generation-session TTL.",
+                  "location": {
+                    "file": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser/generation.spec.ts",
+                    "line": 237,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 110,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T19:55:44.534Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Run with an actual short generation-session TTL.",
+                      "location": {
+                        "file": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser/generation.spec.ts",
+                        "line": 237,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "3fa35f77379691647ef9-edfc75f1b64b0ef9100a",
+          "file": "generation.spec.ts",
+          "line": 236,
+          "column": 5
+        },
+        {
+          "title": "generation handles the unavailable backend",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Run with the actual backend stopped.",
+                  "location": {
+                    "file": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser/generation.spec.ts",
+                    "line": 251,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 111,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T19:55:44.654Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Run with the actual backend stopped.",
+                      "location": {
+                        "file": "/Users/likhithreddy/Documents/llm interpreter/apps/web/tests/browser/generation.spec.ts",
+                        "line": 251,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "3fa35f77379691647ef9-45914402729d96bcda3a",
+          "file": "generation.spec.ts",
+          "line": 250,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T19:55:32.907Z",
+    "duration": 11971.623,
+    "expected": 4,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

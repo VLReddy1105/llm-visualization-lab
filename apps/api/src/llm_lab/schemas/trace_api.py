@@ -167,6 +167,7 @@ class EffectiveCapture(StrictModel):
     token_indices: list[int]
     query_heads: list[int] | None
     raw_tensors: bool
+    retain_base_states: bool = False
     statistics: bool
     max_bytes: int
 

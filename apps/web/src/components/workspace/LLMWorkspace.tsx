@@ -12,9 +12,12 @@ import { TraceDetails } from "@/components/trace/TraceDetails";
 import { TokenStrip } from "@/components/tokens/TokenStrip";
 import { ModelJourney } from "@/components/model-journey/ModelJourney";
 import { Inspector } from "@/components/inspector/Inspector";
+import { GenerationWorkspace } from "@/components/generation/GenerationWorkspace";
+import type { GenerationStep } from "@/lib/api/client";
 
 function Workspace() {
   const [prompt, setPrompt] = useState("The capital of Germany is");
+  const [workspaceMode, setWorkspaceMode] = useState<"trace" | "generation">("trace");
   const [inputError, setInputError] = useState<Error | null>(null);
   const store = useSelectionStore();
   const id = useSelection((state) => state.traceId);
@@ -136,6 +139,7 @@ function Workspace() {
       return;
     }
     setInputError(null);
+    setWorkspaceMode("trace");
     create.reset();
     if (id) {
       void client.cancelQueries({ queryKey: traceKey(id) });
@@ -143,6 +147,18 @@ function Workspace() {
     }
     reset(null);
     create.mutate(prompt);
+  }
+  function inspectGenerationStep(
+    step: GenerationStep,
+    view: "journey" | "attention" | "residual" | "mlp",
+  ) {
+    if (!step.source_trace_id) return;
+    reset(step.source_trace_id);
+    const selection = store.getState();
+    if (view === "journey") selection.selectToken(step.decision_position);
+    else if (view === "attention") selection.selectAttention(12, step.decision_position);
+    else selection.openBlock(view, step.decision_position, 12);
+    setWorkspaceMode("trace");
   }
   async function checkTrace() {
     const result = await trace.refetch();
@@ -197,6 +213,14 @@ function Workspace() {
         onLoad={() => load.mutate()}
         apiUnavailable={!!model.error}
       />
+      <nav className="workspace-mode-tabs" aria-label="Workspace mode">
+        <button type="button" aria-pressed={workspaceMode === "trace"} onClick={() => setWorkspaceMode("trace")}>Model Journey</button>
+        <button type="button" aria-pressed={workspaceMode === "generation"} onClick={() => setWorkspaceMode("generation")}>Generation Journey</button>
+      </nav>
+      <div hidden={workspaceMode !== "generation"}>
+        <GenerationWorkspace prompt={prompt} onOpenTrace={inspectGenerationStep} />
+      </div>
+      {workspaceMode === "trace" && <>
       {model.error && (
         <div className="workspace-notice">
           <ApiErrorNotice
@@ -316,6 +340,7 @@ function Workspace() {
         <span>One trace. A continuous model journey.</span>
         <span>Stage 7 · Residual Stream and MLP</span>
       </footer>
+      </>}
     </main>
   );
 }

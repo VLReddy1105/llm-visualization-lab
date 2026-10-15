@@ -2,7 +2,7 @@
 
 An interactive microscope for understanding how a real transformer processes text: tokens, embeddings, attention, residual updates, MLP transformations, vocabulary logits, and next-token generation.
 
-**Current status: Stage 7 — PASS (2026-10-14).** Residual Stream and MLP Explorer inspect the real selected-token/layer checkpoints, attention/MLP updates, learned RMSNorm boundaries and gate/up/SiLU/product/down pathway. All 340 backend tests pass on CPU and Apple MPS; all 73 frontend tests pass. Ten real production Chrome checks cover Stage 7, prior views, expiry and unavailable sources, with zero extra forwards during exploration. See the [Stage 7 validation report](docs/validation/STAGE_7_REPORT.md) for numerical evidence, exact files and limitations.
+**Current status: Stage 8 — PASS (2026-10-14).** Users can run bounded greedy or seeded sampled generation, inspect each real token decision, and open its original captured forward in existing scientific inspectors. Independent Qwen CPU and MPS audits pass; 359 backend tests pass on each device, 77 frontend tests pass, and 11 production Chrome regressions pass (with separately passing Stage 8 session/source expiry and offline checks). Exploration adds zero model forwards. See the [Stage 8 validation report](docs/validation/STAGE_8_REPORT.md) for detailed evidence, measurements and limitations.
 
 The initial model is **Qwen/Qwen3-0.6B**, pinned to `c1899de289a04d12100db370d81485cdf75e47ca`. The implemented stack is Next.js / React / TypeScript / Tailwind CSS, Zustand, TanStack Query and Python / FastAPI / PyTorch / Hugging Face Transformers / Pydantic. Stage 2 supplies model adapters and scientific capture; Stage 3 retains these results and exposes bounded lazy access. Stage 4 consumes those contracts. Stage 5 adds bounded-slice statistics and a retained-output comparison endpoint. Stage 6 adds bounded, versioned analysis jobs using existing source leases and the resident model executor; the trace engine and store remain intact.
 
@@ -152,7 +152,7 @@ With uvicorn running, reproduce the bounded actual HTTP artifacts from `apps/api
 .venv/bin/python -m llm_lab.trace_http_validation
 ```
 
-The generated typed API client supports creation, polling, metadata pages, head/relation reads, JSON/binary slices and deletion. Stage 4 adds external cancellation signals for its reads and submission. TanStack Query owns server payloads and polls only pending traces; Zustand owns selection and viewport state. In-memory traces disappear on restart; the API is for one local process/worker. Attention Explorer, Layer Microscope, Token Journey, Logit Lens and residual/MLP exploration are implemented. The generation timeline remains Stage 8 scope.
+The generated typed API client supports trace and generation creation, polling, metadata/step pages, head/relation reads, JSON/binary slices and deletion. TanStack Query owns server payloads; Zustand owns scientific selection and viewport state. In-memory sessions and traces disappear on restart; the API is for one local process/worker. Attention Explorer, Layer Microscope, Token Journey, Logit Lens, Residual/MLP inspection and the Generation Journey are implemented.
 
 To reproduce the Stage 5 real-model browser checks with the local backend and production frontend running:
 

@@ -1264,6 +1264,11 @@
             "title": "Raw Tensors",
             "type": "boolean"
           },
+          "retain_base_states": {
+            "default": false,
+            "title": "Retain Base States",
+            "type": "boolean"
+          },
           "statistics": {
             "title": "Statistics",
             "type": "boolean"
@@ -1437,6 +1442,720 @@
           "multiplication_error"
         ],
         "title": "GateCoordinate",
+        "type": "object"
+      },
+      "GenerationCandidate": {
+        "additionalProperties": false,
+        "properties": {
+          "adjusted_probability": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adjusted Probability"
+          },
+          "adjusted_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adjusted Rank"
+          },
+          "decoded_in_isolation": {
+            "title": "Decoded In Isolation",
+            "type": "string"
+          },
+          "eligible": {
+            "title": "Eligible",
+            "type": "boolean"
+          },
+          "model_probability": {
+            "title": "Model Probability",
+            "type": "number"
+          },
+          "processed_logit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Processed Logit"
+          },
+          "raw_logit": {
+            "title": "Raw Logit",
+            "type": "number"
+          },
+          "raw_rank": {
+            "title": "Raw Rank",
+            "type": "integer"
+          },
+          "token_id": {
+            "title": "Token Id",
+            "type": "integer"
+          },
+          "tokenizer_piece": {
+            "title": "Tokenizer Piece",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token_id",
+          "tokenizer_piece",
+          "decoded_in_isolation",
+          "raw_logit",
+          "model_probability",
+          "processed_logit",
+          "adjusted_probability",
+          "raw_rank",
+          "adjusted_rank",
+          "eligible"
+        ],
+        "title": "GenerationCandidate",
+        "type": "object"
+      },
+      "GenerationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "capture_layer": {
+            "default": 12,
+            "maximum": 27.0,
+            "minimum": 0.0,
+            "title": "Capture Layer",
+            "type": "integer"
+          },
+          "capture_profile": {
+            "default": "deep",
+            "enum": [
+              "none",
+              "overview",
+              "deep"
+            ],
+            "title": "Capture Profile",
+            "type": "string"
+          },
+          "input": {
+            "$ref": "#/components/schemas/RawInput"
+          },
+          "max_new_tokens": {
+            "default": 8,
+            "maximum": 32.0,
+            "minimum": 1.0,
+            "title": "Max New Tokens",
+            "type": "integer"
+          },
+          "model_id": {
+            "const": "qwen3-0.6b",
+            "default": "qwen3-0.6b",
+            "title": "Model Id",
+            "type": "string"
+          },
+          "request_key": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Request Key",
+            "type": "string"
+          },
+          "retain_traces": {
+            "default": 4,
+            "maximum": 8.0,
+            "minimum": 0.0,
+            "title": "Retain Traces",
+            "type": "integer"
+          },
+          "sampling": {
+            "$ref": "#/components/schemas/GenerationSampling"
+          },
+          "use_cache": {
+            "const": false,
+            "default": false,
+            "title": "Use Cache",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "input",
+          "request_key"
+        ],
+        "title": "GenerationRequest",
+        "type": "object"
+      },
+      "GenerationSampling": {
+        "additionalProperties": false,
+        "properties": {
+          "display_top_k": {
+            "default": 10,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Display Top K",
+            "type": "integer"
+          },
+          "mode": {
+            "default": "sample",
+            "enum": [
+              "sample",
+              "greedy"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "maximum": 9.223372036854776e+18,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "temperature": {
+            "default": 1.0,
+            "exclusiveMinimum": 0.0,
+            "maximum": 100.0,
+            "title": "Temperature",
+            "type": "number"
+          },
+          "token_index": {
+            "const": 0,
+            "default": 0,
+            "title": "Token Index",
+            "type": "integer"
+          },
+          "top_k": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Top K",
+            "type": "integer"
+          },
+          "top_p": {
+            "default": 1.0,
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Top P",
+            "type": "number"
+          }
+        },
+        "title": "GenerationSampling",
+        "type": "object"
+      },
+      "GenerationSession": {
+        "additionalProperties": false,
+        "properties": {
+          "accounted_state_bytes": {
+            "default": 0,
+            "title": "Accounted State Bytes",
+            "type": "integer"
+          },
+          "active_forward_execution_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active Forward Execution Id"
+          },
+          "attempted_forwards": {
+            "default": 0,
+            "title": "Attempted Forwards",
+            "type": "integer"
+          },
+          "budgets": {
+            "additionalProperties": true,
+            "title": "Budgets",
+            "type": "object"
+          },
+          "cancellation_requested": {
+            "default": false,
+            "title": "Cancellation Requested",
+            "type": "boolean"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "completed_steps": {
+            "default": 0,
+            "title": "Completed Steps",
+            "type": "integer"
+          },
+          "decoded_continuation": {
+            "default": "",
+            "title": "Decoded Continuation",
+            "type": "string"
+          },
+          "decoded_full_sequence": {
+            "title": "Decoded Full Sequence",
+            "type": "string"
+          },
+          "device": {
+            "title": "Device",
+            "type": "string"
+          },
+          "dtype": {
+            "title": "Dtype",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "execution_configuration": {
+            "additionalProperties": true,
+            "title": "Execution Configuration",
+            "type": "object"
+          },
+          "expires_at": {
+            "title": "Expires At",
+            "type": "string"
+          },
+          "generation_id": {
+            "title": "Generation Id",
+            "type": "string"
+          },
+          "hf_model_id": {
+            "title": "Hf Model Id",
+            "type": "string"
+          },
+          "max_new_tokens": {
+            "title": "Max New Tokens",
+            "type": "integer"
+          },
+          "model_id": {
+            "title": "Model Id",
+            "type": "string"
+          },
+          "model_revision": {
+            "title": "Model Revision",
+            "type": "string"
+          },
+          "original_decoded_prompt": {
+            "title": "Original Decoded Prompt",
+            "type": "string"
+          },
+          "original_input_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Original Input Ids",
+            "type": "array"
+          },
+          "original_prompt": {
+            "title": "Original Prompt",
+            "type": "string"
+          },
+          "request_key": {
+            "title": "Request Key",
+            "type": "string"
+          },
+          "result_bytes": {
+            "default": 0,
+            "title": "Result Bytes",
+            "type": "integer"
+          },
+          "sampling": {
+            "$ref": "#/components/schemas/GenerationSampling"
+          },
+          "selected_token_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Selected Token Ids",
+            "type": "array"
+          },
+          "session_duration_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Duration Ms"
+          },
+          "started_at": {
+            "title": "Started At",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "completed",
+              "stopped",
+              "cancelled",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/GenerationStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "stop_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stop Reason"
+          },
+          "tokenizer_identity": {
+            "title": "Tokenizer Identity",
+            "type": "string"
+          },
+          "tokenizer_revision": {
+            "title": "Tokenizer Revision",
+            "type": "string"
+          },
+          "trace_retention_summary": {
+            "additionalProperties": true,
+            "title": "Trace Retention Summary",
+            "type": "object"
+          }
+        },
+        "required": [
+          "generation_id",
+          "request_key",
+          "original_prompt",
+          "original_input_ids",
+          "original_decoded_prompt",
+          "model_id",
+          "hf_model_id",
+          "model_revision",
+          "tokenizer_revision",
+          "tokenizer_identity",
+          "device",
+          "dtype",
+          "execution_configuration",
+          "sampling",
+          "started_at",
+          "status",
+          "max_new_tokens",
+          "budgets",
+          "decoded_full_sequence",
+          "expires_at"
+        ],
+        "title": "GenerationSession",
+        "type": "object"
+      },
+      "GenerationStep": {
+        "additionalProperties": false,
+        "properties": {
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/GenerationCandidate"
+            },
+            "title": "Candidates",
+            "type": "array"
+          },
+          "capture_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capture Unavailable Reason"
+          },
+          "decision_position": {
+            "title": "Decision Position",
+            "type": "integer"
+          },
+          "decoded_continuation": {
+            "title": "Decoded Continuation",
+            "type": "string"
+          },
+          "decoded_full_sequence": {
+            "title": "Decoded Full Sequence",
+            "type": "string"
+          },
+          "decoded_prefix": {
+            "title": "Decoded Prefix",
+            "type": "string"
+          },
+          "display_note": {
+            "title": "Display Note",
+            "type": "string"
+          },
+          "distribution_statistics": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Distribution Statistics",
+            "type": "object"
+          },
+          "elapsed_ms": {
+            "title": "Elapsed Ms",
+            "type": "number"
+          },
+          "forward_completion_status": {
+            "const": "completed",
+            "default": "completed",
+            "title": "Forward Completion Status",
+            "type": "string"
+          },
+          "forward_duration_ms": {
+            "title": "Forward Duration Ms",
+            "type": "number"
+          },
+          "forward_execution_id": {
+            "title": "Forward Execution Id",
+            "type": "string"
+          },
+          "generation_id": {
+            "title": "Generation Id",
+            "type": "string"
+          },
+          "prefix_sha256": {
+            "title": "Prefix Sha256",
+            "type": "string"
+          },
+          "prefix_token_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Prefix Token Ids",
+            "type": "array"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "title": "Provenance",
+            "type": "object"
+          },
+          "raw_argmax_token_id": {
+            "title": "Raw Argmax Token Id",
+            "type": "integer"
+          },
+          "sampling": {
+            "$ref": "#/components/schemas/GenerationSampling"
+          },
+          "selected_adjusted_probability": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Adjusted Probability"
+          },
+          "selected_display_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Display Text"
+          },
+          "selected_model_probability": {
+            "title": "Selected Model Probability",
+            "type": "number"
+          },
+          "selected_position": {
+            "title": "Selected Position",
+            "type": "integer"
+          },
+          "selected_raw_logit": {
+            "title": "Selected Raw Logit",
+            "type": "number"
+          },
+          "selected_token_id": {
+            "title": "Selected Token Id",
+            "type": "integer"
+          },
+          "source_capture_coverage": {
+            "additionalProperties": true,
+            "title": "Source Capture Coverage",
+            "type": "object"
+          },
+          "source_trace_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Trace Id"
+          },
+          "step_id": {
+            "title": "Step Id",
+            "type": "string"
+          },
+          "step_index": {
+            "title": "Step Index",
+            "type": "integer"
+          },
+          "tokenizer_piece": {
+            "title": "Tokenizer Piece",
+            "type": "string"
+          },
+          "vocabulary_size": {
+            "title": "Vocabulary Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "generation_id",
+          "step_id",
+          "step_index",
+          "prefix_token_ids",
+          "prefix_sha256",
+          "decoded_prefix",
+          "decision_position",
+          "selected_position",
+          "vocabulary_size",
+          "selected_token_id",
+          "tokenizer_piece",
+          "selected_display_text",
+          "display_note",
+          "decoded_continuation",
+          "decoded_full_sequence",
+          "selected_raw_logit",
+          "selected_model_probability",
+          "selected_adjusted_probability",
+          "raw_argmax_token_id",
+          "candidates",
+          "distribution_statistics",
+          "sampling",
+          "source_trace_id",
+          "source_capture_coverage",
+          "capture_unavailable_reason",
+          "forward_execution_id",
+          "forward_duration_ms",
+          "elapsed_ms",
+          "provenance"
+        ],
+        "title": "GenerationStep",
+        "type": "object"
+      },
+      "GenerationStepPage": {
+        "additionalProperties": false,
+        "properties": {
+          "generation_id": {
+            "title": "Generation Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/GenerationStep"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "generation_id",
+          "total",
+          "offset",
+          "items"
+        ],
+        "title": "GenerationStepPage",
+        "type": "object"
+      },
+      "GenerationStoreStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "eviction_count": {
+            "title": "Eviction Count",
+            "type": "integer"
+          },
+          "expiration_count": {
+            "title": "Expiration Count",
+            "type": "integer"
+          },
+          "inflight": {
+            "title": "Inflight",
+            "type": "integer"
+          },
+          "reserved_state_bytes": {
+            "title": "Reserved State Bytes",
+            "type": "integer"
+          },
+          "result_bytes": {
+            "title": "Result Bytes",
+            "type": "integer"
+          },
+          "session_count": {
+            "title": "Session Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "session_count",
+          "inflight",
+          "reserved_state_bytes",
+          "result_bytes",
+          "eviction_count",
+          "expiration_count"
+        ],
+        "title": "GenerationStoreStatus",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -3683,12 +4402,26 @@
         "additionalProperties": false,
         "properties": {
           "character_end": {
-            "title": "Character End",
-            "type": "integer"
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character End"
           },
           "character_start": {
-            "title": "Character Start",
-            "type": "integer"
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Start"
           },
           "decoded_token": {
             "title": "Decoded Token",
@@ -4167,6 +4900,801 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/generations": {
+      "post": {
+        "operationId": "create_api_v1_generations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationSession"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Create",
+        "tags": [
+          "generation"
+        ]
+      }
+    },
+    "/api/v1/generations/status": {
+      "get": {
+        "operationId": "status_api_v1_generations_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationStoreStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Status",
+        "tags": [
+          "generation"
+        ]
+      }
+    },
+    "/api/v1/generations/{generation_id}": {
+      "delete": {
+        "operationId": "delete_api_v1_generations__generation_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "generation_id",
+            "required": true,
+            "schema": {
+              "title": "Generation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Delete",
+        "tags": [
+          "generation"
+        ]
+      },
+      "get": {
+        "operationId": "get_api_v1_generations__generation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "generation_id",
+            "required": true,
+            "schema": {
+              "title": "Generation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationSession"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get",
+        "tags": [
+          "generation"
+        ]
+      }
+    },
+    "/api/v1/generations/{generation_id}/cancel": {
+      "post": {
+        "operationId": "cancel_api_v1_generations__generation_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "generation_id",
+            "required": true,
+            "schema": {
+              "title": "Generation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationSession"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Cancel",
+        "tags": [
+          "generation"
+        ]
+      }
+    },
+    "/api/v1/generations/{generation_id}/steps": {
+      "get": {
+        "operationId": "steps_api_v1_generations__generation_id__steps_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "generation_id",
+            "required": true,
+            "schema": {
+              "title": "Generation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 16,
+              "maximum": 32,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationStepPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Steps",
+        "tags": [
+          "generation"
+        ]
+      }
+    },
+    "/api/v1/generations/{generation_id}/steps/{step_index}": {
+      "get": {
+        "operationId": "step_api_v1_generations__generation_id__steps__step_index__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "generation_id",
+            "required": true,
+            "schema": {
+              "title": "Generation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "step_index",
+            "required": true,
+            "schema": {
+              "title": "Step Index",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationStep"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Step",
+        "tags": [
+          "generation"
+        ]
+      }
+    },
     "/api/v1/health": {
       "get": {
         "operationId": "health_api_v1_health_get",

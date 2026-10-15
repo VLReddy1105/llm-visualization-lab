@@ -1,0 +1,10 @@
+{
+  "generation_id": "7f35aa4d-97db-4ee6-987d-152cf694b063",
+  "source_trace_id": "f4c3ffcb-d13a-4fdd-8ad5-25d3b29db9de",
+  "retained_step_id": "7f35aa4d-97db-4ee6-987d-152cf694b063:0",
+  "selected_token_id": 19846,
+  "capture_unavailable_reason": null,
+  "inspector_removed_after_expiry": true,
+  "recaptured": false,
+  "forwards_after_expiry": 1
+}

@@ -1,0 +1,10 @@
+{
+  "generation_id": "88ad34d5-b8aa-46fd-823d-e9c348b32c94",
+  "status": "cancelled",
+  "stop_reason": "cancelled",
+  "completed_steps": 0,
+  "attempted_forwards": 1,
+  "counter_before": 19,
+  "counter_after": 20,
+  "no_forward_after_cancellation": true
+}

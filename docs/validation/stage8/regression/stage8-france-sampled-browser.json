@@ -1,0 +1,30 @@
+{
+  "generation_id": "174da4d8-530e-4adb-867b-8512fba8c4e6",
+  "source_trace_ids": [
+    "acd8d19b-3d0e-4690-a5bc-d55ce98f0b35",
+    "5470ff48-a697-49e8-9a09-73c60d360f2d"
+  ],
+  "selected_ids": [
+    12095,
+    11
+  ],
+  "argmax_ids": [
+    12095,
+    13
+  ],
+  "selected_differs_from_argmax": true,
+  "forward_counter_before": 10,
+  "forward_counter_after_exploration": 12,
+  "exploration_forwards": 0,
+  "seed": 53,
+  "sample_parameters": {
+    "token_index": 0,
+    "temperature": 0.7,
+    "top_k": 40,
+    "top_p": 0.9,
+    "display_top_k": 10,
+    "mode": "sample",
+    "seed": 53
+  },
+  "session_payload_bytes": 7336
+}
