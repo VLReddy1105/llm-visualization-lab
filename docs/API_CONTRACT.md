@@ -1,6 +1,6 @@
 # API contract
 
-Status: Stages 1–7 are implemented. Trace Store, lazy trace APIs, attention inspection and bounded saved-data analyses use generated contracts. Stage 6 validation is recorded in the [Stage 6 report](validation/STAGE_6_REPORT.md). Stage 7 expands existing analysis kinds; endpoints assigned to Stages 8–10 remain future designs. Base path: `/api/v1`; `/api/traces` is a shared-handler alias. Trace schema: `1.0.0`; analysis method: `stage6.v1`. Pydantic models generate the implemented OpenAPI and TypeScript types. Examples below describe contracts and lifecycle states; they contain no invented scientific measurements.
+Status: Stages 1–8 are implemented. The [Stage 8 report](validation/STAGE_8_REPORT.md) records generation validation. Base path: `/api/v1`; `/api/traces` and `/api/generations` are shared-handler aliases. Trace schema: `1.0.0`; analysis method: `stage6.v1`. Pydantic models generate OpenAPI and TypeScript types. Stage 9+ endpoints remain designs.
 
 Stage 1 also exposes compatibility aliases `GET /api/health`, `GET /api/model/status` and `POST /api/inference/next-token`. These aliases share canonical handlers and response schemas and are omitted from OpenAPI to avoid duplicate generated operations. `/api/v1/status` returns `inference_ready` plus the full model status; it has no trace-store fields yet. Model loading reports `loading_tokenizer`, `loading_weights`, `moving_to_device` and `smoke_check`; states remain `unloaded`, `loading`, `ready`, `failed`.
 
@@ -8,7 +8,7 @@ Stage 1 also exposes compatibility aliases `GET /api/health`, `GET /api/model/st
 
 JSON uses snake_case and ISO 8601 UTC timestamps. IDs are opaque UUIDs; `model_id` is a registry slug such as `qwen3-0.6b`, distinct from the Hugging Face ID. All tensor axes and index conventions follow [Trace design](TRACE_DESIGN.md). Unknown request fields are rejected. HTTP statuses and a typed error code communicate distinct conditions.
 
-Stage 1 provides health/model loading and a minimal synchronous inference result. Stage 3 provides asynchronous traces and lazy retained data, with an optional synchronous wait. Stage 6 adds saved-data analysis jobs. Generation endpoints remain future work. Schema examples are not promises that future endpoints are present.
+Stage 1 provides health/model loading and a minimal synchronous inference result. Stage 3 provides asynchronous traces and lazy retained data, with an optional synchronous wait. Stage 6 adds saved-data analysis jobs. Stage 8 adds bounded asynchronous generation sessions. Retrieval and historical inspection do not execute model forwards.
 
 Long inference runs are submitted to a bounded serialized executor; status endpoints stay responsive. Trace creation acknowledges with 202 and a Location header. Once ready, GET returns an overview, never a huge tensor dump. No retrieval request performs model inference. Model-dependent derived analysis can execute vocabulary projections from saved states but requires the exact matching resident weights; it never silently reloads or changes a trace.
 
@@ -45,9 +45,12 @@ Long inference runs are submitted to a bounded serialized executor; status endpo
 | `GET /traces/{trace_id}/analyses/{analysis_id}` | Analysis status, provenance and bounded result | 6 |
 | `DELETE /traces/{trace_id}/analyses/{analysis_id}` | 200 cancelled analysis with result cleared | 6 |
 | `POST /generations` | 202 bounded autoregressive run | 8 |
-| `GET /generations/{generation_id}` | Status/settings/termination and paginated step mapping | 8 |
-| `GET /generations/{generation_id}/steps/{generation_step}` | Decision record and associated trace ID | 8 |
-| `POST /generations/{generation_id}/cancel` | 202 step-boundary cancellation | 8 |
+| `GET /generations/status` | Session/in-flight counts, reservations, result bytes, eviction and expiry counts | 8 |
+| `GET /generations/{generation_id}` | Status, settings, termination and bounded session summary | 8 |
+| `GET /generations/{generation_id}/steps?offset=&limit=` | Bounded decision-page retrieval | 8 |
+| `GET /generations/{generation_id}/steps/{step_index}` | Decision record and exact associated trace ID | 8 |
+| `POST /generations/{generation_id}/cancel` | 202 cancellation at the current-forward boundary | 8 |
+| `DELETE /generations/{generation_id}` | 204 remove saved session and original source traces | 8 |
 | `POST /interventions` | 202 matched baseline/intervention experiment | 10 |
 | `GET /interventions/{intervention_id}` | Status, specification, trace links, effect analysis | 10 |
 
@@ -201,7 +204,9 @@ Logit Lens requests specify checkpoint stages/layers, position, candidate IDs, `
 
 ## Generation and intervention extension contracts
 
-Stage 8 `POST /generations` accepts the same model/input/capture definitions, `max_new_tokens` (initial default 8, hard limit 32), frozen sampling settings, seed for sampled mode, and cache mode `disabled` initially. Return generation ID and queued status. Decision records contain zero-based step, context length, source trace ID, actual chosen vocabulary ID/piece, settings/RNG provenance, and termination reason (`eos`, `length_limit`, `cancelled`, `budget_limit`, or `failed`). Generation settings cannot edit an existing run; branch with a new request. Cache-enabled mode remains rejected until its validation gate passes.
+Stage 8 `POST /generations` accepts raw input, `max_new_tokens` (schema default 8, configured default ceiling 16), frozen greedy or sampled settings, a required sampled seed, optional original-forward trace capture and `use_cache=false`. The server rejects requests beyond its configured bound before the first forward. The response includes an opaque session ID and queued state. Every step stores exact prefix IDs/digest, absolute decision and append positions, raw argmax, selected ID, raw and adjusted probabilities where applicable, bounded candidates, RNG/sampler provenance, forward execution ID, and optional original source trace. Stop reasons distinguish `eos`, `max_new_tokens`, `context_limit`, `resource_budget`, `cancelled`, `timeout`, `session_expired`, and execution failure. A new request key creates a new run; settings are immutable within a run.
+
+Generation bounds default to 16 new tokens, 64 prefix tokens, 16 sessions, 2 in-flight loops, 4 detailed traces per session, 1 MiB per result, 16 MiB total reserved state, 32 MiB detailed trace bytes per session, 32 MiB estimated scratch, 120 seconds execution time and 600 seconds absolute TTL. All have `LLM_LAB_GENERATION_*` settings with validated ceilings. The trace store remains authoritative for captured tensors. Missing or expired source traces are never regenerated by a GET.
 
 Stage 10 intervention requests specify an existing compatible baseline or a new paired execution recipe, semantic target, position/head/dimension scope, intervention kind, and optional patch-source trace/component selectors. Initial head ablation targets query-head weighted-value output before output projection. Validate revisions, topology, dtype/shape, source availability, and paired budgets. Return experiment ID, baseline/intervention trace IDs when ready, controlled differences, and provenance. Incompatible source/target patches return 422; expired sources return 410.
 

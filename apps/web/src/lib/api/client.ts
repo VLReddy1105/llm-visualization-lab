@@ -11,6 +11,10 @@ export type EvolutionResult = components["schemas"]["EvolutionResult"];
 export type LensResult = components["schemas"]["LensResult"];
 export type SamplingResult = components["schemas"]["SamplingResult"];
 export type SamplingParameters = components["schemas"]["SamplingParameters"];
+export type GenerationRequest = components["schemas"]["GenerationRequest"];
+export type GenerationSession = components["schemas"]["GenerationSession"];
+export type GenerationStep = components["schemas"]["GenerationStep"];
+export type GenerationSampling = components["schemas"]["GenerationSampling"];
 export type BlockParameters = components["schemas"]["BlockParameters"];
 export type ResidualStreamResult = components["schemas"]["ResidualStreamResult"];
 export type MLPInternalsResult = components["schemas"]["MLPInternalsResult"];
@@ -148,6 +152,8 @@ function query(
 }
 
 const tracePath = (id: string) => `/api/v1/traces/${encodeURIComponent(id)}`;
+const generationPath = (id: string) =>
+  `/api/v1/generations/${encodeURIComponent(id)}`;
 const layerPath = (id: string, layer: number) =>
   `${tracePath(id)}/layers/${layer}`;
 const componentPath = (id: string, component: string) =>
@@ -318,4 +324,23 @@ export const api = {
     request<CancellationResponse | undefined>(tracePath(id), {
       method: "DELETE",
     }),
+  createGeneration: (body: GenerationRequest, signal?: AbortSignal) =>
+    request<GenerationSession>(
+      "/api/v1/generations",
+      { ...jsonPost(body), signal },
+      15000,
+    ),
+  generation: (id: string, signal?: AbortSignal) =>
+    request<GenerationSession>(generationPath(id), { signal }),
+  generationStep: (id: string, index: number, signal?: AbortSignal) =>
+    request<GenerationStep>(
+      `${generationPath(id)}/steps/${index}`,
+      { signal },
+    ),
+  cancelGeneration: (id: string) =>
+    request<GenerationSession>(`${generationPath(id)}/cancel`, {
+      method: "POST",
+    }),
+  deleteGeneration: (id: string) =>
+    request<void>(generationPath(id), { method: "DELETE" }),
 };

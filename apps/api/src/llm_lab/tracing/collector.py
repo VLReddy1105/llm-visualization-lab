@@ -21,6 +21,19 @@ def should_retain(spec, plan):
     return plan.effective_raw and (
         spec.layer_index is None
         or plan.profile == "overview"
+        or (
+            plan.retain_base_states
+            and spec.component_id.endswith(
+                (
+                    ".residual.before",
+                    ".residual.after_attention",
+                    ".residual.after_mlp",
+                    ".attention.output",
+                    ".mlp.output",
+                    ".output",
+                )
+            )
+        )
         or spec.layer_index in plan.detailed_layers
     )
 

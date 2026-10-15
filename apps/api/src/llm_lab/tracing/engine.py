@@ -133,7 +133,7 @@ class TraceEngine:
         self.adapter = adapter
         self.settings = settings
 
-    def run(self, text, plan, top_k, compute):
+    def run(self, text, plan, top_k, compute, *, token_ids_override=None):
         started, created_at = time.perf_counter(), _now()
         plan = plan or CapturePlan()
         if not isinstance(plan, CapturePlan):
@@ -142,14 +142,17 @@ class TraceEngine:
             raise ServiceError("EMPTY_PROMPT", "Enter a non-empty prompt.", 422)
         if len(text) > self.settings.max_prompt_characters:
             raise ServiceError("INPUT_LIMIT_EXCEEDED", "Prompt exceeds the character limit.", 413)
-        encoded = self.adapter.tokenize(
-            text, add_special_tokens=False, return_tensors="pt", truncation=False
-        )
-        token_ids = tuple(encoded["input_ids"][0].tolist())
+        if token_ids_override is None:
+            encoded = self.adapter.tokenize(
+                text, add_special_tokens=False, return_tensors="pt", truncation=False
+            )
+            token_ids = tuple(encoded["input_ids"][0].tolist())
+            del encoded
+        else:
+            token_ids = tuple(token_ids_override)
         n = len(token_ids)
         if not n or n > self.settings.max_input_tokens:
             raise ServiceError("INPUT_LIMIT_EXCEEDED", "Prompt exceeds the token limit.", 413)
-        del encoded
         plan = plan.resolve(self.adapter.architecture, n)
         estimate = estimate_capture(self.adapter, plan, n)
         budget = min(plan.max_bytes, self.settings.trace_max_bytes)

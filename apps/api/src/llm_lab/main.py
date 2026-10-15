@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from llm_lab.analysis.jobs import AnalysisService
-from llm_lab.api import analyses, health, inference, models, traces
+from llm_lab.api import analyses, generations, health, inference, models, traces
 from llm_lab.config import Settings
 from llm_lab.errors import ServiceError
 from llm_lab.models.manager import ModelService
@@ -43,12 +43,18 @@ def create_app(
         app.state.analysis_service = AnalysisService(
             app.state.model_service, app.state.trace_store, configuration
         )
+        from llm_lab.generation.service import GenerationService
+
+        app.state.generation_service = GenerationService(
+            app.state.model_service, app.state.trace_store, configuration
+        )
 
         async def sweep():
             while True:
                 await asyncio.sleep(configuration.trace_sweep_seconds)
                 await asyncio.to_thread(app.state.trace_store.sweep)
                 await asyncio.to_thread(app.state.analysis_service.sweep)
+                await asyncio.to_thread(app.state.generation_service.sweep)
 
         sweeper = asyncio.create_task(sweep())
         if configuration.auto_load:
@@ -63,6 +69,7 @@ def create_app(
         except asyncio.CancelledError:
             pass
         await asyncio.to_thread(app.state.analysis_service.close)
+        await asyncio.to_thread(app.state.generation_service.close)
         if service is None:
             await asyncio.to_thread(app.state.model_service.close)
         app.state.trace_store.close()
@@ -142,6 +149,7 @@ def create_app(
     app.include_router(inference.router)
     app.include_router(traces.router)
     app.include_router(analyses.router)
+    app.include_router(generations.router)
     return app
 
 

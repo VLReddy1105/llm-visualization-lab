@@ -1,6 +1,6 @@
 # Implementation stages
 
-Status: **Stage 7 — PASS on CPU and Apple MPS float32 (2026-10-14).** The [Stage 7 report](validation/STAGE_7_REPORT.md) records residual/MLP capture, numerical reconciliation, bounded analyses, production-browser checks and preserved predecessor evidence. Stages 8–11 remain planned and require separate authorization.
+Status: **Stage 8 — PASS on CPU and Apple MPS float32 (2026-10-14).** The [Stage 8 report](validation/STAGE_8_REPORT.md) records bounded autoregressive generation, per-step trace identity, independent CPU/MPS parity, 359 backend tests per device, 77 frontend tests, production-browser regressions, expiry/offline handling and preserved predecessor evidence. Stages 9–11 remain planned.
 
 ## Stage execution rules
 
@@ -161,19 +161,19 @@ Stage 3 completion: 224 tests pass on each CPU/MPS device (87 added beyond Stage
 
 **Must not implement yet:** SAE integration, semantic neuron labels, autoregressive timeline, nonlinear residual-vector diagrams presented as exact addition, representation fitting, causal interventions, or other models.
 
-## Stage 8 — Generation Timeline
+## Stage 8 — Generation Timeline — PASS (2026-10-14)
 
 **Objective:** Preserve and inspect real autoregressive next-token decisions.
 
-**Dependencies:** Stage 7 core trace UI; Stage 6 validated sampling processor; store reservations and cancellation.
+**Dependencies:** Stage 7 core trace UI; Stage 6 validated sampling processor; store reservations and cancellation. All predecessor gates passed before implementation.
 
-**Exact tasks:** Add generation service/routes and frozen sampler settings; implement bounded full-prefix cache-disabled generation through the same Trace Engine; link each decision step to its own trace; append actual chosen token IDs; expose EOS/length/cancel/budget/failure outcomes; render timeline, step selection, and branch-with-new-settings. Preserve absolute token identities and distinguish chosen tokens from consumed input. Optimize KV caching only after its explicit parity/coverage tests pass; retain full-prefix mode as scientific reference.
+**Implemented:** A bounded generation-session service submits its whole loop to the existing serialized resident-model executor. Every step runs one cache-disabled full-prefix forward, reads exact prompt/generated token IDs, records raw argmax and selected ID separately, applies the Stage 6 sampling pipeline with a dedicated seeded CPU generator, and optionally captures the same forward through the existing Trace Engine. Source traces retain exact generation/step/forward IDs and selected-position coverage. Session/step reads, paginated steps, cancellation and deletion never execute inference. The bright Generation Journey reuses the existing Model Journey, Attention, Residual and MLP inspectors. No cache optimization is enabled.
 
-**Expected files/modules:** `generation/service.py`, `steps.py`, `sampler.py`, `records.py`; `api/generations.py`, generation schemas; `features/generation-timeline/GenerationTimeline.tsx`, `GenerationControls.tsx`; `tests/test_generation_parity.py`, `test_generation_limits.py`, generation browser checks. Sampler calls the existing `analysis/sampling.py` processor, not a duplicate implementation.
+**Implemented files/modules:** `apps/api/src/llm_lab/generation/service.py`, `api/generations.py`, `schemas/generation.py`; generation bounds in `config.py`; exact-ID support and base-state retention in the existing model manager and Trace Engine; `apps/web/src/components/generation/GenerationWorkspace.tsx`; generated OpenAPI/TypeScript and the typed API client. The implementation adds no model instance or execution queue.
 
-**Test criteria:** Greedy traced/untraced generation matches for equivalent settings; sampled decisions match with restored sampler RNG state on the same supported runtime; each step uses the exact previous IDs; EOS and budget limits stop correctly; cancellation removes observers and live cache references; earlier-position selection persists only where present. If cache mode is enabled, rectangular attention and query/key maps agree with cached computation and matching full-prefix rows under tolerance.
+**Validation:** 359 backend tests pass on CPU and 359 on MPS; independent real-Qwen Stage 8 audits pass on each device; 77 frontend tests pass; 11 production browser regression checks pass with six separately scoped/conditional scenarios, plus real Stage 8 session/source expiry and offline checks. See [Stage 8 report](validation/STAGE_8_REPORT.md) for artifacts and the unmeasured-memory limitation.
 
-**Definition of done:** A bounded run yields actual chosen tokens and inspectable per-decision traces with reproducible settings, truthful coverage, and bounded retention. Cached mode may remain disabled if its gate is not passed.
+**Definition of done:** PASS. A bounded run yields actual chosen tokens and inspectable per-decision traces with reproducible settings, truthful coverage, and bounded retention. Cache remains disabled.
 
 **Must not implement yet:** Unbounded streaming retention, editing historical decisions in place, automatic recapture of expired steps, PCA/UMAP/3D, causal intervention with live caches, or additional models.
 

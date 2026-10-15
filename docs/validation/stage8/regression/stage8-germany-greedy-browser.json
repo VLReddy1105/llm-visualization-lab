@@ -1,0 +1,21 @@
+{
+  "generation_id": "5b84b1d3-5a81-4bcd-9f0c-21ac09dcc680",
+  "source_trace_ids": [
+    "5f489f95-60a0-4b60-be47-ee9559e56e99",
+    "d11abc75-5676-467c-8a73-93b98d096047"
+  ],
+  "selected_ids": [
+    19846,
+    13
+  ],
+  "decoded_continuation": " Berlin.",
+  "forward_counter_before": 8,
+  "forward_counter_after_exploration": 10,
+  "exploration_forwards": 0,
+  "page_errors": [],
+  "accessibility": {
+    "violations": [],
+    "passes": 40
+  },
+  "session_payload_bytes": 11588
+}

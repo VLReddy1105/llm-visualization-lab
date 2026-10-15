@@ -43,6 +43,7 @@ class CapturePlan:
     query_heads: tuple[int, ...] | None = None
     raw_tensors: bool | None = None
     statistics: bool = True
+    retain_base_states: bool = False
     max_bytes: int = 256 * 1024 * 1024
 
     def __post_init__(self) -> None:
@@ -65,6 +66,8 @@ class CapturePlan:
             raise ValueError(
                 "summary is statistics-only for internals; select overview for raw states"
             )
+        if type(self.retain_base_states) is not bool:
+            raise TypeError("retain_base_states must be bool")
         if type(self.statistics) is not bool:
             raise TypeError("statistics must be bool")
         if type(self.max_bytes) is not int:

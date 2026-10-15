@@ -32,8 +32,8 @@ class TokenRecord(StrictModel):
     decoded_token: str
     position_id: int
     is_special: bool
-    character_start: int
-    character_end: int
+    character_start: int | None
+    character_end: int | None
 
 
 class InputResult(StrictModel):

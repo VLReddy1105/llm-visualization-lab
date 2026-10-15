@@ -1,0 +1,348 @@
+{
+  "result": "PASS",
+  "completed_at": "2026-10-14T19:56:13.061524+00:00",
+  "device": "mps",
+  "dtype": "float32",
+  "model_id": "Qwen/Qwen3-0.6B",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "python": "3.11.15",
+  "torch": "2.14.1",
+  "transformers": "5.19.0",
+  "configuration": {
+    "use_cache": false,
+    "attention_backend": "eager",
+    "max_new_tokens": 3,
+    "prefix_ids_are_not_retokenized": true
+  },
+  "greedy_and_sampling_runs": [
+    {
+      "mode": "greedy",
+      "prompt": "The capital of Germany is",
+      "input_ids": [
+        785,
+        6722,
+        315,
+        9856,
+        374
+      ],
+      "generation_id": "f9188976-7f5e-4c38-ac2b-6fd0e4068b6d",
+      "selected_ids": [
+        19846,
+        13,
+        576
+      ],
+      "decoded_continuation": " Berlin. The",
+      "forward_attempt_delta": 3,
+      "published_steps": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "prefix_ids": [
+            785,
+            6722,
+            315,
+            9856,
+            374
+          ],
+          "selected_token_id": 19846,
+          "raw_argmax_token_id": 19846,
+          "selected_raw_logit": 16.52149200439453,
+          "selected_model_probability": 0.47704339027404785,
+          "independent_logits_bitwise_equal": true,
+          "forward_execution_id": "d399d881-62a1-488d-8267-c08db9b7d8a7",
+          "source_trace_id": "982b89b5-384b-4a48-a534-381bb4e13eb6",
+          "forward_ms": 170.44870898826048,
+          "elapsed_ms": 597.6066250004806,
+          "source_retained_bytes": 1873532
+        },
+        {
+          "step_index": 1,
+          "prefix_ids": [
+            785,
+            6722,
+            315,
+            9856,
+            374,
+            19846
+          ],
+          "selected_token_id": 13,
+          "raw_argmax_token_id": 13,
+          "selected_raw_logit": 19.56342315673828,
+          "selected_model_probability": 0.5169621109962463,
+          "independent_logits_bitwise_equal": true,
+          "forward_execution_id": "9d5d2c5c-3660-41d4-9a48-dbf6d33e94c8",
+          "source_trace_id": "ad72a9ff-ae2c-46fc-9c0c-e67fbec6c553",
+          "forward_ms": 193.64754197886214,
+          "elapsed_ms": 297.0332499826327,
+          "source_retained_bytes": 1891272
+        },
+        {
+          "step_index": 2,
+          "prefix_ids": [
+            785,
+            6722,
+            315,
+            9856,
+            374,
+            19846,
+            13
+          ],
+          "selected_token_id": 576,
+          "raw_argmax_token_id": 576,
+          "selected_raw_logit": 16.988536834716797,
+          "selected_model_probability": 0.25694769620895386,
+          "independent_logits_bitwise_equal": true,
+          "forward_execution_id": "39b4e639-2f62-4929-b1c5-c0db0d375963",
+          "source_trace_id": "4909ed4f-7e8e-4d0f-ae37-60e134507ab4",
+          "forward_ms": 162.5833329744637,
+          "elapsed_ms": 266.9512080028653,
+          "source_retained_bytes": 1909012
+        }
+      ],
+      "session_json_bytes": 16465,
+      "session_duration_ms": 1163.0005830083974
+    },
+    {
+      "mode": "greedy",
+      "prompt": "The capital of France is",
+      "input_ids": [
+        785,
+        6722,
+        315,
+        9625,
+        374
+      ],
+      "generation_id": "a95b78fd-f26d-4bbd-b9f8-f07d9bef057c",
+      "selected_ids": [
+        12095,
+        13,
+        576
+      ],
+      "decoded_continuation": " Paris. The",
+      "forward_attempt_delta": 3,
+      "published_steps": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "prefix_ids": [
+            785,
+            6722,
+            315,
+            9625,
+            374
+          ],
+          "selected_token_id": 12095,
+          "raw_argmax_token_id": 12095,
+          "selected_raw_logit": 17.498855590820312,
+          "selected_model_probability": 0.6568935513496399,
+          "independent_logits_bitwise_equal": true,
+          "forward_execution_id": "60d27935-5c3d-4fb7-a302-dd066de4e252",
+          "source_trace_id": "7065dd91-1573-487c-8951-a36ac6071b91",
+          "forward_ms": 139.02237499132752,
+          "elapsed_ms": 238.97354200016707,
+          "source_retained_bytes": 1873532
+        },
+        {
+          "step_index": 1,
+          "prefix_ids": [
+            785,
+            6722,
+            315,
+            9625,
+            374,
+            12095
+          ],
+          "selected_token_id": 13,
+          "raw_argmax_token_id": 13,
+          "selected_raw_logit": 19.27466583251953,
+          "selected_model_probability": 0.5093590617179871,
+          "independent_logits_bitwise_equal": true,
+          "forward_execution_id": "9d9fb45a-703b-486e-bd45-61fa308cb968",
+          "source_trace_id": "dd668252-6a92-47c0-aacc-3d63db602a65",
+          "forward_ms": 146.39070897828788,
+          "elapsed_ms": 243.97737497929484,
+          "source_retained_bytes": 1891272
+        },
+        {
+          "step_index": 2,
+          "prefix_ids": [
+            785,
+            6722,
+            315,
+            9625,
+            374,
+            12095,
+            13
+          ],
+          "selected_token_id": 576,
+          "raw_argmax_token_id": 576,
+          "selected_raw_logit": 16.967758178710938,
+          "selected_model_probability": 0.2798578143119812,
+          "independent_logits_bitwise_equal": true,
+          "forward_execution_id": "d5095e18-2b18-4a1e-9075-c7086f301484",
+          "source_trace_id": "a0eb2ee9-15d7-44da-90dd-32583eb96522",
+          "forward_ms": 152.75250002741814,
+          "elapsed_ms": 250.29662501765415,
+          "source_retained_bytes": 1909012
+        }
+      ],
+      "session_json_bytes": 16443,
+      "session_duration_ms": 734.1130000422709
+    },
+    {
+      "mode": "sample",
+      "seed": 31,
+      "differs_from_argmax_seed_case": false,
+      "temperature": 1.0,
+      "top_k": 0,
+      "top_p": 1.0,
+      "repeatable_same_device": true,
+      "runs": [
+        {
+          "generation_id": "e2d623f7-950a-4f35-b9f6-f0b0d80eab09",
+          "selected_ids": [
+            30743,
+            624,
+            785
+          ],
+          "attempted_forwards": 3,
+          "session_json_bytes": 16952,
+          "duration_ms": 233.02412504563108,
+          "no_trace_reason": "capture disabled"
+        },
+        {
+          "generation_id": "b287323a-0956-4d87-9edf-626075e841dc",
+          "selected_ids": [
+            30743,
+            624,
+            785
+          ],
+          "attempted_forwards": 3,
+          "session_json_bytes": 16954,
+          "duration_ms": 229.7493750229478,
+          "no_trace_reason": "capture disabled"
+        }
+      ]
+    },
+    {
+      "mode": "sample",
+      "seed": 53,
+      "differs_from_argmax_seed_case": true,
+      "temperature": 0.7,
+      "top_k": 40,
+      "top_p": 0.9,
+      "repeatable_same_device": true,
+      "runs": [
+        {
+          "generation_id": "f2d34d9d-313f-47e9-b93f-15b478493451",
+          "selected_ids": [
+            7407,
+            304,
+            279
+          ],
+          "attempted_forwards": 3,
+          "session_json_bytes": 10723,
+          "duration_ms": 233.08108403580263,
+          "no_trace_reason": "capture disabled"
+        },
+        {
+          "generation_id": "aed1e486-2b89-4223-b095-d846407c0710",
+          "selected_ids": [
+            7407,
+            304,
+            279
+          ],
+          "attempted_forwards": 3,
+          "session_json_bytes": 10722,
+          "duration_ms": 234.7574579762295,
+          "no_trace_reason": "capture disabled"
+        }
+      ]
+    },
+    {
+      "mode": "sample",
+      "seed": 31,
+      "differs_from_argmax_seed_case": false,
+      "temperature": 0.7,
+      "top_k": 1,
+      "top_p": 0.01,
+      "repeatable_same_device": true,
+      "runs": [
+        {
+          "generation_id": "f0f5f82f-f0f5-4d81-a270-8f1224a34301",
+          "selected_ids": [
+            19846,
+            13,
+            576
+          ],
+          "attempted_forwards": 3,
+          "session_json_bytes": 9367,
+          "duration_ms": 238.94929100060835,
+          "no_trace_reason": "capture disabled"
+        },
+        {
+          "generation_id": "91608b9b-a1fc-4718-8d0a-1e408b849e82",
+          "selected_ids": [
+            19846,
+            13,
+            576
+          ],
+          "attempted_forwards": 3,
+          "session_json_bytes": 9367,
+          "duration_ms": 235.14408303890377,
+          "no_trace_reason": "capture disabled"
+        }
+      ]
+    }
+  ],
+  "processor_cases": [
+    {
+      "temperature": 1.0,
+      "top_k": 0,
+      "top_p": 1.0,
+      "eligible_count": 151936,
+      "raw_probability_sum": 0.9999999919948191,
+      "transformers_processors_bitwise_equal": true
+    },
+    {
+      "temperature": 0.7,
+      "top_k": 40,
+      "top_p": 0.9,
+      "eligible_count": 3,
+      "raw_probability_sum": 0.9999999919948191,
+      "transformers_processors_bitwise_equal": true
+    },
+    {
+      "temperature": 0.7,
+      "top_k": 1,
+      "top_p": 0.01,
+      "eligible_count": 1,
+      "raw_probability_sum": 0.9999999919948191,
+      "transformers_processors_bitwise_equal": true
+    }
+  ],
+  "store_status": {
+    "trace_count": 0,
+    "retained_bytes": 0,
+    "reserved_bytes": 0,
+    "accounted_bytes": 0,
+    "max_bytes": 536870912,
+    "ttl_seconds": 1800.0,
+    "max_entries": 1024,
+    "eviction_count": 0,
+    "expiration_count": 0,
+    "active_leases": 0,
+    "deferred_removals": 0,
+    "tombstone_count": 6
+  },
+  "model_forward_counter_scope": {
+    "request_forward_passes": 24,
+    "counter_scope": "adapter.forward attempts from inference/trace/generation; excludes load warmup and independent validation reference"
+  },
+  "limitations": [
+    "Runs are short local research audits, not throughput claims.",
+    "This report records Python retained bytes and timings; allocator peak RSS/MPS memory is not asserted.",
+    "CPU and MPS use the same explicitly seeded CPU-generator policy; cross-device token equality is not claimed."
+  ]
+}
